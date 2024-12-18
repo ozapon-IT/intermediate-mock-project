@@ -17,13 +17,15 @@
             </a>
 
             <nav class="header__nav">
-                <a class="header__link" href="#" class="header__link">勤怠</a>
+                <a class="header__link" href="/attendance" class="header__link">勤怠</a>
 
-                <a class="header__link" href="#" class="header__link">勤怠一覧</a>
+                <a class="header__link" href="/attendance/list" class="header__link">勤怠一覧</a>
 
-                <a class="header__link" href="#" class="header__link">申請</a>
+                <a class="header__link" href="/stamp_correction_request/list" class="header__link">申請</a>
 
-                <button class="header__button" type="submit">ログアウト</button>
+                <form action="/" method="GET">
+                    <button class="header__button" type="submit">ログアウト</button>
+                </form>
             </nav>
         </div>
     </header>

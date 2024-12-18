@@ -24,3 +24,15 @@ Route::get('/register', function () {
 Route::get('/attendance', function () {
     return view('attendance');
 });
+
+Route::get('/attendance/list', function () {
+    return view('attendance-list');
+});
+
+Route::get('/attendance/{id}', function () {
+    return view('attendance-detail');
+});
+
+Route::get('/stamp_correction_request/list', function () {
+    return view('request-list');
+});

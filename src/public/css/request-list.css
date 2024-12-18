@@ -1,0 +1,118 @@
+body {
+    font-family: Arial, sans-serif;
+    box-sizing:border-box;
+    background-color: #f0eff2;
+}
+
+.header {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 0px;
+}
+
+.header__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: calc(100% - 40px);
+    height: 60px;
+}
+
+.header__logo img {
+    width: 370px;
+    height: 60px;
+}
+
+.header__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 420px;
+    height: 60px;
+}
+
+.header__link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+.header__button {
+    all: unset;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.request-list {
+    width: 900px;
+    margin: 100px auto;
+}
+
+.request-list__title {
+    font-size: 2rem;
+    border-left: 8px solid #000;
+    padding-left: 20px;
+}
+
+.request-list__tabs {
+    margin-top: 60px;
+    padding: 10px 60px;
+    border-bottom: 2px solid #000;
+}
+
+.request-list__tab {
+    display: inline-block;
+    font-size: 1rem;
+}
+
+.request-list__tab--waiting {
+    font-weight: bold;
+    margin-right: 100px;
+}
+
+.request-list__records {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 4px;
+    margin-top: 40px;
+}
+
+.request-list__item {
+    background-color: #fff;
+    width: 100%;
+    height: 40px;
+}
+
+.request-list__item th,
+.request-list__item td {
+    color: #666;
+    line-height: 40px;
+}
+
+.request-list__item td {
+    text-align: center;
+}
+
+.request-list__item th:first-of-type {
+    border-radius: 10px 0 0 0;
+}
+
+.request-list__item th:last-of-type {
+    border-radius: 0 10px 0 0;
+}
+
+.request-list__item:last-of-type td:first-of-type {
+    border-radius: 0 0 0 10px;
+}
+
+.request-list__item:last-of-type td:last-of-type {
+    border-radius: 0 0 10px 0;
+}
+
+.request-list__item td a {
+    text-decoration: none;
+    color: #666;
+}
+
+
