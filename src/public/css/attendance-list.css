@@ -1,0 +1,126 @@
+body {
+    font-family: Arial, sans-serif;
+    box-sizing:border-box;
+    background-color: #f0eff2;
+}
+
+.header {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 0px;
+}
+
+.header__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: calc(100% - 40px);
+    height: 60px;
+}
+
+.header__logo img {
+    width: 370px;
+    height: 60px;
+}
+
+.header__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 420px;
+    height: 60px;
+}
+
+.header__link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+.header__button {
+    all: unset;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.attendance-list {
+    width: 900px;
+    margin: 100px auto;
+}
+
+.attendance-list__title {
+    font-size: 2rem;
+    border-left: 8px solid #000;
+    padding-left: 20px;
+}
+
+.attendance-list__monthly {
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    width: 860px;
+    height: 50px;
+    margin-top: 40px;
+    border-radius: 10px;
+    padding: 0 20px;
+}
+
+.attendance-list__previous-month,
+.attendance-list__next-month {
+    color: #666;
+    font-weight: bold;
+    line-height: 50px;
+    font-size: 1rem;
+}
+
+.attendance-list__calendar {
+    line-height: 50px;
+    font-size: 1.5rem;
+}
+
+.attendance-list__records {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 4px;
+    margin-top: 40px;
+}
+
+.attendance-list__item {
+    background-color: #fff;
+    width: 100%;
+    height: 40px;
+}
+
+.attendance-list__item th,
+.attendance-list__item td {
+    color: #666;
+    line-height: 40px;
+}
+
+.attendance-list__item th:first-of-type {
+    border-radius: 10px 0 0 0;
+}
+
+.attendance-list__item th:last-of-type {
+    border-radius: 0 10px 0 0;
+}
+
+.attendance-list__item td {
+    text-align: center;
+    /* font-weight: bold; */
+}
+
+.attendance-list__item:last-of-type td:first-of-type {
+    border-radius: 0 0 0 10px;
+}
+
+.attendance-list__item:last-of-type td:last-of-type {
+    border-radius: 0 0 10px 0;
+}
+
+.attendance-list__item td a {
+    text-decoration: none;
+    color: #666;
+}
+

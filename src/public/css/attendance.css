@@ -1,0 +1,108 @@
+body {
+    font-family: Arial, sans-serif;
+    box-sizing:border-box;
+    background-color: #f0eff2;
+}
+
+.header {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 0px;
+}
+
+.header__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: calc(100% - 40px);
+    height: 60px;
+}
+
+.header__logo img {
+    width: 370px;
+    height: 60px;
+}
+
+.header__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 420px;
+    height: 60px;
+}
+
+.header__link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+.header__button {
+    all: unset;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.attendance {
+    width: 450px;
+    margin: 200px auto;
+    text-align: center;
+}
+
+.attendance__status {
+    background-color: #ccc;
+    color: #666;
+    padding: 10px 15px;
+    border-radius: 20px;
+}
+
+.attendance__date {
+    margin-top: 40px;
+    font-size: 2rem;
+}
+
+.attendance__time {
+    margin-top: 50px;
+    font-weight: bold;
+    font-size: 5rem;
+}
+
+.attendance__button {
+    margin-top: 80px;
+    width: 190px;
+    height: 65px;
+    border: none;
+    font-size: 2rem;
+    border-radius: 10px;
+}
+
+.attendance__buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.attendance__working,
+.attendance__leaving {
+    background-color: #000;
+    color: #fff;
+}
+
+.attendance__break--begins,
+.attendance__break--ends {
+    background-color: #fff;
+    color: #000;
+}
+
+.attendance__message {
+    margin-top: 80px;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.attendance__leaving,
+.attendance__break--begins,
+.attendance__break--ends,
+.attendance__message {
+    display: none;
+}
