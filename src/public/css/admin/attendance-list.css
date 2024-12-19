@@ -1,0 +1,91 @@
+body {
+    background-color: #f0eff2;
+}
+
+.attendance-list {
+    width: 900px;
+    margin: 100px auto;
+}
+
+.attendance-list__title {
+    font-size: 2rem;
+    border-left: 8px solid #000;
+    padding-left: 20px;
+}
+
+.attendance-list__daily {
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    width: 860px;
+    height: 50px;
+    margin-top: 40px;
+    border-radius: 10px;
+    padding: 0 20px;
+}
+
+.attendance-list__previous-day,
+.attendance-list__next-day {
+    color: #666;
+    font-weight: bold;
+    line-height: 50px;
+    font-size: 1rem;
+}
+
+.attendance-list__calendar {
+    line-height: 50px;
+    font-size: 1.5rem;
+}
+
+.attendance-list__records {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 4px;
+    margin-top: 40px;
+}
+
+.attendance-list__item {
+    background-color: #fff;
+    width: 100%;
+    height: 40px;
+}
+
+.attendance-list__item th,
+.attendance-list__item td {
+    color: #666;
+    line-height: 40px;
+}
+
+.attendance-list__item th:first-of-type {
+    border-radius: 10px 0 0 0;
+}
+
+.attendance-list__item th:last-of-type {
+    border-radius: 0 10px 0 0;
+}
+
+.attendance-list__item td {
+    text-align: center;
+}
+
+.attendance-list__item:last-of-type td:first-of-type {
+    border-radius: 0 0 0 10px;
+}
+
+.attendance-list__item:last-of-type td:last-of-type {
+    border-radius: 0 0 10px 0;
+}
+
+.attendance-list__item td a {
+    text-decoration: none;
+    color: #222;
+}
+
+.attendance-list__item td a:hover {
+    color: #000;
+}
+
+.attendance-list__item td:last-of-type {
+    color: #222;
+    font-weight: bold;
+}
