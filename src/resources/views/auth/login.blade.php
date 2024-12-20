@@ -28,19 +28,27 @@
                 <label class="login__label" for="email">メールアドレス</label>
 
                 <input class="login__input" type="text" id="email" name="email" value="{{ old('email') }}">
+
+                @error('email')
+                    <span class="error-message">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="login__form-group">
                 <label class="login__label" for="password">パスワード</label>
 
-                <input class="login__input" type="password" id="password" name="password" value="{{ old('password') }}">
+                <input class="login__input" type="password" id="password" name="password">
+
+                @error('password')
+                    <span class="error-message">{{ $message }}</span>
+                @enderror
             </div>
 
             <button class="login__button" type="submit">ログインする</button>
         </form>
-        
+
         <div class="login__register-link">
-            <a href="/register">会員登録はこちら</a>
+            <a href="{{ route('register') }}">会員登録はこちら</a>
         </div>
     </div>
 </main>
