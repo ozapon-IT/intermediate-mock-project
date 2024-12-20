@@ -14,9 +14,14 @@
         </a>
         <nav class="header__nav">
             <a class="header__link" href="/attendance" class="header__link">勤怠</a>
+
             <a class="header__link" href="/attendance/list" class="header__link">勤怠一覧</a>
+
             <a class="header__link" href="/stamp_correction_request/list" class="header__link">申請</a>
-            <form action="/login" method="GET">
+
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+
                 <button class="header__button" type="submit">ログアウト</button>
             </form>
         </nav>
