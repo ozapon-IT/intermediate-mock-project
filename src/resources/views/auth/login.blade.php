@@ -20,17 +20,25 @@
 <main>
     <div class="login">
         <h1 class="login__title">ログイン</h1>
-        <form class="login__form" action="/attendance" method="GET">
+
+        <form class="login__form" action="{{ route('login') }}" method="POST">
+            @csrf
+
             <div class="login__form-group">
                 <label class="login__label" for="email">メールアドレス</label>
-                <input class="login__input" type="text" id="email" name="email">
+
+                <input class="login__input" type="text" id="email" name="email" value="{{ old('email') }}">
             </div>
+
             <div class="login__form-group">
                 <label class="login__label" for="password">パスワード</label>
-                <input class="login__input" type="password" id="password" name="password">
+
+                <input class="login__input" type="password" id="password" name="password" value="{{ old('password') }}">
             </div>
+
             <button class="login__button" type="submit">ログインする</button>
         </form>
+        
         <div class="login__register-link">
             <a href="/register">会員登録はこちら</a>
         </div>
