@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\AttendanceBreakController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,29 +18,31 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-// Route::get('/login', function () {
-//     return view('auth.login');
-// });
+Route::middleware('auth')->group(function () {
+    Route::get('/attendance', [AttendanceController::class, 'show'])->name('attendance.show');
 
-// Route::get('/register', function () {
-//     return view('auth.register');
-// });
+    Route::post('/attendance/clock_in', [AttendanceController::class, 'clockIn'])->name('attendance.clock_in');
 
-Route::get('/attendance', function () {
-    return view('attendance');
+    Route::post('/attendance/break_in', [AttendanceBreakController::class, 'breakIn'])->name('attendance.break_in');
+
+    Route::post('/attendance/break_out', [AttendanceBreakController::class, 'breakOut'])->name('attendance.break_out');
+
+    Route::post('/attendance/clock_out', [AttendanceController::class, 'clockOut'])->name('attendance.clock_out');
+
+    Route::get('/attendance/list', function () {
+        return view('attendance-list');
+    });
+
+    Route::get('/attendance/{id}', function () {
+        return view('attendance-detail');
+    });
+
+    Route::get('/stamp_correction_request/list', function () {
+        return view('request-list');
+    });
 });
 
-Route::get('/attendance/list', function () {
-    return view('attendance-list');
-});
 
-Route::get('/attendance/{id}', function () {
-    return view('attendance-detail');
-});
-
-Route::get('/stamp_correction_request/list', function () {
-    return view('request-list');
-});
 
 Route::get('/admin/login', function () {
     return view('auth.admin-login');
