@@ -28,6 +28,7 @@ body {
 .attendance-list__next-month {
     color: #666;
     font-weight: bold;
+    text-decoration: none;
     line-height: 50px;
     font-size: 1rem;
 }
@@ -35,6 +36,10 @@ body {
 .attendance-list__calendar {
     line-height: 50px;
     font-size: 1.5rem;
+}
+
+.attendance-list__calendar i {
+    color: #666;
 }
 
 .attendance-list__records {
@@ -66,7 +71,6 @@ body {
 
 .attendance-list__item td {
     text-align: center;
-    /* font-weight: bold; */
 }
 
 .attendance-list__item:last-of-type td:first-of-type {

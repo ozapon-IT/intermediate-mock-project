@@ -23,20 +23,31 @@ class AttendanceRecord extends Model
 
     public function calculateWorkHours()
     {
+        if (!$this->clock_in || !$this->clock_out) {
+            return null;
+        }
+
         $clockIn = Carbon::parse($this->clock_in);
         $clockOut = Carbon::parse($this->clock_out);
 
-        $totalWorkHours = round($clockIn->diffInMinutes($clockOut) / 60, 2);
+        $totalWorkMinutes = $clockIn->diffInMinutes($clockOut);
 
-        $actualWorkHours = $totalWorkHours - $this->calculateBreakHours();
+        $totalBreakMinutes = $this->calculateBreakMinutes();
 
-        return $actualWorkHours;
+        $actualWorkMinutes = max(0, $totalWorkMinutes - $totalBreakMinutes);
+
+        $hours = floor($actualWorkMinutes / 60);
+        $minutes = $actualWorkMinutes % 60;
+
+        return sprintf('%02d:%02d', $hours, $minutes);
     }
 
-    public function calculateBreakHours()
+    public function calculateBreakMinutes()
     {
         $totalBreakHours = AttendanceBreak::where('attendance_record_id', $this->id)->sum('break_duration');
 
-        return $totalBreakHours;
+        $totalBreakMinutes = (int) round($totalBreakHours * 60);
+
+        return $totalBreakMinutes;
     }
 }
