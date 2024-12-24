@@ -33,46 +33,93 @@
 <main>
     <div class="attendance-detail">
         <h1 class="attendance-detail__title">勤怠詳細</h1>
-        <table class="attendance-detail__records">
-            <tr class="attendance-detail__item attendance-detail__name">
-                <th>名前</th>
-                <th>西 怜奈</th>
-            </tr>
-            <tr class="attendance-detail__item attendance-detail__date">
-                <td>日付</td>
-                <td>
-                    <input type="text" value="2024年">
-                    <input type="text" value="12月1日">
-                </td>
-            </tr>
-            <tr class="attendance-detail__item attendance-detail__working-time">
-                <td>出勤・退勤</td>
-                <td>
-                    <input type="text" value="09:00">
-                    <span>~</span>
-                    <input type="text" value="18:00">
-                </td>
-            </tr>
-            <tr class="attendance-detail__item attendance-detail__break">
-                <td>休憩</td>
-                <td>
-                    <input type="text" value="12:00">
-                    <span>~</span>
-                    <input type="text" value="13:00">
-                </td>
-            </tr>
-            <tr class="attendance-detail__item attendance-detail__reason">
-                <td>備考</td>
-                <td>
-                    <textarea name="" id="">電車遅延のため</textarea>
-                </td>
-            </tr>
-        </table>
-        <div class="attendance-detail__correction">
-            <form action="#">
+
+        <form action="{{-- route('attendance-detail.correct'), $attendanceRecord->id) --}}" method="POST">
+            @csrf
+
+            <table class="attendance-detail__records">
+                <tr class="attendance-detail__item attendance-detail__name">
+                    <th>名前</th>
+                    <th>{{ Auth::user()->name }}</th>
+                </tr>
+                <tr class="attendance-detail__item attendance-detail__date">
+                    <td>日付</td>
+
+                    <td>
+                        <input type="text" name="year" value="{{ $attendanceRecord->formatted_year }}">
+
+                        <input type="text" name="month_day" value="{{ $attendanceRecord->formatted_month_day }}">
+
+                        @error('year')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
+
+                        @error('month_day')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
+                    </td>
+                </tr>
+
+                <tr class="attendance-detail__item attendance-detail__working-time">
+                    <td>出勤・退勤</td>
+
+                    <td>
+                        <input type="text" name="clock_in" value="{{ $attendanceRecord->formatted_clock_in }}">
+
+                        <span>~</span>
+
+                        <input type="text" name="clock_out" value="{{ $attendanceRecord->formatted_clock_out }}">
+
+                        @error('clock_in')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
+
+                        @error('clock_out')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
+                    </td>
+                </tr>
+
+                @foreach ($breaks as $index => $break)
+                <tr class="attendance-detail__item attendance-detail__break">
+                    <td>{{ $index === 0 ? '休憩' : '休憩' . ($index + 1) }}</td>
+
+                    <td>
+                        <input type="text" name="break_in[{{ $index }}]" value="{{ $break->formatted_break_in }}">
+
+                        <span>~</span>
+
+                        <input type="text" name="break_out[{{ $index }}]" value="{{ $break->formatted_break_out }}">
+
+                        @error('break_in[{{ $index }}]')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
+
+                        @error('break_out[{{ $index }}]')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
+                    </td>
+                </tr>
+                @endforeach
+
+                <tr class="attendance-detail__item attendance-detail__reason">
+                    <td>備考</td>
+
+                    <td>
+                        <textarea name="reason">{{ old('reason') }}</textarea>
+                    </td>
+
+                    @error('reason')
+                        <span class="error-message">{{ $message }}</span>
+                    @enderror
+                </tr>
+            </table>
+
+            <div class="attendance-detail__correction">
                 <button class="attendance-detail__button" type="submit">修正</button>
-            </form>
-        </div>
+            </div>
+        </form>
+
         <table class="attendance-detail__records">
             <tr class="attendance-detail__item attendance-detail__name">
                 <th>名前</th>

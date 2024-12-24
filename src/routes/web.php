@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AttendanceBreakController;
 use App\Http\Controllers\AttendanceListController;
+use App\Http\Controllers\AttendanceDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,9 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/attendance/list', [AttendanceListController::class, 'show'])->name('attendance-list.show');
 
 
-    Route::get('/attendance/{id}', function () {
-        return view('attendance-detail');
-    });
+    Route::get('/attendance/{id}', [AttendanceDetailController::class, 'show'])->name('attendance-detail.show');
+    Route::post('/attendance/{id}/correction', [AttendanceCorrectionController::class, 'correct'])->name('attendance-detail.correct');
 
     Route::get('/stamp_correction_request/list', function () {
         return view('request-list');

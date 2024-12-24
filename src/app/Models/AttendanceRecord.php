@@ -21,7 +21,40 @@ class AttendanceRecord extends Model
         'status',
     ];
 
+    public function breaks()
+    {
+        return $this->hasMany(AttendanceBreak::class, 'attendance_record_id');
+    }
+
     public function calculateWorkHours()
+    {
+        $clockIn = Carbon::parse($this->clock_in);
+        $clockOut = Carbon::parse($this->clock_out);
+
+        $totalWorkHours = $clockIn->diffInMinutes($clockOut) / 60;
+        $totalBreakHours = $this->calculateBreakHours();
+
+        $actualWorkHours = $totalWorkHours - $totalBreakHours;
+
+        return round($actualWorkHours, 2);
+    }
+
+    public function calculateBreakHours()
+    {
+        $totalBreakHours = AttendanceBreak::where('attendance_record_id', $this->id)
+            ->sum('break_duration');
+
+        return $totalBreakHours;
+    }
+
+    public function calculateBreakMinutes()
+    {
+       $totalBreakMinutes = (int) round($this->calculateBreakHours() * 60);
+
+        return $totalBreakMinutes;
+    }
+
+    public function formatWorkHours()
     {
         if (!$this->clock_in || !$this->clock_out) {
             return null;
@@ -42,12 +75,12 @@ class AttendanceRecord extends Model
         return sprintf('%02d:%02d', $hours, $minutes);
     }
 
-    public function calculateBreakMinutes()
+    public function formatBreakHours()
     {
-        $totalBreakHours = AttendanceBreak::where('attendance_record_id', $this->id)->sum('break_duration');
+        $totalBreakMinutes = $this->calculateBreakMinutes();
+        $hours = floor($totalBreakMinutes / 60);
+        $minutes = $totalBreakMinutes % 60;
 
-        $totalBreakMinutes = (int) round($totalBreakHours * 60);
-
-        return $totalBreakMinutes;
+        return sprintf('%02d:%02d', $hours, $minutes);
     }
 }

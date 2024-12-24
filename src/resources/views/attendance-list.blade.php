@@ -64,7 +64,7 @@
 
                 <td>{{ $record->formatted_work_hours }}</td>
 
-                <td><a href="{{-- route('attendance.detail.show', $record->id) --}}">詳細</a></td>
+                <td><a href="{{ route('attendance-detail.show', $record->id) }}">詳細</a></td>
             </tr>
             @endforeach
         </table>

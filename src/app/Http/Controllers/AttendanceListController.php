@@ -21,8 +21,8 @@ class AttendanceListController extends Controller
             $record->formatted_date = Carbon::parse($record->date)->locale('ja')->isoFormat('MM/DD(ddd)');
             $record->formatted_clock_in = $record->clock_in ? Carbon::parse($record->clock_in)->format('H:i') : '';
             $record->formatted_clock_out = $record->clock_out ? Carbon::parse($record->clock_out)->format('H:i') : '';
-            $record->formatted_break_hours = sprintf('%02d:%02d', floor($record->calculateBreakMinutes() / 60), $record->calculateBreakMinutes() % 60);
-            $record->formatted_work_hours = $record->calculateWorkHours();
+            $record->formatted_break_hours = $record->formatBreakHours();
+            $record->formatted_work_hours = $record->formatWorkHours();
         }
 
         $currentMonthFormatted = Carbon::parse($currentMonth)->format('Y/m');
