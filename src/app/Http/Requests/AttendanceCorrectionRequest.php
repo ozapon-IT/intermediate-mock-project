@@ -22,24 +22,38 @@ class AttendanceCorrectionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'year' => 'required|numeric|digits:4',
-            'month_day' => 'required|string|regex:/^\d{1,2}月\d{1,2}日$/',
+            'year' => 'required|regex:/^\d{4}年$/',
+            'month_day' => 'required|regex:/^\d{1,2}月\d{1,2}日$/',
             'clock_in' => 'required|date_format:H:i|before:clock_out',
-            'clock_out' => 'required|date_format:H:i|after:clock_in',
-            'break_in.*' => 'nullable|date_format:H:i|after_or_equal:clock_in|before:clock_out',
-            'break_out.*' => 'nullable|date_format:H:i|after:break_in.*|before_or_equal:clock_out',
-            'reason' => 'required|string|max:255',
+            'clock_out' => 'required|date_format:H:i',
+            'break_in.*' => 'required|date_format:H:i|after_or_equal:clock_in|before:break_out.*',
+            'break_out.*' => 'required|date_format:H:i|before_or_equal:clock_out',
+            'reason' => 'required|string|max:100',
         ];
     }
 
     public function messages()
     {
         return [
+            'year.required' => '年を入力してください。',
+            'year.regex' => '****年のように数字4桁と年を入力してください。',
+            'month_day.required' => '月日を入力してください。',
+            'month_day.regex' => '**月**日のように数字1~2桁で月日を入力してください。',
+            'clock_in.required' => '出勤時間を入力してください。',
+            'clock_in.date_format' => '出勤時間は**:**のように入力してください。',
             'clock_in.before' => '出勤時間もしくは退勤時間が不適切な値です。',
-            'clock_out.after' => '出勤時間もしくは退勤時間が不適切な値です。',
+            'clock_out.required' => '退勤時間を入力してください。',
+            'clock_out.date_format' => '退勤時間は**:**のように入力してください。',
+            'break_in.*.required' => '休憩入時間を入力してください。',
+            'break_in.*.date_format' => '休憩入時間は**:**のように入力してください。',
             'break_in.*.after_or_equal' => '休憩時間が勤務時間外です。',
+            'break_in.*.before' => '休憩入時間もしくは休憩戻時間が不適切な値です。',
+            'break_out.*.required' => '休憩戻時間を入力してください。',
+            'break_out.*.date_format' => '休憩戻時間は**:**のように入力してください。',
             'break_out.*.before_or_equal' => '休憩時間が勤務時間外です。',
             'reason.required' => '備考を記入してください。',
+            'reason.string' => '備考は文字列で入力してください。',
+            'reason.max' => '備考は100文字以下で入力してください。',
         ];
     }
 }

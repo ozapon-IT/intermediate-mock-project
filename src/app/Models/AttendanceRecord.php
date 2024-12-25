@@ -77,6 +77,12 @@ class AttendanceRecord extends Model
 
     public function formatBreakHours()
     {
+        $breaks =$this->breaks;
+
+        if ($breaks->isEmpty()) {
+            return null;
+        }
+
         $totalBreakMinutes = $this->calculateBreakMinutes();
         $hours = floor($totalBreakMinutes / 60);
         $minutes = $totalBreakMinutes % 60;

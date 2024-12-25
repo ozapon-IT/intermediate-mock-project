@@ -35,11 +35,11 @@
         <h1 class="attendance-list__title">勤怠一覧</h1>
 
         <div class="attendance-list__monthly">
-            <a href="{{ route('attendance-list.show', ['month' => $previousMonth]) }}" class="attendance-list__previous-month">← 前月</a>
+            <a href="{{ route('attendance-list.show', ['month' => $previousMonth]) }}" class="attendance-list__previous-month"><i class="bi bi-arrow-left-short"></i> 前月</a>
 
             <p class="attendance-list__calendar"><i class="bi bi-calendar3"></i> {{ $currentMonthFormatted }}</p>
 
-            <a href="{{ route('attendance-list.show', ['month' => $nextMonth]) }}" class="attendance-list__next-month">→ 翌月</a>
+            <a href="{{ route('attendance-list.show', ['month' => $nextMonth]) }}" class="attendance-list__next-month">翌月 <i class="bi bi-arrow-right-short"></i></a>
         </div>
 
         <table class="attendance-list__records">

@@ -5,6 +5,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AttendanceBreakController;
 use App\Http\Controllers\AttendanceListController;
 use App\Http\Controllers\AttendanceDetailController;
+use App\Http\Controllers\AttendanceCorrectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/attendance/{id}', [AttendanceDetailController::class, 'show'])->name('attendance-detail.show');
     Route::post('/attendance/{id}/correction', [AttendanceCorrectionController::class, 'correct'])->name('attendance-detail.correct');
+
+    Route::get('/attendance/{id}/wait_approval', [AttendanceCorrectionController::class, 'waitApproval'])->name('attendance-detail.wait_approval');
 
     Route::get('/stamp_correction_request/list', function () {
         return view('request-list');

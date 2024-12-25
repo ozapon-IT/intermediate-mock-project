@@ -2,6 +2,10 @@ body {
     background-color: #f0eff2;
 }
 
+.error-message {
+    display: block;
+}
+
 .attendance-detail {
     width: 900px;
     margin: 100px auto;
