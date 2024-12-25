@@ -15,4 +15,9 @@ class AttendanceBreak extends Model
         'break_out',
         'break_duration',
     ];
+
+    public function attendanceRecord()
+    {
+        return $this->belongsTo(AttendanceRecord::class, 'attendance_record_id');
+    }
 }

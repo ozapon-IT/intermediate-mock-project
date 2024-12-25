@@ -12,9 +12,12 @@
         <a class="header__logo" href="#">
             <img src="{{ asset('img/logo.svg') }}" alt="COACHTECHロゴ画像">
         </a>
+
         <nav class="header__nav">
-            <a class="header__link" href="/attendance" class="header__link">勤怠</a>
-            <a class="header__link" href="/attendance/list" class="header__link">勤怠一覧</a>
+            <a class="header__link" href="{{ route('attendance.show') }}" class="header__link">勤怠</a>
+
+            <a class="header__link" href="{{ route('attendance-list.show') }}" class="header__link">勤怠一覧</a>
+
             <a class="header__link" href="/stamp_correction_request/list" class="header__link">申請</a>
 
             <form action="{{ route('logout') }}" method="POST">
