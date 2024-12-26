@@ -17,7 +17,7 @@
 
             <a class="header__link" href="{{ route('attendance-list.show') }}" class="header__link">勤怠一覧</a>
 
-            <a class="header__link" href="/stamp_correction_request/list" class="header__link">申請</a>
+            <a class="header__link" href="{{ route('request-list.show') }}" class="header__link">申請</a>
 
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
@@ -34,7 +34,7 @@
     <div class="attendance-detail">
         <h1 class="attendance-detail__title">勤怠詳細</h1>
 
-        <form action="{{ route('attendance-detail.correct', $attendanceRecord->id) }}" method="POST">
+        <form action="{{ route('attendance-detail.request_correction', $attendanceRecord->id) }}" method="POST">
             @csrf
 
             <table class="attendance-detail__records">

@@ -6,6 +6,7 @@ use App\Http\Controllers\AttendanceBreakController;
 use App\Http\Controllers\AttendanceListController;
 use App\Http\Controllers\AttendanceDetailController;
 use App\Http\Controllers\AttendanceCorrectionController;
+use App\Http\Controllers\RequestListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,6 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/attendance', [AttendanceController::class, 'show'])->name('attendance.show');
-
     Route::post('/attendance/clock_in', [AttendanceController::class, 'clockIn'])->name('attendance.clock_in');
     Route::post('/attendance/clock_out', [AttendanceController::class, 'clockOut'])->name('attendance.clock_out');
 
@@ -33,15 +33,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/attendance/list', [AttendanceListController::class, 'show'])->name('attendance-list.show');
 
-
     Route::get('/attendance/{id}', [AttendanceDetailController::class, 'show'])->name('attendance-detail.show');
-    Route::post('/attendance/{id}/correction', [AttendanceCorrectionController::class, 'correct'])->name('attendance-detail.correct');
 
-    Route::get('/attendance/{id}/wait_approval', [AttendanceCorrectionController::class, 'waitApproval'])->name('attendance-detail.wait_approval');
+    Route::post('/attendance/request_correction/{id}', [AttendanceCorrectionController::class, 'requestCorrection'])->name('attendance-detail.request_correction');
+    Route::get('/attendance/wait_approval/{id}', [AttendanceCorrectionController::class, 'waitApproval'])->name('attendance-detail.wait_approval');
 
-    Route::get('/stamp_correction_request/list', function () {
-        return view('request-list');
-    });
+    Route::get('/stamp_correction_request/list', [RequestListController::class, 'show'])->name('request-list.show');
 });
 
 
