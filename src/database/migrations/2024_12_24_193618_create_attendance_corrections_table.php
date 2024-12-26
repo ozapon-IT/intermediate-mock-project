@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('attendance_record_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->date('requested_date');
+            $table->date('old_date');
+            $table->date('new_date');
             $table->time('old_clock_in');
             $table->time('old_clock_out');
             $table->time('new_clock_in');

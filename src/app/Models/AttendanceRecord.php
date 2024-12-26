@@ -21,7 +21,12 @@ class AttendanceRecord extends Model
         'status',
     ];
 
-    public function breaks()
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function attendanceBreaks()
     {
         return $this->hasMany(AttendanceBreak::class, 'attendance_record_id');
     }
@@ -77,9 +82,15 @@ class AttendanceRecord extends Model
 
     public function formatBreakHours()
     {
-        $breaks =$this->breaks;
+        $breaks =$this->attendanceBreaks;
 
         if ($breaks->isEmpty()) {
+            return null;
+        }
+
+        if ($breaks->contains(function ($break) {
+            return is_null($break->break_out);
+        })) {
             return null;
         }
 

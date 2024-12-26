@@ -18,7 +18,7 @@
 
             <a class="header__link" href="{{ route('attendance-list.show') }}" class="header__link">勤怠一覧</a>
 
-            <a class="header__link" href="/stamp_correction_request/list" class="header__link">申請</a>
+            <a class="header__link" href="{{ route('request-list.show') }}" class="header__link">申請</a>
 
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
