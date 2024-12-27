@@ -7,6 +7,8 @@ use App\Http\Controllers\AttendanceListController;
 use App\Http\Controllers\AttendanceDetailController;
 use App\Http\Controllers\AttendanceCorrectionController;
 use App\Http\Controllers\RequestListController;
+use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\AdminAttendanceListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,7 @@ use App\Http\Controllers\RequestListController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// 一般ユーザールート
 Route::get('/', function () {
     return redirect('/login');
 });
@@ -41,32 +44,32 @@ Route::middleware('auth')->group(function () {
     Route::get('/stamp_correction_request/list', [RequestListController::class, 'show'])->name('request-list.show');
 });
 
+// 管理者ルート
+Route::get('/admin/login', [AdminAuthController::class, 'show'])->name('admin-login.show');
+Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin-login.login');
 
+Route::prefix('admin')->middleware('admin')->group(function () {
+    Route::post('logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
-Route::get('/admin/login', function () {
-    return view('auth.admin-login');
-});
+    Route::get('attendance/list', [AdminAttendanceListController::class, 'show'])->name('admin.attendance-list.show');
 
-Route::get('/admin/attendance/list', function () {
-    return view('admin.attendance-list');
-});
+    Route::get('attendance/{id}', function () {
+        return view('admin.attendance-detail');
+    })->name('admin.attendance-detail.show');
 
-Route::get('/admin/attendance/{id}', function () {
-    return view('admin.attendance-detail');
-});
+    Route::get('staff/list', function () {
+        return view('admin.staff-list');
+    });
 
-Route::get('/admin/staff/list', function () {
-    return view('admin.staff-list');
-});
+    Route::get('attendance/staff/{id}', function () {
+        return view('admin.staff-attendance-list');
+    });
 
-Route::get('/admin/attendance/staff/{id}', function () {
-    return view('admin.staff-attendance-list');
-});
-
-Route::get('/admin/stamp_correction_request/list', function () {
-    return view('admin.request-list');
-});
-
-Route::get('/stamp_correction_request/approval/{attendance_correct_request}', function () {
-    return view('admin.request-approval');
+    Route::get('stamp_correction_request/list', function () {
+        return view('admin.request-list');
+    });
+    
+    Route::get('stamp_correction_request/approval/{attendance_correct_request}', function () {
+        return view('admin.request-approval');
+    });
 });

@@ -13,10 +13,13 @@
             <img src="{{ asset('img/logo.svg') }}" alt="COACHTECHロゴ画像">
         </a>
         <nav class="header__nav">
-            <a class="header__link" href="/admin/attendance/list" class="header__link">勤怠一覧</a>
+            <a class="header__link" href="{{ route('admin.attendance-list.show') }}" class="header__link">勤怠一覧</a>
+
             <a class="header__link" href="/admin/staff/list" class="header__link">スタッフ一覧</a>
+
             <a class="header__link" href="/admin/stamp_correction_request/list" class="header__link">申請一覧</a>
-            <form action="/admin/login" method="GET">
+
+            <form action="{{ route('admin.logout') }}" method="GET">
                 <button class="header__button" type="submit">ログアウト</button>
             </form>
         </nav>
@@ -47,7 +50,7 @@
                 <td>2024/12/01</td>
                 <td>遅延のため</td>
                 <td>2024/12/02</td>
-                <td><a href="/stamp_correction_request/approval/{attendance_correct_request}">詳細</a></td>
+                <td><a href="/admin/stamp_correction_request/approval/{attendance_correct_request}">詳細</a></td>
             </tr>
             <tr class="request-list__item">
                 <td>承認待ち</td>
