@@ -20,15 +20,30 @@
 <main>
     <div class="admin-login">
         <h1 class="admin-login__title">管理者ログイン</h1>
-        <form class="admin-login__form" action="/admin/attendance/list" method="GET">
+
+        <form class="admin-login__form" action="{{ route('admin-login.login') }}" method="POST">
+            @csrf
+
             <div class="admin-login__form-group">
                 <label class="admin-login__label" for="email">メールアドレス</label>
+
                 <input class="admin-login__input" type="text" id="email" name="email">
+
+                @error('email')
+                    <span class="error-message">{{ $message }}</span>
+                @enderror
             </div>
+
             <div class="admin-login__form-group">
                 <label class="admin-login__label" for="password">パスワード</label>
+
                 <input class="admin-login__input" type="password" id="password" name="password">
+
+                @error('password')
+                    <span class="error-message">{{ $message }}</span>
+                @enderror
             </div>
+
             <button class="admin-login__button" type="submit">管理者ログインする</button>
         </form>
     </div>

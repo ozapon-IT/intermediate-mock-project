@@ -14,9 +14,14 @@
         </a>
         <nav class="header__nav">
             <a class="header__link" href="/admin/attendance/list" class="header__link">勤怠一覧</a>
+
             <a class="header__link" href="/admin/staff/list" class="header__link">スタッフ一覧</a>
+
             <a class="header__link" href="/admin/stamp_correction_request/list" class="header__link">申請一覧</a>
-            <form action="/admin/login" method="GET">
+
+            <form action="{{ route('admin.logout') }}" method="POST">
+                @csrf
+
                 <button class="header__button" type="submit">ログアウト</button>
             </form>
         </nav>
