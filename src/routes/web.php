@@ -8,6 +8,7 @@ use App\Http\Controllers\AttendanceDetailController;
 use App\Http\Controllers\AttendanceCorrectionController;
 use App\Http\Controllers\RequestListController;
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\AdminAttendanceListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,30 +48,28 @@ Route::middleware('auth')->group(function () {
 Route::get('/admin/login', [AdminAuthController::class, 'show'])->name('admin-login.show');
 Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin-login.login');
 
-Route::middleware('admin')->group(function () {
-    Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+Route::prefix('admin')->middleware('admin')->group(function () {
+    Route::post('logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
-    Route::get('/admin/attendance/list', function () {
-        return view('admin.attendance-list');
-    })->name('admin.attendance-list');
-    
-    Route::get('/admin/attendance/{id}', function () {
+    Route::get('attendance/list', [AdminAttendanceListController::class, 'show'])->name('admin.attendance-list.show');
+
+    Route::get('attendance/{id}', function () {
         return view('admin.attendance-detail');
-    });
-    
-    Route::get('/admin/staff/list', function () {
+    })->name('admin.attendance-detail.show');
+
+    Route::get('staff/list', function () {
         return view('admin.staff-list');
     });
-    
-    Route::get('/admin/attendance/staff/{id}', function () {
+
+    Route::get('attendance/staff/{id}', function () {
         return view('admin.staff-attendance-list');
     });
-    
-    Route::get('/admin/stamp_correction_request/list', function () {
+
+    Route::get('stamp_correction_request/list', function () {
         return view('admin.request-list');
     });
     
-    Route::get('/stamp_correction_request/approval/{attendance_correct_request}', function () {
+    Route::get('stamp_correction_request/approval/{attendance_correct_request}', function () {
         return view('admin.request-approval');
     });
 });

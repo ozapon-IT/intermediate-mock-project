@@ -22,7 +22,7 @@ class AdminAuthController extends Controller
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::guard('admin')->login($user);
 
-            return redirect()->route('admin.attendance-list');
+            return redirect()->route('admin.attendance-list.show');
         }
 
         throw ValidationException::withMessages([

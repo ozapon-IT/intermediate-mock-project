@@ -13,7 +13,7 @@
             <img src="{{ asset('img/logo.svg') }}" alt="COACHTECHロゴ画像">
         </a>
         <nav class="header__nav">
-            <a class="header__link" href="/admin/attendance/list" class="header__link">勤怠一覧</a>
+            <a class="header__link" href="{{ route('admin.attendance-list.show') }}" class="header__link">勤怠一覧</a>
 
             <a class="header__link" href="/admin/staff/list" class="header__link">スタッフ一覧</a>
 
@@ -32,12 +32,16 @@
 @section('main')
 <main>
     <div class="attendance-list">
-        <h1 class="attendance-list__title">2024年12月1日の勤怠</h1>
+        <h1 class="attendance-list__title">{{ $currentDay }}の勤怠</h1>
+
         <div class="attendance-list__daily">
-            <span class="attendance-list__previous-day">← 前日</span>
-            <p class="attendance-list__calendar">2024/12/01</p>
-            <span class="attendance-list__next-day">翌日 →</span>
+            <a class="attendance-list__previous-day" href="{{ route('admin.attendance-list.show', ['day' => $previousDay]) }}"><i class="bi bi-arrow-left-short"></i> 前日</a>
+
+            <p class="attendance-list__calendar">{{ $currentDayFormatted }}</p>
+
+            <a class="attendance-list__next-day" href="{{ route('admin.attendance-list.show', ['day' => $nextDay]) }}">翌日 <i class="bi bi-arrow-right-short"></i></a>
         </div>
+
         <table class="attendance-list__records">
             <tr class="attendance-list__item">
                 <th>名前</th>
@@ -47,54 +51,22 @@
                 <th>合計</th>
                 <th>詳細</th>
             </tr>
-            <tr class="attendance-list__item">
-                <td>西 怜奈</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="/admin/attendance/{id}">詳細</a></td>
-            </tr>
-            <tr class="attendance-list__item">
-                <td>山田 太郎</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="#">詳細</a></td>
-            </tr>
-            <tr class="attendance-list__item">
-                <td>増田 一世</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td>詳細</td>
-            </tr>
-            <tr class="attendance-list__item">
-                <td>山本 敬吉</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td>詳細</td>
-            </tr>
-            <tr class="attendance-list__item">
-                <td>秋田 朋美</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td>詳細</td>
-            </tr>
-            <tr class="attendance-list__item">
-                <td>中西 敦夫</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td>詳細</td>
-            </tr>
+
+            @foreach ($attendanceRecords as $record)
+                <tr class="attendance-list__item">
+                    <td>{{ $record->user->name }}</td>
+
+                    <td>{{ $record->formatted_clock_in }}</td>
+
+                    <td>{{ $record->formatted_clock_out }}</td>
+
+                    <td>{{ $record->formatted_break_hours }}</td>
+
+                    <td>{{ $record->formatted_work_hours }}</td>
+
+                    <td><a href="{{ route('admin.attendance-detail.show', $record->id) }}">詳細</a></td>
+                </tr>
+            @endforeach
         </table>
     </div>
 </main>
