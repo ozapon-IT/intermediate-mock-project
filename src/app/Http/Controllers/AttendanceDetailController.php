@@ -12,7 +12,12 @@ class AttendanceDetailController extends Controller
 {
     public function show($id)
     {
-        $attendanceRecord = AttendanceRecord::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        if (request()->routeIs('admin.*')) {
+            $attendanceRecord = AttendanceRecord::findOrFail($id);
+        } else {
+            $user = Auth::guard('web')->user();
+            $attendanceRecord = AttendanceRecord::where('id', $id)->where('user_id', $user->id)->firstOrFail();
+        }
 
         $attendanceRecord->formatted_year = Carbon::parse($attendanceRecord->date)->format('Y年');
         $attendanceRecord->formatted_month_day = Carbon::parse($attendanceRecord->date)->format('m月d日');
@@ -26,7 +31,7 @@ class AttendanceDetailController extends Controller
             $break->formatted_break_out = $break->break_out ? Carbon::parse($break->break_out)->format('H:i') : '';
         }
 
-        $attendanceCorrection = AttendanceCorrection::where('attendance_record_id', $id)->where('user_id', Auth::id())->latest()->first();
+        $attendanceCorrection = AttendanceCorrection::where('attendance_record_id', $id)->where('user_id', $attendanceRecord->user->id)->latest()->first();
         if ($attendanceCorrection) {
             $attendanceCorrection->formatted_year = $attendanceCorrection->new_date ? Carbon::parse($attendanceCorrection->new_date)->format('Y年') : '';
             $attendanceCorrection->formatted_month_day = $attendanceCorrection->new_date ? Carbon::parse($attendanceCorrection->new_date)->format('m月d日') : '';
@@ -44,6 +49,10 @@ class AttendanceDetailController extends Controller
 
         $isWaitingApproval = $attendanceCorrection && $attendanceCorrection->status === '承認待ち';
 
-        return view('attendance-detail', compact('attendanceRecord', 'breaks', 'attendanceCorrection', 'breakCorrections', 'isWaitingApproval'));
+        if  (request()->routeIs('admin.*')) {
+            return view('admin.attendance-detail', compact('attendanceRecord', 'breaks', 'attendanceCorrection', 'breakCorrections', 'isWaitingApproval'));
+        } else {
+            return view('attendance-detail', compact('attendanceRecord', 'breaks', 'attendanceCorrection', 'breakCorrections', 'isWaitingApproval'));
+        }
     }
 }

@@ -13,11 +13,11 @@
             <img src="{{ asset('img/logo.svg') }}" alt="COACHTECHロゴ画像">
         </a>
         <nav class="header__nav">
-            <a class="header__link" href="{{ route('attendance.show') }}" class="header__link">勤怠</a>
+            <a class="header__link" href="{{ route('attendance.show') }}">勤怠</a>
 
-            <a class="header__link" href="{{ route('attendance-list.show') }}" class="header__link">勤怠一覧</a>
+            <a class="header__link" href="{{ route('attendance-list.show') }}">勤怠一覧</a>
 
-            <a class="header__link" href="{{ route('request-list.show') }}" class="header__link">申請</a>
+            <a class="header__link" href="{{ route('request-list.show') }}">申請</a>
 
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
@@ -40,8 +40,10 @@
             <table class="attendance-detail__records">
                 <tr class="attendance-detail__item attendance-detail__name">
                     <th>名前</th>
+
                     <th>{{ Auth::user()->name }}</th>
                 </tr>
+
                 <tr class="attendance-detail__item attendance-detail__date">
                     <td>日付</td>
 

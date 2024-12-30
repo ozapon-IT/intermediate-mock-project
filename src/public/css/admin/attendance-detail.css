@@ -2,6 +2,10 @@ body {
     background-color: #f0eff2;
 }
 
+.error-message {
+    display: block;
+}
+
 .header__nav {
     width: 550px;
 }
@@ -118,4 +122,26 @@ body {
 
 .attendance-detail__button:hover {
     background-color: #000;
+}
+
+.attendance-detail__item td p {
+    display: inline-block;
+}
+
+.attendance-detail__date td p:first-of-type {
+    margin-right: 100px;
+}
+
+.attendance-detail__working-time td p:first-of-type,
+.attendance-detail__break td p:first-of-type {
+    margin-right: 44px;
+}
+
+.attendance-detail__working-time td p:last-of-type,
+.attendance-detail__break td p:last-of-type {
+    margin-left: 44px;
+}
+
+.attendance-detail__correction p {
+    color: red;
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('attendance_correction_id')->constrained()->cascadeOnDelete();
             $table->foreignId('attendance_break_id')->constrained()->cascadeOnDelete();
             $table->time('old_break_in');
-            $table->time('old_break_out');
+            $table->time('old_break_out')->nullable();
             $table->time('new_break_in');
             $table->time('new_break_out');
             $table->timestamps();

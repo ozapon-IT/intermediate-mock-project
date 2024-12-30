@@ -38,7 +38,7 @@ class UserAttendanceSeeder extends Seeder
 
             // 勤怠データ生成
             $startDate = Carbon::parse('2024-10-01');
-            $endDate = Carbon::parse('2024-12-25');
+            $endDate = Carbon::parse('2024-12-31');
 
             while ($startDate->lte($endDate)) {
                 // 勤怠記録作成

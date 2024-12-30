@@ -17,7 +17,7 @@ class AdminUserSeeder extends Seeder
         User::create([
             'name' => '管理者',
             'email' => 'admin@coachtech.com',
-            'password' => Hash::make('adminpassword'),
+            'password' => Hash::make('testadmin'),
             'role' => 'admin',
         ]);
     }

@@ -3,25 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AttendanceCorrectionRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Models\AttendanceRecord;
 use Illuminate\Support\Carbon;
 use App\Models\AttendanceCorrection;
-use Illuminate\Support\Facades\Auth;
 
 class AttendanceCorrectionController extends Controller
 {
     public function requestCorrection(AttendanceCorrectionRequest $request, $id)
     {
+        $user = Auth::guard('admin')->user();
+
         $attendanceRecord = AttendanceRecord::findOrFail($id);
 
-        $newDate = Carbon::createFromFormat('Y年m月d日', "{$request->year}{$request->month_day}");
+        $formattedDate = Carbon::createFromFormat('Y年m月d日', "{$request->year}{$request->month_day}")->toDateString();
 
         $attendanceCorrection = AttendanceCorrection::create([
             'attendance_record_id' => $attendanceRecord->id,
-            'user_id' => Auth::id(),
+            'user_id' => $attendanceRecord->user->id,
             'requested_date' => Carbon::today(),
             'old_date' => $attendanceRecord->date,
-            'new_date' => $newDate->toDateString(),
+            'new_date' => $formattedDate,
             'old_clock_in' => $attendanceRecord->clock_in,
             'old_clock_out' => $attendanceRecord->clock_out,
             'new_clock_in' => $request->clock_in,
@@ -48,14 +50,20 @@ class AttendanceCorrectionController extends Controller
             }
         }
 
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.attendance-detail.wait_approval', $attendanceRecord->id);
+        }
+
         return redirect()->route('attendance-detail.wait_approval', $attendanceRecord->id);
     }
 
     public function waitApproval($id)
     {
+        $user = Auth::guard('admin')->user();
+
         $attendanceRecord = AttendanceRecord::findOrFail($id);
 
-        $attendanceCorrection = AttendanceCorrection::where('attendance_record_id', $id)->where('user_id', Auth::id())->latest()->first();
+        $attendanceCorrection = AttendanceCorrection::where('attendance_record_id', $id)->where('user_id', $attendanceRecord->user->id)->latest()->first();
         $attendanceCorrection->formatted_year = Carbon::parse($attendanceCorrection->new_date)->format('Y年');
         $attendanceCorrection->formatted_month_day = Carbon::parse($attendanceCorrection->new_date)->format('m月d日');
         $attendanceCorrection->formatted_new_clock_in = $attendanceCorrection->new_clock_in ? Carbon::parse($attendanceCorrection->new_clock_in)->format('H:i') : '';
@@ -69,6 +77,10 @@ class AttendanceCorrectionController extends Controller
         }
 
         $isWaitingApproval = $attendanceCorrection && $attendanceCorrection->status === '承認待ち';
+
+        if ($user->role === 'admin') {
+            return view('admin.attendance-detail', compact('attendanceRecord', 'attendanceCorrection', 'breakCorrections', 'isWaitingApproval'));
+        }
 
         return view('attendance-detail', compact('attendanceRecord', 'attendanceCorrection', 'breakCorrections', 'isWaitingApproval'));
     }
