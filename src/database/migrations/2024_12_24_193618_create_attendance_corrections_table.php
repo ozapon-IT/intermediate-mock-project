@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('old_date');
             $table->date('new_date');
             $table->time('old_clock_in');
-            $table->time('old_clock_out');
+            $table->time('old_clock_out')->nullable();
             $table->time('new_clock_in');
             $table->time('new_clock_out');
             $table->string('reason');

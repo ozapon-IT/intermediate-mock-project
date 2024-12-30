@@ -44,6 +44,8 @@ return [
         'admin' => [
             'driver' => 'session',
             'provider' => 'users',
+            'session' => 'admin_session',
+            'cookie' => 'admin_cookie',
         ],
     ],
 
