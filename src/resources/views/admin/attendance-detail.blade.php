@@ -19,7 +19,9 @@
 
             <a class="header__link" href="/admin/stamp_correction_request/list">申請一覧</a>
 
-            <form action="{{ route('admin.logout') }}" method="GET">
+            <form action="{{ route('admin.logout') }}" method="POST">
+                @csrf
+
                 <button class="header__button" type="submit">ログアウト</button>
             </form>
         </nav>

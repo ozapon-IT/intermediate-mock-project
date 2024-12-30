@@ -9,7 +9,7 @@ use App\Http\Controllers\AttendanceCorrectionController;
 Route::get('login', [AdminAuthController::class, 'show'])->name('admin-login.show');
 Route::post('login', [AdminAuthController::class, 'login'])->name('admin-login.login');
 
-Route::middleware('admin')->group(function () {
+Route::middleware(['admin.session', 'admin'])->group(function () {
     Route::post('logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
     Route::get('attendance/list', [AdminAttendanceListController::class, 'show'])->name('admin.attendance-list.show');
