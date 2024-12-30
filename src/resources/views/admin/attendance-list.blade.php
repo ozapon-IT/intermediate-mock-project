@@ -13,11 +13,11 @@
             <img src="{{ asset('img/logo.svg') }}" alt="COACHTECHロゴ画像">
         </a>
         <nav class="header__nav">
-            <a class="header__link" href="{{ route('admin.attendance-list.show') }}" class="header__link">勤怠一覧</a>
+            <a class="header__link" href="{{ route('admin.attendance-list.show') }}">勤怠一覧</a>
 
-            <a class="header__link" href="/admin/staff/list" class="header__link">スタッフ一覧</a>
+            <a class="header__link" href="{{ route('admin.staff-list.show') }}">スタッフ一覧</a>
 
-            <a class="header__link" href="/admin/stamp_correction_request/list" class="header__link">申請一覧</a>
+            <a class="header__link" href="/admin/stamp_correction_request/list">申請一覧</a>
 
             <form action="{{ route('admin.logout') }}" method="POST">
                 @csrf

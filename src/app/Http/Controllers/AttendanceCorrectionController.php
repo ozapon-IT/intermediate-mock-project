@@ -12,8 +12,6 @@ class AttendanceCorrectionController extends Controller
 {
     public function requestCorrection(AttendanceCorrectionRequest $request, $id)
     {
-        $user = Auth::guard('admin')->user();
-
         $attendanceRecord = AttendanceRecord::findOrFail($id);
 
         $formattedDate = Carbon::createFromFormat('Y年m月d日', "{$request->year}{$request->month_day}")->toDateString();
@@ -50,7 +48,7 @@ class AttendanceCorrectionController extends Controller
             }
         }
 
-        if ($user->role === 'admin') {
+        if (request()->routeIs('admin.*')) {
             return redirect()->route('admin.attendance-detail.wait_approval', $attendanceRecord->id);
         }
 
@@ -59,8 +57,6 @@ class AttendanceCorrectionController extends Controller
 
     public function waitApproval($id)
     {
-        $user = Auth::guard('admin')->user();
-
         $attendanceRecord = AttendanceRecord::findOrFail($id);
 
         $attendanceCorrection = AttendanceCorrection::where('attendance_record_id', $id)->where('user_id', $attendanceRecord->user->id)->latest()->first();
@@ -78,7 +74,7 @@ class AttendanceCorrectionController extends Controller
 
         $isWaitingApproval = $attendanceCorrection && $attendanceCorrection->status === '承認待ち';
 
-        if ($user->role === 'admin') {
+        if (request()->routeIs('admin.*')) {
             return view('admin.attendance-detail', compact('attendanceRecord', 'attendanceCorrection', 'breakCorrections', 'isWaitingApproval'));
         }
 

@@ -15,7 +15,7 @@
         <nav class="header__nav">
             <a class="header__link" href="{{ route('admin.attendance-list.show') }}">勤怠一覧</a>
 
-            <a class="header__link" href="/admin/staff/list">スタッフ一覧</a>
+            <a class="header__link" href="{{ route('admin.staff-list.show') }}">スタッフ一覧</a>
 
             <a class="header__link" href="/admin/stamp_correction_request/list">申請一覧</a>
 

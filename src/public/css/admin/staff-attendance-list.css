@@ -32,13 +32,24 @@ body {
 .attendance-list__next-month {
     color: #666;
     font-weight: bold;
+    text-decoration: none;
     line-height: 50px;
     font-size: 1rem;
+}
+
+.attendance-list__previous-month i,
+.attendance-list__next-month i {
+    vertical-align: middle;
+    font-size: 2rem;
 }
 
 .attendance-list__calendar {
     line-height: 50px;
     font-size: 1.5rem;
+}
+
+.attendance-list__calendar i {
+    color: #666;
 }
 
 .attendance-list__records {
