@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AttendanceCorrectionRequest;
-use Illuminate\Support\Facades\Auth;
 use App\Models\AttendanceRecord;
 use Illuminate\Support\Carbon;
 use App\Models\AttendanceCorrection;

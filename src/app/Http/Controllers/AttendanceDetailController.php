@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\AttendanceRecord;
 use Illuminate\Support\Facades\Auth;
+use App\Models\AttendanceRecord;
 use Illuminate\Support\Carbon;
 use App\Models\AttendanceCorrection;
 
@@ -12,12 +11,8 @@ class AttendanceDetailController extends Controller
 {
     public function show($id)
     {
-        if (request()->routeIs('admin.*')) {
-            $attendanceRecord = AttendanceRecord::findOrFail($id);
-        } else {
-            $user = Auth::guard('web')->user();
-            $attendanceRecord = AttendanceRecord::where('id', $id)->where('user_id', $user->id)->firstOrFail();
-        }
+        $user = Auth::guard('web')->user();
+        $attendanceRecord = AttendanceRecord::where('id', $id)->where('user_id', $user->id)->firstOrFail();
 
         $attendanceRecord->formatted_year = Carbon::parse($attendanceRecord->date)->format('Y年');
         $attendanceRecord->formatted_month_day = Carbon::parse($attendanceRecord->date)->format('m月d日');
@@ -49,10 +44,6 @@ class AttendanceDetailController extends Controller
 
         $isWaitingApproval = $attendanceCorrection && $attendanceCorrection->status === '承認待ち';
 
-        if  (request()->routeIs('admin.*')) {
-            return view('admin.attendance-detail', compact('attendanceRecord', 'breaks', 'attendanceCorrection', 'breakCorrections', 'isWaitingApproval'));
-        } else {
-            return view('attendance-detail', compact('attendanceRecord', 'breaks', 'attendanceCorrection', 'breakCorrections', 'isWaitingApproval'));
-        }
+        return view('attendance-detail', compact('attendanceRecord', 'breaks', 'attendanceCorrection', 'breakCorrections', 'isWaitingApproval'));
     }
 }

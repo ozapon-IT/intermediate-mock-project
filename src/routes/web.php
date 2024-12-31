@@ -18,6 +18,7 @@ use App\Http\Controllers\RequestListController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// 一般ユーザー用ルート
 Route::get('/', function () {
     return redirect('/login');
 });
@@ -29,7 +30,6 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/attendance/break_in', [AttendanceBreakController::class, 'breakIn'])->name('attendance.break_in');
     Route::post('/attendance/break_out', [AttendanceBreakController::class, 'breakOut'])->name('attendance.break_out');
-
 
     Route::get('/attendance/list', [AttendanceListController::class, 'show'])->name('attendance-list.show');
 

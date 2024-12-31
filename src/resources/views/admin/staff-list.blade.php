@@ -17,7 +17,7 @@
 
             <a class="header__link" href="{{ route('admin.staff-list.show') }}">スタッフ一覧</a>
 
-            <a class="header__link" href="/admin/stamp_correction_request/list">申請一覧</a>
+            <a class="header__link" href="{{ route('admin.request-list.show') }}">申請一覧</a>
 
             <form action="{{ route('admin.logout') }}" method="POST">
                 @csrf
