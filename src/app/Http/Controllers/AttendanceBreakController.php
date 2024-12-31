@@ -14,7 +14,7 @@ class AttendanceBreakController extends Controller
     {
         AttendanceBreak::create([
             'attendance_record_id' => $request->attendance_record_id,
-            'break_in' => Carbon::now()->format('H:i'),
+            'break_in' => Carbon::now(),
         ]);
 
         AttendanceRecord::where('id', $request->attendance_record_id)->update(['status' => '休憩中']);
@@ -26,7 +26,7 @@ class AttendanceBreakController extends Controller
     {
         $break = AttendanceBreak::where('attendance_record_id', $request->attendance_record_id)->whereNull('break_out')->first();
 
-        $breakOutTime = Carbon::now()->format('H:i');
+        $breakOutTime = Carbon::now();
 
         $breakDuration = Carbon::parse($break->break_in)->diffInMinutes($breakOutTime) / 60;
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AttendanceRecord;
 use Illuminate\Support\Carbon;
-use App\Models\AttendanceCorrection;
+use App\Models\AttendanceCorrectRequest;
 
 class AdminAttendanceDetailController extends Controller
 {
@@ -24,14 +24,14 @@ class AdminAttendanceDetailController extends Controller
             $break->formatted_break_out = $break->break_out ? Carbon::parse($break->break_out)->format('H:i') : '';
         }
 
-        $attendanceCorrection = AttendanceCorrection::where('attendance_record_id', $id)->where('user_id', $attendanceRecord->user->id)->latest()->first();
+        $attendanceCorrection = AttendanceCorrectRequest::where('attendance_record_id', $id)->where('user_id', $attendanceRecord->user->id)->latest()->first();
         if ($attendanceCorrection) {
             $attendanceCorrection->formatted_year = $attendanceCorrection->new_date ? Carbon::parse($attendanceCorrection->new_date)->format('Y年') : '';
             $attendanceCorrection->formatted_month_day = $attendanceCorrection->new_date ? Carbon::parse($attendanceCorrection->new_date)->format('m月d日') : '';
             $attendanceCorrection->formatted_new_clock_in = $attendanceCorrection->new_clock_in ? Carbon::parse($attendanceCorrection->new_clock_in)->format('H:i') : '';
             $attendanceCorrection->formatted_new_clock_out = $attendanceCorrection->new_clock_out ? Carbon::parse($attendanceCorrection->new_clock_out)->format('H:i') : '';
 
-            $breakCorrections = $attendanceCorrection->breakCorrections;
+            $breakCorrections = $attendanceCorrection->breakCorrectRequests;
             foreach ($breakCorrections as $breakCorrection) {
                 $breakCorrection->formatted_new_break_in = $breakCorrection->new_break_in ? Carbon::parse($breakCorrection->new_break_in)->format('H:i') : '';
                 $breakCorrection->formatted_new_break_out = $breakCorrection->new_break_out ? Carbon::parse($breakCorrection->new_break_out)->format('H:i') : '';

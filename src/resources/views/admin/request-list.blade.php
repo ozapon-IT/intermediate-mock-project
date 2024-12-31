@@ -61,7 +61,7 @@
                     <td>{{ $attendanceCorrection->formatted_old_date }}</td>
                     <td>{{ $attendanceCorrection->reason }}</td>
                     <td>{{ $attendanceCorrection->formatted_requested_date }}</td>
-                    <td><a href="{{-- route('admin.approve-request.show') --}}">詳細</a></td>
+                    <td><a href="{{ route('admin.approve-request.show', ['attendance_correct_request' => $attendanceCorrection->id]) }}">詳細</a></td>
                 </tr>
             @endforeach
         </table>

@@ -8,6 +8,7 @@ use App\Http\Controllers\AttendanceCorrectionController;
 use App\Http\Controllers\AdminStaffListController;
 use App\Http\Controllers\AdminStaffAttendanceListController;
 use App\Http\Controllers\AdminRequestListController;
+use App\Http\Controllers\AdminApproveRequestController;
 
 // 管理者用ルート
 Route::get('login', [AdminAuthController::class, 'show'])->name('admin-login.show');
@@ -30,4 +31,5 @@ Route::middleware(['admin.session', 'admin'])->group(function () {
     Route::get('stamp_correction_request/list', [AdminRequestListController::class, 'show'])->name('admin.request-list.show');
 
     Route::get('stamp_correction_request/approve/{attendance_correct_request}', [AdminApproveRequestController::class, 'show'])->name('admin.approve-request.show');
+    Route::POST('stamp_correction_request/approve/{attendance_correct_request}', [AdminApproveRequestController::class, 'approve'])->name('admin.approve-request.approve');
 });

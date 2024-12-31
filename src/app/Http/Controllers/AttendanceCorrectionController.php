@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AttendanceCorrectionRequest;
 use App\Models\AttendanceRecord;
 use Illuminate\Support\Carbon;
-use App\Models\AttendanceCorrection;
+use App\Models\AttendanceCorrectRequest;
 
 class AttendanceCorrectionController extends Controller
 {
@@ -15,7 +15,7 @@ class AttendanceCorrectionController extends Controller
 
         $formattedDate = Carbon::createFromFormat('Y年m月d日', "{$request->year}{$request->month_day}")->toDateString();
 
-        $attendanceCorrection = AttendanceCorrection::create([
+        $attendanceCorrection = AttendanceCorrectRequest::create([
             'attendance_record_id' => $attendanceRecord->id,
             'user_id' => $attendanceRecord->user->id,
             'requested_date' => Carbon::today(),
@@ -23,8 +23,8 @@ class AttendanceCorrectionController extends Controller
             'new_date' => $formattedDate,
             'old_clock_in' => $attendanceRecord->clock_in,
             'old_clock_out' => $attendanceRecord->clock_out,
-            'new_clock_in' => $request->clock_in,
-            'new_clock_out' =>$request->clock_out,
+            'new_clock_in' => Carbon::createFromFormat('Y-m-d H:i', "{$formattedDate}  {$request->clock_in}"),
+            'new_clock_out' => Carbon::createFromFormat('Y-m-d H:i', "{$formattedDate}  {$request->clock_out}"),
             'reason' => $request->reason,
             'status' => '承認待ち',
         ]);
@@ -36,12 +36,12 @@ class AttendanceCorrectionController extends Controller
                 $oldBreak = $attendanceRecord->attendanceBreaks[$index];
 
                 if ($breakIn && $breakOut) {
-                    $attendanceCorrection->breakCorrections()->create([
+                    $attendanceCorrection->breakCorrectRequests()->create([
                         'attendance_break_id' => $oldBreak->id,
                         'old_break_in' => $oldBreak->break_in,
                         'old_break_out' => $oldBreak->break_out,
-                        'new_break_in' => $breakIn,
-                        'new_break_out' =>$breakOut,
+                        'new_break_in' => Carbon::createFromFormat('Y-m-d H:i', "{$formattedDate}  {$breakIn}"),
+                        'new_break_out' => Carbon::createFromFormat('Y-m-d H:i', "{$formattedDate}  {$breakOut}"),
                     ]);
                 }
             }
@@ -58,13 +58,13 @@ class AttendanceCorrectionController extends Controller
     {
         $attendanceRecord = AttendanceRecord::findOrFail($id);
 
-        $attendanceCorrection = AttendanceCorrection::where('attendance_record_id', $id)->where('user_id', $attendanceRecord->user->id)->latest()->first();
+        $attendanceCorrection = AttendanceCorrectRequest::where('attendance_record_id', $id)->where('user_id', $attendanceRecord->user->id)->latest()->first();
         $attendanceCorrection->formatted_year = Carbon::parse($attendanceCorrection->new_date)->format('Y年');
         $attendanceCorrection->formatted_month_day = Carbon::parse($attendanceCorrection->new_date)->format('m月d日');
         $attendanceCorrection->formatted_new_clock_in = $attendanceCorrection->new_clock_in ? Carbon::parse($attendanceCorrection->new_clock_in)->format('H:i') : '';
         $attendanceCorrection->formatted_new_clock_out = $attendanceCorrection->new_clock_out ? Carbon::parse($attendanceCorrection->new_clock_out)->format('H:i') : '';
 
-        $breakCorrections = $attendanceCorrection->breakCorrections;
+        $breakCorrections = $attendanceCorrection->breakCorrectRequests;
 
         foreach ($breakCorrections as $breakCorrection) {
             $breakCorrection->formatted_new_break_in = $breakCorrection->new_break_in ? Carbon::parse($breakCorrection->new_break_in)->format('H:i') : '';

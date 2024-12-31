@@ -44,17 +44,25 @@ class UserAttendanceSeeder extends Seeder
                 // 勤怠記録作成
                 $attendanceRecord = $user->attendanceRecords()->create([
                     'date' => $startDate->toDateString(),
-                    'clock_in' => '09:00:00',
-                    'clock_out' => '18:00:00',
-                    'break_hours' => '1.00',
-                    'work_hours' => '8.00',
+                    'clock_in' => $startDate->copy()->setTime(9, 0, 0),
+                    'clock_out' => $startDate->copy()->setTime(18, 0, 0),
+                    // 'break_hours' => '1.00',
+                    // 'work_hours' => '8.00',
                     'status' => '退勤済',
                 ]);
 
                 // 休憩データ作成
                 $attendanceRecord->attendanceBreaks()->createMany([
-                    ['break_in' => '12:00:00', 'break_out' => '12:40:00', 'break_duration' => '0.67'],
-                    ['break_in' => '15:00:00', 'break_out' => '15:20:00', 'break_duration' => '0.33'],
+                    [
+                        'break_in' => $startDate->copy()->setTime(12, 0, 0),
+                        'break_out' => $startDate->copy()->setTime(12, 40, 0),
+                        'break_duration' => '0.67'
+                    ],
+                    [
+                        'break_in' => $startDate->copy()->setTime(15, 0, 0),
+                        'break_out' => $startDate->copy()->setTime(15, 20, 0),
+                        'break_duration' => '0.33',
+                    ],
                 ]);
 
                 // 次の日へ
