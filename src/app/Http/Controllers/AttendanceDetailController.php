@@ -2,22 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\AttendanceRecord;
 use Illuminate\Support\Facades\Auth;
+use App\Models\AttendanceRecord;
 use Illuminate\Support\Carbon;
-use App\Models\AttendanceCorrection;
+use App\Models\AttendanceCorrectRequest;
 
 class AttendanceDetailController extends Controller
 {
     public function show($id)
     {
-        if (request()->routeIs('admin.*')) {
-            $attendanceRecord = AttendanceRecord::findOrFail($id);
-        } else {
-            $user = Auth::guard('web')->user();
-            $attendanceRecord = AttendanceRecord::where('id', $id)->where('user_id', $user->id)->firstOrFail();
-        }
+        $user = Auth::guard('web')->user();
+        $attendanceRecord = AttendanceRecord::where('id', $id)->where('user_id', $user->id)->firstOrFail();
 
         $attendanceRecord->formatted_year = Carbon::parse($attendanceRecord->date)->format('Y年');
         $attendanceRecord->formatted_month_day = Carbon::parse($attendanceRecord->date)->format('m月d日');
@@ -31,14 +26,14 @@ class AttendanceDetailController extends Controller
             $break->formatted_break_out = $break->break_out ? Carbon::parse($break->break_out)->format('H:i') : '';
         }
 
-        $attendanceCorrection = AttendanceCorrection::where('attendance_record_id', $id)->where('user_id', $attendanceRecord->user->id)->latest()->first();
+        $attendanceCorrection = AttendanceCorrectRequest::where('attendance_record_id', $id)->where('user_id', $attendanceRecord->user->id)->latest()->first();
         if ($attendanceCorrection) {
             $attendanceCorrection->formatted_year = $attendanceCorrection->new_date ? Carbon::parse($attendanceCorrection->new_date)->format('Y年') : '';
             $attendanceCorrection->formatted_month_day = $attendanceCorrection->new_date ? Carbon::parse($attendanceCorrection->new_date)->format('m月d日') : '';
             $attendanceCorrection->formatted_new_clock_in = $attendanceCorrection->new_clock_in ? Carbon::parse($attendanceCorrection->new_clock_in)->format('H:i') : '';
             $attendanceCorrection->formatted_new_clock_out = $attendanceCorrection->new_clock_out ? Carbon::parse($attendanceCorrection->new_clock_out)->format('H:i') : '';
 
-            $breakCorrections = $attendanceCorrection->breakCorrections;
+            $breakCorrections = $attendanceCorrection->breakCorrectRequests;
             foreach ($breakCorrections as $breakCorrection) {
                 $breakCorrection->formatted_new_break_in = $breakCorrection->new_break_in ? Carbon::parse($breakCorrection->new_break_in)->format('H:i') : '';
                 $breakCorrection->formatted_new_break_out = $breakCorrection->new_break_out ? Carbon::parse($breakCorrection->new_break_out)->format('H:i') : '';
@@ -49,10 +44,6 @@ class AttendanceDetailController extends Controller
 
         $isWaitingApproval = $attendanceCorrection && $attendanceCorrection->status === '承認待ち';
 
-        if  (request()->routeIs('admin.*')) {
-            return view('admin.attendance-detail', compact('attendanceRecord', 'breaks', 'attendanceCorrection', 'breakCorrections', 'isWaitingApproval'));
-        } else {
-            return view('attendance-detail', compact('attendanceRecord', 'breaks', 'attendanceCorrection', 'breakCorrections', 'isWaitingApproval'));
-        }
+        return view('attendance-detail', compact('attendanceRecord', 'breaks', 'attendanceCorrection', 'breakCorrections', 'isWaitingApproval'));
     }
 }

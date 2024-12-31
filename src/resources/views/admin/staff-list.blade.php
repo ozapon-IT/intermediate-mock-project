@@ -13,11 +13,11 @@
             <img src="{{ asset('img/logo.svg') }}" alt="COACHTECHロゴ画像">
         </a>
         <nav class="header__nav">
-            <a class="header__link" href="{{ route('admin.attendance-list.show') }}" class="header__link">勤怠一覧</a>
+            <a class="header__link" href="{{ route('admin.attendance-list.show') }}">勤怠一覧</a>
 
-            <a class="header__link" href="/admin/staff/list" class="header__link">スタッフ一覧</a>
+            <a class="header__link" href="{{ route('admin.staff-list.show') }}">スタッフ一覧</a>
 
-            <a class="header__link" href="/admin/stamp_correction_request/list" class="header__link">申請一覧</a>
+            <a class="header__link" href="{{ route('admin.request-list.show') }}">申請一覧</a>
 
             <form action="{{ route('admin.logout') }}" method="POST">
                 @csrf
@@ -33,42 +33,23 @@
 <main>
     <div class="staff-list">
         <h1 class="staff-list__title">スタッフ一覧</h1>
+
         <table class="staff-list__records">
             <tr class="staff-list__item">
                 <th>名前</th>
                 <th>メールアドレス</th>
                 <th>月次勤怠</th>
             </tr>
-            <tr class="staff-list__item">
-                <td>西 怜奈</td>
-                <td>reina.n@coachtech.com</td>
-                <td><a href="/admin/attendance/staff/{id}">詳細</a></td>
-            </tr>
-            <tr class="staff-list__item">
-                <td>山田 太郎</td>
-                <td>taro.y@coachtech.com</td>
-                <td><a href="#">詳細</a></td>
-            </tr>
-            <tr class="staff-list__item">
-                <td>増田 一世</td>
-                <td>issei.m@coachtech.com</td>
-                <td><a href="#">詳細</a></td>
-            </tr>
-            <tr class="staff-list__item">
-                <td>山本 敬吉</td>
-                <td>keikichi.y@coachtech.com</td>
-                <td><a href="#">詳細</a></td>
-            </tr>
-            <tr class="staff-list__item">
-                <td>秋田 朋美</td>
-                <td>tomomi.a@coachtech.com</td>
-                <td><a href="#">詳細</a></td>
-            </tr>
-            <tr class="staff-list__item">
-                <td>中西 敦夫</td>
-                <td>norio.n@coachtech.com</td>
-                <td><a href="#">詳細</a></td>
-            </tr>
+
+            @foreach ($users as $user)
+                <tr class="staff-list__item">
+                    <td>{{ $user->name }}</td>
+
+                    <td>{{ $user->email }}</td>
+
+                    <td><a href="{{ route('admin.staff-attendance-list.show', $user->id) }}">詳細</a></td>
+                </tr>
+            @endforeach
         </table>
     </div>
 </main>

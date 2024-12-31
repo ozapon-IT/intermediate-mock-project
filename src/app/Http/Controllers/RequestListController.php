@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\AttendanceCorrection;
+use App\Models\AttendanceCorrectRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 
@@ -13,7 +13,7 @@ class RequestListController extends Controller
     {
         $status = $request->query('status', '承認待ち');
 
-        $attendanceCorrections = AttendanceCorrection::where('user_id', Auth::id())->where('status', $status)->get();
+        $attendanceCorrections = AttendanceCorrectRequest::where('user_id', Auth::id())->where('status', $status)->get();
 
         foreach ($attendanceCorrections as $attendanceCorrection) {
             $attendanceCorrection->formatted_requested_date = Carbon::parse($attendanceCorrection->requested_date)->isoFormat('YYYY/MM/DD');

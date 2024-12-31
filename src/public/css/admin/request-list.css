@@ -25,12 +25,17 @@ body {
 
 .request-list__tab {
     display: inline-block;
+    text-decoration: none;
+    color: #000;
     font-size: 1rem;
 }
 
-.request-list__tab--waiting {
-    font-weight: bold;
+.request-list__tab:first-of-type {
     margin-right: 100px;
+}
+
+.request-list__tab--active {
+    font-weight: bold;
 }
 
 .request-list__records {

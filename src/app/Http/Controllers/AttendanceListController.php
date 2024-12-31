@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use App\Models\AttendanceRecord;
+use Illuminate\Support\Carbon;
 
 class AttendanceListController extends Controller
 {
     public function show(Request $request)
     {
         $currentMonth = $request->input('month', now()->format('Y-m'));
-
         $attendanceRecords = AttendanceRecord::where('user_id', auth()->id())->whereBetween('date', [
             Carbon::parse($currentMonth)->startOfMonth(),
             Carbon::parse($currentMonth)->endOfMonth()
