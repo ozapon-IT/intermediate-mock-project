@@ -8,6 +8,6 @@ class LoginResponse implements LoginResponseContract
 {
     public function toResponse($request)
     {
-        return redirect('/attendance');
+        return redirect()->route('attendance.show');
     }
 }

@@ -34,6 +34,7 @@ class UserAttendanceSeeder extends Seeder
                 'name' => $userData['name'],
                 'email' => $userData['email'],
                 'password' => Hash::make($userData['password']),
+                'email_verified_at' => Carbon::now(),
             ]);
 
             // 勤怠データ生成
@@ -46,8 +47,8 @@ class UserAttendanceSeeder extends Seeder
                     'date' => $startDate->toDateString(),
                     'clock_in' => $startDate->copy()->setTime(9, 0, 0),
                     'clock_out' => $startDate->copy()->setTime(18, 0, 0),
-                    // 'break_hours' => '1.00',
-                    // 'work_hours' => '8.00',
+                    'break_hours' => '1.00',
+                    'work_hours' => '8.00',
                     'status' => '退勤済',
                 ]);
 

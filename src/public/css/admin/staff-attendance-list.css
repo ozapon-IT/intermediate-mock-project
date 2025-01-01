@@ -110,17 +110,19 @@ body {
     margin-top: 50px;
 }
 
-.attendance-list__button {
+.attendance-list__export-button {
+    display:inline-block;
     background-color: #111;
     color: #fff;
-    border: none;
     width: 180px;
-    height: 50px;
+    padding: 13px 0;
     border-radius: 5px;
     font-size: 1.5rem;
     cursor: pointer;
+    text-decoration: none;
+    text-align: center;
 }
 
-.attendance-list__button:hover {
+.attendance-list__export-button:hover {
     background-color: #000;
 }

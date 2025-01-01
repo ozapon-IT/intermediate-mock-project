@@ -27,6 +27,7 @@ Route::middleware(['admin.session', 'admin'])->group(function () {
     Route::get('staff/list', [AdminStaffListController::class, 'show'])->name('admin.staff-list.show');
 
     Route::get('attendance/staff/{id}', [AdminStaffAttendanceListController::class, 'show'])->name('admin.staff-attendance-list.show');
+    Route::get('attendance/staff/{id}/export', [AdminStaffAttendanceListController::class, 'export'])->name('admin.staff-attendance-list.export');
 
     Route::get('stamp_correction_request/list', [AdminRequestListController::class, 'show'])->name('admin.request-list.show');
 

@@ -18,6 +18,8 @@ use App\Actions\Fortify\CustomValidateLogin;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Http\Responses\VerifyEmailResponse;
+use Laravel\Fortify\Contracts\VerifyEmailResponse as VerifyEmailResponseContract;
 // use App\Actions\Fortify\ResetUserPassword;
 // use App\Actions\Fortify\UpdateUserPassword;
 // use App\Actions\Fortify\UpdateUserProfileInformation;
@@ -35,6 +37,8 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
 
         $this->app->singleton(LoginRequest::class, CustomLoginRequest::class);
+
+        $this->app->singleton(VerifyEmailResponseContract::class, VerifyEmailResponse::class);
     }
 
     /**
@@ -62,6 +66,12 @@ class FortifyServiceProvider extends ServiceProvider
             $user = User::where('email', $request->email)->first();
 
             if ($user && Hash::check($request->password, $user->password)) {
+                if (!$user->hasVerifiedEmail()) {
+                    throw ValidationException::withMessages([
+                        Fortify::username() => 'ログインできません。メール認証を確認してください',
+                    ]);
+                }
+
                 return $user;
             }
 
