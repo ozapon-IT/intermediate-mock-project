@@ -12,11 +12,12 @@ class AdminStaffAttendanceListController extends Controller
     public function show(Request $request, $id)
     {
         $currentMonth = $request->input('month', now()->format('Y-m'));
-        $user = User::find($id);
-        $attendanceRecords = AttendanceRecord::where('user_id', $id)->whereBetween('date', [
-            Carbon::parse($currentMonth)->startOfMonth(),
-            Carbon::parse($currentMonth)->endOfMonth()
-        ])->orderBy('date')->get();
+
+        $attendanceRecords = AttendanceRecord::where('user_id', $id)
+            ->whereBetween('date', [
+                Carbon::parse($currentMonth)->startOfMonth(),
+                Carbon::parse($currentMonth)->endOfMonth()
+            ])->orderBy('date')->get();
 
         foreach ($attendanceRecords as $record) {
             $record->formatted_date = Carbon::parse($record->date)->locale('ja')->isoFormat('MM/DD(ddd)');
@@ -30,6 +31,56 @@ class AdminStaffAttendanceListController extends Controller
         $previousMonth = Carbon::parse($currentMonth)->subMonth()->format('Y-m');
         $nextMonth = Carbon::parse($currentMonth)->addMonth()->format('Y-m');
 
-        return view('admin.staff-attendance-list', compact('attendanceRecords', 'currentMonthFormatted', 'previousMonth', 'nextMonth', 'user'));
+        $user = User::find($id);
+
+        return view('admin.staff-attendance-list', compact('attendanceRecords', 'currentMonthFormatted', 'previousMonth', 'nextMonth', 'currentMonth', 'user'));
+    }
+
+    public function export(Request $request, $id)
+    {
+        $currentMonth = $request->input('month', now()->format('Y-m'));
+
+        $attendanceRecords = AttendanceRecord::where('user_id', $id)
+            ->whereBetween('date', [
+                Carbon::parse($currentMonth)->startOfMonth(),
+                Carbon::parse($currentMonth)->endOfMonth()
+            ])->orderBy('date')->get();
+
+        $user = User::find($id);
+
+        $csvHeader = [
+            '日付',
+            '出勤',
+            '退勤',
+            '休憩時間',
+            '合計時間'
+        ];
+
+        $callback = function () use ($attendanceRecords, $csvHeader) {
+            $file = fopen('php://output', 'w');
+
+            fputs($file, chr(0xEF).chr(0xBB).chr(0xBF));
+
+            fputcsv($file, $csvHeader);
+
+            foreach ($attendanceRecords as $record) {
+                $row = [
+                    Carbon::parse($record->date)->locale('ja')->isoFormat('MM/DD(ddd)'),
+                    $record->clock_in ? Carbon::parse($record->clock_in)->format('H:i') : '',
+                    $record->clock_out ? Carbon::parse($record->clock_out)->format('H:i') : '',
+                    $record->formatBreakHours(),
+                    $record->formatWorkHours(),
+                ];
+
+                fputcsv($file, $row);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, [
+            "Content-Type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=attendance_($user->name)_$currentMonth.csv"
+        ]);
     }
 }

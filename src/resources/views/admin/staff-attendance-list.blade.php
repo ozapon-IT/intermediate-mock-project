@@ -70,7 +70,7 @@
         </table>
 
         <div class="attendance-list__export">
-            <button class="attendance-list__button">CSV出力</button>
+            <a class="attendance-list__export-button" href="{{ route('admin.staff-attendance-list.export', ['id' => $user->id, 'month' => $currentMonth]) }}">CSV出力</a>
         </div>
     </div>
 </main>
