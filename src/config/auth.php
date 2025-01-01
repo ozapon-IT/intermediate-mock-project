@@ -41,6 +41,7 @@ return [
             'provider' => 'users',
         ],
 
+        // カスタムガード
         'admin' => [
             'driver' => 'session',
             'provider' => 'users',

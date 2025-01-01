@@ -34,6 +34,7 @@ class UserAttendanceSeeder extends Seeder
                 'name' => $userData['name'],
                 'email' => $userData['email'],
                 'password' => Hash::make($userData['password']),
+                'email_verified_at' => Carbon::now(),
             ]);
 
             // 勤怠データ生成

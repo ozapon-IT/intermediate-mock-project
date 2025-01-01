@@ -7,6 +7,7 @@ use App\Http\Controllers\AttendanceListController;
 use App\Http\Controllers\AttendanceDetailController;
 use App\Http\Controllers\AttendanceCorrectionController;
 use App\Http\Controllers\RequestListController;
+use Laravel\Fortify\Http\Controllers\VerifyEmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +19,11 @@ use App\Http\Controllers\RequestListController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-// 一般ユーザー用ルート
 Route::get('/', function () {
     return redirect('/login');
 });
 
+// 認証が必要なルート
 Route::middleware('auth')->group(function () {
     Route::get('/attendance', [AttendanceController::class, 'show'])->name('attendance.show');
     Route::post('/attendance/clock_in', [AttendanceController::class, 'clockIn'])->name('attendance.clock_in');
@@ -40,3 +41,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/stamp_correction_request/list', [RequestListController::class, 'show'])->name('request-list.show');
 });
+
+// デフォルトのメール認証ルートを上書き(カスタムミドルウェア'setUserFromId'を追加)
+Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])->middleware(['signed', 'setUserFromId'])->name('verification.verify');
