@@ -3,37 +3,40 @@ body {
 }
 
 .attendance {
-    width: 450px;
-    margin: 200px auto;
+    width: 30vw;
+    margin: 13vw auto;
     text-align: center;
 }
 
 .attendance__status {
     background-color: #ccc;
     color: #666;
-    padding: 10px 15px;
-    border-radius: 20px;
+    padding: 0.5vw 1vw;
+    border-radius: 1.3vw;
+    font-size: 1vw;
 }
 
 .attendance__date {
-    margin-top: 40px;
-    font-size: 2rem;
+    margin-top: 2.6vw;
+    font-size: 2vw;
 }
 
 .attendance__time {
-    margin-top: 50px;
     font-weight: bold;
-    font-size: 5rem;
+    /* margin-top: 50px; */
+    margin-top: 3.2vw;
+    /* font-size: 5rem; */
+    font-size: 5vw;
 }
 
 .attendance__button {
     cursor: pointer;
-    margin-top: 80px;
-    width: 190px;
-    height: 65px;
     border: none;
-    font-size: 2rem;
-    border-radius: 10px;
+    margin-top: 5.2vw;
+    width: 12.3vw;
+    height: 4.2vw;
+    font-size: 2vw;
+    border-radius: 0.5vw;
 }
 
 .attendance__buttons {
@@ -64,14 +67,81 @@ body {
 }
 
 .attendance__message {
-    margin-top: 80px;
     font-weight: bold;
-    font-size: 1.5rem;
+    margin-top: 5.2vw;
+    font-size: 1.5vw;
 }
 
-/* .attendance__leaving,
-.attendance__break--begins,
-.attendance__break--ends,
-.attendance__message {
-    display: none;
-} */
+/* PC画面時(1400-1540px) */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .attendance {
+        width: 450px;
+        margin: 200px auto;
+    }
+
+    .attendance__status {
+        padding: 10px 15px;
+        border-radius: 20px;
+        font-size: 1rem;
+    }
+
+    .attendance__date {
+        margin-top: 40px;
+        font-size: 2rem;
+    }
+
+    .attendance__time {
+        margin-top: 50px;
+        font-size: 5rem;
+    }
+
+    .attendance__button {
+        margin-top: 80px;
+        width: 190px;
+        height: 65px;
+        font-size: 2rem;
+        border-radius: 10px;
+    }
+
+    .attendance__message {
+        margin-top: 80px;
+        font-size: 1.5rem;
+    }
+}
+
+/* タブレット画面時(768-850px) */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .attendance {
+        width: 250px;
+        margin: 120px auto;
+    }
+
+    .attendance__status {
+        padding: 6px 8px;
+        border-radius: 12px;
+        font-size: 0.6rem;
+    }
+
+    .attendance__date {
+        margin-top: 25px;
+        font-size: 1.2rem;
+    }
+
+    .attendance__time {
+        margin-top: 30px;
+        font-size: 3rem;
+    }
+
+    .attendance__button {
+        margin-top: 50px;
+        width: 100px;
+        height: 40px;
+        font-size: 1.2rem;
+        border-radius: 6px;
+    }
+
+    .attendance__message {
+        margin-top: 50px;
+        font-size: 0.8rem;
+    }
+}
