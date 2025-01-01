@@ -1,15 +1,15 @@
 .register {
-    width: 680px;
-    margin: 100px auto;
+    width: 44vw;
+    margin: 6.5vw auto;
 }
 
 .register__title {
     text-align: center;
-    font-size: 2rem;
+    font-size: 2vw;
 }
 
 .register__form {
-    margin-top: 50px;
+    margin-top: 3vw;
 }
 
 .register__form-group {
@@ -18,21 +18,21 @@
 }
 
 .register__form-group:not(:nth-of-type(1)) {
-    margin-top: 30px;
+    margin-top: 2vw;
 }
 
 .register__label {
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1.5vw;
 }
 
 .register__input {
     border: 1px solid #000;
-    padding: 0 10px;
-    font-size: 1.2rem;
-    border-radius: 5px;
-    height: 43px;
-    margin-top: 10px;
+    padding: 0 0.5vw;
+    font-size: 1.2vw;
+    border-radius: 0.3vw;
+    height: 2.8vw;
+    margin-top: 0.5vw;
 }
 
 .register__button {
@@ -40,12 +40,12 @@
     color: #fff;
     border: none;
     cursor: pointer;
-    padding: 10px;
-    font-size: 1.7rem;
+    padding: 0.5vw;
+    font-size: 1.7vw;
     width: 100%;
-    height: 60px;
-    border-radius: 5px;
-    margin-top: 70px;
+    height: 4vw;
+    border-radius: 0.3vw;
+    margin-top: 4.5vw;
 }
 
 .register__button:hover {
@@ -54,15 +54,111 @@
 
 .register__login-link {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 2.6vw;
 }
 
 .register__login-link a {
     color: #007bff;
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: 1.2vw;
 }
 
 .register__login-link a:hover {
     text-decoration: underline;
+}
+
+/* PC画面時(1400-1540px) */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .register {
+        width: 680px;
+        margin: 100px auto;
+    }
+
+    .register__title {
+        font-size: 2rem;
+    }
+
+    .register__form {
+        margin-top: 50px;
+    }
+
+    .register__form-group:not(:nth-of-type(1)) {
+        margin-top: 30px;
+    }
+
+    .register__label {
+        font-size: 1.5rem;
+    }
+
+    .register__input {
+        padding: 0 10px;
+        font-size: 1.2rem;
+        height: 43px;
+        margin-top: 10px;
+        border-radius: 5px;
+    }
+
+    .register__button {
+        padding: 10px;
+        font-size: 1.7rem;
+        height: 60px;
+        margin-top: 70px;
+        border-radius: 5px;
+    }
+
+    .register__login-link {
+        margin-top: 40px;
+    }
+
+    .register__login-link a {
+        font-size: 1.2rem;
+    }
+}
+
+/* タブレット画面時(768-850px) */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .register {
+        width: 360px;
+        margin: 60px auto;
+    }
+
+    .register__title {
+        font-size: 1.1rem;
+    }
+
+    .register__form {
+        margin-top: 30px;
+    }
+
+    .register__form-group:not(:nth-of-type(1)) {
+        margin-top: 20px;
+    }
+
+    .register__label {
+        font-size: 0.8rem;
+    }
+
+    .register__input {
+        padding: 0 5px;
+        font-size: 0.8rem;
+        height: 23px;
+        margin-top: 5px;
+        border-radius: 3px;
+    }
+
+    .register__button {
+        padding: 5px;
+        font-size: 0.9rem;
+        height: 35px;
+        margin-top: 40px;
+        border-radius: 3px;
+    }
+
+    .register__login-link {
+        margin-top: 20px;
+    }
+
+    .register__login-link a {
+        font-size: 0.7rem;
+    }
 }
