@@ -14,21 +14,21 @@ body {
     align-items: center;
     justify-content: space-between;
     margin: 0 auto;
-    max-width: 97vw;
-    height: 4vw;
+    max-width: 97.4vw;
+    height: 3.9vw;
 }
 
 .header__logo img {
     width: 24vw;
-    height: 4vw;
+    height: 3.9vw;
 }
 
 .header__nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 27vw;
-    height: 6vh;
+    width: 29.2vw;
+    height: 3.9vh;
 }
 
 .header__link {
@@ -45,7 +45,7 @@ body {
 
 .error-message {
     color: red;
-    font-size: 1vw;
+    font-size: 1.2vw;
     margin-top: 0.5vw;
 }
 
@@ -66,7 +66,7 @@ body {
     }
 
     .header__nav {
-        width: 420px;
+        width: 450px;
         height: 60px;
     }
 
@@ -87,22 +87,22 @@ body {
 /* タブレット画面時(768-850px) */
 @media screen and (min-width: 768px) and (max-width: 850px) {
     .header {
-        padding: 5px 0px;
+        padding: 6px 0px;
     }
 
     .header__container {
-        max-width: calc(100% - 20px);
-        height: 30px;
+        max-width: calc(100% - 22px);
+        height: 33px;
     }
 
     .header__logo img {
-        width: 200px;
-        height: 30px;
+        width: 204px;
+        height: 33px;
     }
 
     .header__nav {
-        width: 250px;
-        height: 30px;
+        width: 248px;
+        height: 33px;
     }
 
     .header__link {
@@ -114,7 +114,7 @@ body {
     }
 
     .error-message {
-        font-size: 0.5rem;
-        margin-top: 5px;
+        font-size: 0.6rem;
+        margin-top: 6px;
     }
 }

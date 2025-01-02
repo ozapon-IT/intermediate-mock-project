@@ -187,16 +187,16 @@ body {
     }
 
     .attendance-list__monthly {
-        width: 470px;
-        height: 30px;
-        margin-top: 20px;
+        width: 474px;
+        height: 27px;
+        margin-top: 22px;
         border-radius: 6px;
         padding: 0 14px;
     }
 
     .attendance-list__previous-month,
     .attendance-list__next-month {
-        line-height: 30px;
+        line-height: 27px;
         font-size: 0.6rem;
     }
 
