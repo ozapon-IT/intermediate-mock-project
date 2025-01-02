@@ -12,7 +12,7 @@ class AttendanceController extends Controller
     public function show()
     {
         $now = Carbon::now('Asia/Tokyo');
-        $formattedDate = $now->isoFormat('YYYY年MM月DD日(ddd)');
+        $formattedDate = $now->isoFormat('YYYY年M月D日(ddd)');
         $formattedTime = $now->format('H:i');
         $attendanceRecord = AttendanceRecord::where('user_id', Auth::id())->where('date', Carbon::today())->first();
         $status = $attendanceRecord->status ?? '勤務外';
