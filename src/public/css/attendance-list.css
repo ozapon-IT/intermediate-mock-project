@@ -16,7 +16,6 @@ body {
 .attendance-list__monthly {
     background-color: #fff;
     display: flex;
-    align-items: center;
     justify-content: space-between;
     width: 55.8vw;
     height: 3.2vw;
@@ -202,7 +201,6 @@ body {
 
     .attendance-list__previous-month i,
     .attendance-list__next-month i {
-        vertical-align: middle;
         font-size: 1.2rem;
     }
 
