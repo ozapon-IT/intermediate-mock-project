@@ -7,63 +7,64 @@ body {
 }
 
 .header__nav {
-    width: 550px;
+    width: 38.9vw;
 }
 
 .attendance-detail {
-    width: 900px;
-    margin: 100px auto;
+    width: 58.4vw;
+    margin: 6.5vw auto;
 }
 
 .attendance-detail__title {
-    font-size: 2rem;
-    border-left: 8px solid #000;
-    padding-left: 20px;
+    font-size: 2.2vw;
+    border-left: 0.4vw solid #000;
+    padding-left: 1.3vw;
 }
 
 .attendance-detail__records {
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 4px;
-    margin-top: 40px;
+    border-spacing: 0 0.3vw;
+    margin-top: 2.6vw;
+    font-size: 1.2vw;
 }
 
 .attendance-detail__item {
     background-color: #fff;
     width: 100%;
-    height: 80px;
+    height: 5.2vw;
 }
 
 .attendance-detail__item:first-of-type th:first-of-type {
-    border-radius: 10px 0 0 0;
+    border-radius: 0.5vw 0 0 0;
 }
 
 .attendance-detail__item:first-of-type th:last-of-type {
-    border-radius: 0 10px 0 0;
+    border-radius: 0 0.5vw 0 0;
 }
 
 .attendance-detail__item:last-of-type td:first-of-type {
-    border-radius: 0 0 0 10px;
+    border-radius: 0 0 0 0.5vw;
 }
 
 .attendance-detail__item:last-of-type td:last-of-type {
-    border-radius: 0 0 10px 0;
+    border-radius: 0 0 0.5vw 0;
 }
 
 .attendance-detail__item th,
 .attendance-detail__item td {
-    line-height: 80px;
+    line-height: 5.2vw;
 }
 
 .attendance-detail__item th:first-of-type,
 .attendance-detail__item td:first-of-type {
     color: #666;
-    width: 230px;
+    width: 14.9vw;
 }
 
 .attendance-detail__item th:last-of-type,
 .attendance-detail__item td:last-of-type {
-    width: 670px;
+    width: 43.5vw;
 }
 
 .attendance-detail__item td {
@@ -73,51 +74,51 @@ body {
 
 .attendance-detail__item td input {
     text-align: center;
-    width: 100px;
-    height: 25px;
-    font-size: 1rem;
+    width: 6.5vw;
+    height: 1.6vw;
+    font-size: 1.2vw;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 0.3vw;
 }
 
 .attendance-detail__date td input:first-of-type {
-    margin-right: 100px;
+    margin-right: 7vw;
 }
 
 .attendance-detail__working-time td input:first-of-type,
 .attendance-detail__break td input:first-of-type {
-    margin-right: 44px;
+    margin-right: 2.8vw;
 }
 
 .attendance-detail__working-time td input:last-of-type,
 .attendance-detail__break td input:last-of-type {
-    margin-left: 44px;
+    margin-left: 2.8vw;
 }
 
 .attendance-detail__reason td textarea {
     vertical-align: middle;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-    width: 295px;
-    height: 50px;
-    padding: 10px;
+    border-radius: 0.3vw;
+    font-size: 1.2vw;
+    width: 20.1vw;
+    height: 3.2vw;
+    padding: 0.5vw;
 }
 
 .attendance-detail__correction {
     text-align: right;
-    margin-top: 50px;
+    margin-top: 3.2vw;
 }
 
 .attendance-detail__button {
     background-color: #111;
     color: #fff;
     border: none;
-    width: 130px;
-    height: 50px;
-    border-radius: 5px;
-    font-size: 1.5rem;
     cursor: pointer;
+    width: 8.4vw;
+    height: 3.2vw;
+    border-radius: 0.3vw;
+    font-size: 1.7vw;
 }
 
 .attendance-detail__button:hover {
@@ -129,19 +130,254 @@ body {
 }
 
 .attendance-detail__date td p:first-of-type {
-    margin-right: 100px;
+    margin-right: 6.5vw;
 }
 
 .attendance-detail__working-time td p:first-of-type,
 .attendance-detail__break td p:first-of-type {
-    margin-right: 44px;
+    margin-right: 2.8vw;
 }
 
 .attendance-detail__working-time td p:last-of-type,
 .attendance-detail__break td p:last-of-type {
-    margin-left: 44px;
+    margin-left: 2.8vw;
 }
 
 .attendance-detail__correction p {
     color: red;
+    font-size: 1.2vw;
+}
+
+/* PC画面時(1400-1540px) */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .header__nav {
+        width: 600px;
+    }
+
+    .attendance-detail {
+        width: 900px;
+        margin: 100px auto;
+    }
+
+    .attendance-detail__title {
+        font-size: 2rem;
+        border-left: 8px solid #000;
+        padding-left: 20px;
+    }
+
+    .attendance-detail__records {
+        border-spacing: 0 4px;
+        margin-top: 40px;
+        font-size: 1rem;
+    }
+
+    .attendance-detail__item {
+        height: 80px;
+    }
+
+    .attendance-detail__item:first-of-type th:first-of-type {
+        border-radius: 10px 0 0 0;
+    }
+
+    .attendance-detail__item:first-of-type th:last-of-type {
+        border-radius: 0 10px 0 0;
+    }
+
+    .attendance-detail__item:last-of-type td:first-of-type {
+        border-radius: 0 0 0 10px;
+    }
+
+    .attendance-detail__item:last-of-type td:last-of-type {
+        border-radius: 0 0 10px 0;
+    }
+
+    .attendance-detail__item th,
+    .attendance-detail__item td {
+        line-height: 80px;
+    }
+
+    .attendance-detail__item th:first-of-type,
+    .attendance-detail__item td:first-of-type {
+        width: 230px;
+    }
+
+    .attendance-detail__item th:last-of-type,
+    .attendance-detail__item td:last-of-type {
+        width: 670px;
+    }
+
+    .attendance-detail__item td input {
+        width: 100px;
+        height: 25px;
+        font-size: 1rem;
+        border-radius: 5px;
+    }
+
+    .attendance-detail__date td input:first-of-type {
+        margin-right: 108px;
+    }
+
+    .attendance-detail__working-time td input:first-of-type,
+    .attendance-detail__break td input:first-of-type {
+        margin-right: 44px;
+    }
+
+    .attendance-detail__working-time td input:last-of-type,
+    .attendance-detail__break td input:last-of-type {
+        margin-left: 44px;
+    }
+
+    .attendance-detail__reason td textarea {
+        border-radius: 5px;
+        font-size: 1rem;
+        width: 304px;
+        height: 45px;
+        padding: 10px;
+    }
+
+    .attendance-detail__correction {
+        margin-top: 50px;
+    }
+
+    .attendance-detail__button {
+        width: 130px;
+        height: 50px;
+        border-radius: 5px;
+        font-size: 1.5rem;
+    }
+
+    .attendance-detail__date td p:first-of-type {
+        margin-right: 100px;
+    }
+
+    .attendance-detail__working-time td p:first-of-type,
+    .attendance-detail__break td p:first-of-type {
+        margin-right: 44px;
+    }
+
+    .attendance-detail__working-time td p:last-of-type,
+    .attendance-detail__break td p:last-of-type {
+        margin-left: 44px;
+    }
+
+    .attendance-detail__correction p {
+        font-size: 1rem;
+    }
+}
+
+/* タブレット画面時(768-850px) */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .header__nav {
+        width: 330px;
+    }
+
+    .attendance-detail {
+        width: 500px;
+        margin: 55px auto;
+    }
+
+    .attendance-detail__title {
+        font-size: 1.1rem;
+        border-left: 4px solid #000;
+        padding-left: 14px;
+    }
+
+    .attendance-detail__records {
+        border-spacing: 0 2px;
+        margin-top: 22px;
+        font-size: 0.6rem;
+    }
+
+    .attendance-detail__item {
+        height: 44px;
+    }
+
+    .attendance-detail__item:first-of-type th:first-of-type {
+        border-radius: 6px 0 0 0;
+    }
+
+    .attendance-detail__item:first-of-type th:last-of-type {
+        border-radius: 0 6px 0 0;
+    }
+
+    .attendance-detail__item:last-of-type td:first-of-type {
+        border-radius: 0 0 0 6px;
+    }
+
+    .attendance-detail__item:last-of-type td:last-of-type {
+        border-radius: 0 0 6px 0;
+    }
+
+    .attendance-detail__item th,
+    .attendance-detail__item td {
+        line-height: 44px;
+    }
+
+    .attendance-detail__item th:first-of-type,
+    .attendance-detail__item td:first-of-type {
+        width: 127px;
+    }
+
+    .attendance-detail__item th:last-of-type,
+    .attendance-detail__item td:last-of-type {
+        width: 373px;
+    }
+
+    .attendance-detail__item td input {
+        width: 55px;
+        height: 14px;
+        font-size: 0.6rem;
+        border-radius: 3px;
+    }
+
+    .attendance-detail__date td input:first-of-type {
+        margin-right: 60px;
+    }
+
+    .attendance-detail__working-time td input:first-of-type,
+    .attendance-detail__break td input:first-of-type {
+        margin-right: 24px;
+    }
+
+    .attendance-detail__working-time td input:last-of-type,
+    .attendance-detail__break td input:last-of-type {
+        margin-left: 24px;
+    }
+
+    .attendance-detail__reason td textarea {
+        border-radius: 3px;
+        font-size: 0.6rem;
+        width: 172px;
+        height: 25px;
+        padding: 6px;
+    }
+
+    .attendance-detail__correction {
+        margin-top: 27px;
+    }
+
+    .attendance-detail__button {
+        width: 70px;
+        height: 27px;
+        border-radius: 3px;
+        font-size: 0.8rem;
+    }
+
+    .attendance-detail__date td p:first-of-type {
+        margin-right: 55px;
+    }
+
+    .attendance-detail__working-time td p:first-of-type,
+    .attendance-detail__break td p:first-of-type {
+        margin-right: 24px;
+    }
+
+    .attendance-detail__working-time td p:last-of-type,
+    .attendance-detail__break td p:last-of-type {
+        margin-left: 24px;
+    }
+
+    .attendance-detail__correction p {
+        font-size: 0.6rem;
+    }
 }
