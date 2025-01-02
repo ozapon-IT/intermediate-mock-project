@@ -3,29 +3,29 @@ body {
 }
 
 .header__nav {
-    width: 550px;
+    width: 38.9vw;
 }
 
 .attendance-list {
-    width: 900px;
-    margin: 100px auto;
+    width: 58.4vw;
+    margin: 6.5vw auto;
 }
 
 .attendance-list__title {
-    font-size: 2rem;
-    border-left: 8px solid #000;
-    padding-left: 20px;
+    font-size: 2.2vw;
+    border-left: 0.4vw solid #000;
+    padding-left: 1.3vw;
 }
 
 .attendance-list__monthly {
     background-color: #fff;
     display: flex;
     justify-content: space-between;
-    width: 860px;
-    height: 50px;
-    margin-top: 40px;
-    border-radius: 10px;
-    padding: 0 20px;
+    width: 55.8vw;
+    height: 3.2vw;
+    margin-top: 2.6vw;
+    border-radius: 0.5vw;
+    padding: 0 1.3vw;
 }
 
 .attendance-list__previous-month,
@@ -33,19 +33,19 @@ body {
     color: #666;
     font-weight: bold;
     text-decoration: none;
-    line-height: 50px;
-    font-size: 1rem;
+    line-height: 3.2vw;
+    font-size: 1.2vw;
 }
 
 .attendance-list__previous-month i,
 .attendance-list__next-month i {
     vertical-align: middle;
-    font-size: 2rem;
+    font-size: 2.2vw;
 }
 
 .attendance-list__calendar {
-    line-height: 50px;
-    font-size: 1.5rem;
+    line-height: 3.2vw;
+    font-size: 1.7vw;
 }
 
 .attendance-list__calendar i {
@@ -55,28 +55,29 @@ body {
 .attendance-list__records {
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 4px;
-    margin-top: 40px;
+    border-spacing: 0 0.3vw;
+    margin-top: 2.6vw;
+    font-size: 1.2vw;
 }
 
 .attendance-list__item {
     background-color: #fff;
     width: 100%;
-    height: 40px;
+    height: 2.6vw;
 }
 
 .attendance-list__item th,
 .attendance-list__item td {
     color: #666;
-    line-height: 40px;
+    line-height: 2.6vw;
 }
 
 .attendance-list__item th:first-of-type {
-    border-radius: 10px 0 0 0;
+    border-radius: 0.5vw 0 0 0;
 }
 
 .attendance-list__item th:last-of-type {
-    border-radius: 0 10px 0 0;
+    border-radius: 0 0.5vw 0 0;
 }
 
 .attendance-list__item td {
@@ -84,11 +85,11 @@ body {
 }
 
 .attendance-list__item:last-of-type td:first-of-type {
-    border-radius: 0 0 0 10px;
+    border-radius: 0 0 0 0.5vw;
 }
 
 .attendance-list__item:last-of-type td:last-of-type {
-    border-radius: 0 0 10px 0;
+    border-radius: 0 0 0.5vw 0;
 }
 
 .attendance-list__item td a {
@@ -107,22 +108,190 @@ body {
 
 .attendance-list__export {
     text-align: right;
-    margin-top: 50px;
+    margin-top: 3.2vw;
 }
 
 .attendance-list__export-button {
     display:inline-block;
     background-color: #111;
     color: #fff;
-    width: 180px;
-    padding: 13px 0;
-    border-radius: 5px;
-    font-size: 1.5rem;
     cursor: pointer;
     text-decoration: none;
     text-align: center;
+    width: 11.7vw;
+    padding: 0.8vw 0;
+    border-radius: 0.3vw;
+    font-size: 1.7vw;
 }
 
 .attendance-list__export-button:hover {
     background-color: #000;
+}
+
+/* PC画面時(1400-1540px) */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .header__nav {
+        width: 600px;
+    }
+
+    .attendance-list {
+        width: 900px;
+        margin: 100px auto;
+    }
+
+    .attendance-list__title {
+        font-size: 2rem;
+        border-left: 8px solid #000;
+        padding-left: 20px;
+    }
+
+    .attendance-list__monthly {
+        width: 860px;
+        height: 50px;
+        margin-top: 40px;
+        border-radius: 10px;
+        padding: 0 20px;
+    }
+
+    .attendance-list__previous-month,
+    .attendance-list__next-month {
+        line-height: 50px;
+        font-size: 1rem;
+    }
+
+    .attendance-list__previous-month i,
+    .attendance-list__next-month i {
+        font-size: 2rem;
+    }
+
+    .attendance-list__calendar {
+        line-height: 50px;
+        font-size: 1.5rem;
+    }
+
+    .attendance-list__records {
+        border-spacing: 0 4px;
+        margin-top: 40px;
+        font-size: 1rem;
+    }
+
+    .attendance-list__item {
+        height: 40px;
+    }
+
+    .attendance-list__item th,
+    .attendance-list__item td {
+        line-height: 40px;
+    }
+
+    .attendance-list__item th:first-of-type {
+        border-radius: 10px 0 0 0;
+    }
+
+    .attendance-list__item th:last-of-type {
+        border-radius: 0 10px 0 0;
+    }
+
+    .attendance-list__item:last-of-type td:first-of-type {
+        border-radius: 0 0 0 10px;
+    }
+
+    .attendance-list__item:last-of-type td:last-of-type {
+        border-radius: 0 0 10px 0;
+    }
+
+    .attendance-list__export {
+        margin-top: 50px;
+    }
+
+    .attendance-list__export-button {
+        width: 180px;
+        padding: 13px 0;
+        border-radius: 5px;
+        font-size: 1.5rem;
+    }
+}
+
+/* タブレット画面時(768-850px) */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .header__nav {
+        width: 330px;
+    }
+
+    .attendance-list {
+        width: 500px;
+        margin: 55px auto;
+    }
+
+    .attendance-list__title {
+        font-size: 1.1rem;
+        border-left: 4px solid #000;
+        padding-left: 14px;
+    }
+
+    .attendance-list__monthly {
+        width: 474px;
+        height: 27px;
+        margin-top: 22px;
+        border-radius: 6px;
+        padding: 0 14px;
+    }
+
+    .attendance-list__previous-month,
+    .attendance-list__next-month {
+        line-height: 27px;
+        font-size: 0.6rem;
+    }
+
+    .attendance-list__previous-month i,
+    .attendance-list__next-month i {
+        font-size: 1.2rem;
+    }
+
+    .attendance-list__calendar {
+        line-height: 27px;
+        font-size: 0.9rem;
+    }
+
+    .attendance-list__records {
+        border-spacing: 0 2px;
+        margin-top: 22px;
+        font-size: 0.6rem;
+    }
+
+    .attendance-list__item {
+        height: 22px;
+    }
+
+    .attendance-list__item th,
+    .attendance-list__item td {
+        line-height: 22px;
+    }
+
+    .attendance-list__item th:first-of-type {
+        border-radius: 6px 0 0 0;
+    }
+
+    .attendance-list__item th:last-of-type {
+        border-radius: 0 6px 0 0;
+    }
+
+    .attendance-list__item:last-of-type td:first-of-type {
+        border-radius: 0 0 0 6px;
+    }
+
+    .attendance-list__item:last-of-type td:last-of-type {
+        border-radius: 0 0 6px 0;
+    }
+
+    .attendance-list__export {
+        margin-top: 27px;
+    }
+
+    .attendance-list__export-button {
+        width: 100px;
+        padding: 7px 0;
+        border-radius: 3px;
+        font-size: 0.9rem;
+    }
 }

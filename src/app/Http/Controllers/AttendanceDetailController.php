@@ -15,7 +15,7 @@ class AttendanceDetailController extends Controller
         $attendanceRecord = AttendanceRecord::where('id', $id)->where('user_id', $user->id)->firstOrFail();
 
         $attendanceRecord->formatted_year = Carbon::parse($attendanceRecord->date)->format('Y年');
-        $attendanceRecord->formatted_month_day = Carbon::parse($attendanceRecord->date)->format('m月d日');
+        $attendanceRecord->formatted_month_day = Carbon::parse($attendanceRecord->date)->format('n月j日');
         $attendanceRecord->formatted_clock_in = $attendanceRecord->clock_in ? Carbon::parse($attendanceRecord->clock_in)->format('H:i') : '';
         $attendanceRecord->formatted_clock_out = $attendanceRecord->clock_out ? Carbon::parse($attendanceRecord->clock_out)->format('H:i') : '';
 
@@ -29,7 +29,7 @@ class AttendanceDetailController extends Controller
         $attendanceCorrection = AttendanceCorrectRequest::where('attendance_record_id', $id)->where('user_id', $attendanceRecord->user->id)->latest()->first();
         if ($attendanceCorrection) {
             $attendanceCorrection->formatted_year = $attendanceCorrection->new_date ? Carbon::parse($attendanceCorrection->new_date)->format('Y年') : '';
-            $attendanceCorrection->formatted_month_day = $attendanceCorrection->new_date ? Carbon::parse($attendanceCorrection->new_date)->format('m月d日') : '';
+            $attendanceCorrection->formatted_month_day = $attendanceCorrection->new_date ? Carbon::parse($attendanceCorrection->new_date)->format('n月j日') : '';
             $attendanceCorrection->formatted_new_clock_in = $attendanceCorrection->new_clock_in ? Carbon::parse($attendanceCorrection->new_clock_in)->format('H:i') : '';
             $attendanceCorrection->formatted_new_clock_out = $attendanceCorrection->new_clock_out ? Carbon::parse($attendanceCorrection->new_clock_out)->format('H:i') : '';
 

@@ -6,7 +6,7 @@ body {
 .header {
     background-color: #000;
     color: #fff;
-    padding: 10px 0px;
+    padding: 0.5vw 0;
 }
 
 .header__container {
@@ -14,37 +14,114 @@ body {
     align-items: center;
     justify-content: space-between;
     margin: 0 auto;
-    max-width: calc(100% - 40px);
-    height: 60px;
+    max-width: 97.4vw;
+    height: 3.9vw;
 }
 
 .header__logo img {
-    width: 370px;
-    height: 60px;
+    width: 24vw;
+    height: 3.9vw;
 }
 
 .header__nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 420px;
-    height: 60px;
+    width: 29.2vw;
+    height: 3.9vh;
 }
 
 .header__link {
     color: #fff;
     text-decoration: none;
-    font-size: 1.3rem;
+    font-size: 1.5vw;
 }
 
 .header__button {
     all: unset;
     cursor: pointer;
-    font-size: 1.3rem;
+    font-size: 1.5vw;
 }
 
 .error-message {
     color: red;
-    font-size: 1rem;
-    margin-top: 10px;
+    font-size: 1.2vw;
+    margin-top: 0.5vw;
+}
+
+/* PC画面時(1400-1540px) */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .header {
+        padding: 10px 0px;
+    }
+
+    .header__container {
+        max-width: calc(100% - 40px);
+        height: 60px;
+    }
+
+    .header__logo img {
+        width: 370px;
+        height: 60px;
+    }
+
+    .header__nav {
+        width: 450px;
+        height: 60px;
+    }
+
+    .header__link {
+        font-size: 1.5rem;
+        height: 24px;
+    }
+
+    .header__button {
+        font-size: 1.5rem;
+    }
+
+    .error-message {
+        font-size: 1rem;
+        margin-top: 10px;
+    }
+}
+
+/* タブレット画面時(768-850px) */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .header {
+        padding: 6px 0px;
+    }
+
+    .header__container {
+        max-width: calc(100% - 22px);
+        height: 33px;
+    }
+
+    .header__logo img {
+        width: 204px;
+        height: 33px;
+    }
+
+    .header__nav {
+        width: 248px;
+        height: 33px;
+    }
+
+    .header__nav form {
+        height: 13px;
+    }
+
+    .header__link {
+        font-size: 0.9rem;
+        height: 12px;
+    }
+
+    .header__button {
+        font-size: 0.9rem;
+        height: 13px;
+    }
+
+    .error-message {
+        font-size: 0.6rem;
+        margin-top: 6px;
+    }
 }
