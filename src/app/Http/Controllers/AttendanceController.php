@@ -25,7 +25,7 @@ class AttendanceController extends Controller
         AttendanceRecord::create([
             'user_id' => auth()->id(),
             'date' => Carbon::today(),
-            'clock_in' => Carbon::now(),
+            'clock_in' => Carbon::now()->format('Y-m-d H:i:00'),
             'status' => '出勤中',
         ]);
 
@@ -37,7 +37,7 @@ class AttendanceController extends Controller
         $attendance = AttendanceRecord::where('user_id', auth()->id())->whereNull('clock_out')->first();
 
         $attendance->update([
-            'clock_out' => Carbon::now(),
+            'clock_out' => Carbon::now()->format('Y-m-d H:i:00'),
             'break_hours' => $attendance->calculateBreakHours(),
             'work_hours' => $attendance->calculateWorkHours(),
             'status' => '退勤済',
