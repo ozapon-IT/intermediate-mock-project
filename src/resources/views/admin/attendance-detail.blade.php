@@ -34,8 +34,9 @@
     <div class="attendance-detail">
         <h1 class="attendance-detail__title">勤怠詳細</h1>
 
-        <form action="{{ route('admin.attendance-detail.request_correction', $attendanceRecord->id) }}" method="POST">
+        <form action="{{ route('admin.attendance-detail.correct', $attendanceRecord->id) }}" method="POST">
             @csrf
+            @method('PATCH')
 
             <table class="attendance-detail__records">
                 <tr class="attendance-detail__item attendance-detail__name">
@@ -54,9 +55,9 @@
                             <p>{{ $attendanceCorrection->formatted_month_day }}</p>
                         @else
                             <div>
-                                <input type="text" name="year" value="{{ $attendanceRecord->formatted_year }}">
+                                <input type="text" name="year" value="{{ old('year', $attendanceRecord->formatted_year) }}">
 
-                                <input type="text" name="month_day" value="{{ $attendanceRecord->formatted_month_day }}">
+                                <input type="text" name="month_day" value="{{ old('month_day', $attendanceRecord->formatted_month_day) }}">
 
                                 @error('year')
                                     <span class="error-message">{{ $message }}</span>
@@ -82,11 +83,11 @@
                             <p>{{ $attendanceCorrection->formatted_new_clock_out }}</p>
                         @else
                             <div>
-                                <input type="text" name="clock_in" value="{{ $attendanceRecord->formatted_clock_in }}">
+                                <input type="text" name="clock_in" value="{{ old('clock_in', $attendanceRecord->formatted_clock_in) }}">
 
                                 <span>〜</span>
 
-                                <input type="text" name="clock_out" value="{{ $attendanceRecord->formatted_clock_out }}">
+                                <input type="text" name="clock_out" value="{{ old('clock_out', $attendanceRecord->formatted_clock_out ?? '') }}">
 
                                 @error('clock_in')
                                     <span class="error-message">{{ $message }}</span>
@@ -121,11 +122,11 @@
 
                             <td>
                                 <div>
-                                    <input type="text" name="break_in[{{ $index }}]" value="{{ $break->formatted_break_in }}">
+                                    <input type="text" name="break_in[{{ $index }}]" value="{{ old('break_in.'.$index, $break->formatted_break_in) }}">
 
                                     <span>〜</span>
 
-                                    <input type="text" name="break_out[{{ $index }}]" value="{{ $break->formatted_break_out }}">
+                                    <input type="text" name="break_out[{{ $index }}]" value="{{ old('break_out.'.$index, $break->formatted_break_out ?? '') }}">
 
                                     @error('break_in.'.$index)
                                         <span class="error-message">{{ $message }}</span>
@@ -161,7 +162,7 @@
 
             <div class="attendance-detail__correction">
                 @if ($isWaitingApproval)
-                    <p>*承認待ちの為修正はできません。</p>
+                    <p>*承認待ちのため修正はできません。</p>
                 @else
                     <button class="attendance-detail__button" type="submit">修正</button>
                 @endif

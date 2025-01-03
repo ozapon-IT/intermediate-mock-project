@@ -52,13 +52,6 @@ class AttendanceRecord extends Model
         return $totalBreakHours;
     }
 
-    public function calculateBreakMinutes()
-    {
-       $totalBreakMinutes = (int) round($this->calculateBreakHours() * 60);
-
-        return $totalBreakMinutes;
-    }
-
     public function formatWorkHours()
     {
         if (!$this->clock_in || !$this->clock_out) {
@@ -70,14 +63,14 @@ class AttendanceRecord extends Model
 
         $totalWorkMinutes = $clockIn->diffInMinutes($clockOut);
 
-        $totalBreakMinutes = $this->calculateBreakMinutes();
+        $totalBreakMinutes = (int) round($this->calculateBreakHours() * 60);
 
         $actualWorkMinutes = max(0, $totalWorkMinutes - $totalBreakMinutes);
 
         $hours = floor($actualWorkMinutes / 60);
         $minutes = $actualWorkMinutes % 60;
 
-        return sprintf('%02d:%02d', $hours, $minutes);
+        return sprintf('%01d:%02d', $hours, $minutes);
     }
 
     public function formatBreakHours()
@@ -94,10 +87,10 @@ class AttendanceRecord extends Model
             return null;
         }
 
-        $totalBreakMinutes = $this->calculateBreakMinutes();
+        $totalBreakMinutes = (int) round($this->calculateBreakHours() * 60);
         $hours = floor($totalBreakMinutes / 60);
         $minutes = $totalBreakMinutes % 60;
 
-        return sprintf('%02d:%02d', $hours, $minutes);
+        return sprintf('%01d:%02d', $hours, $minutes);
     }
 }

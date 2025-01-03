@@ -12,7 +12,9 @@ class AttendanceDetailController extends Controller
     public function show($id)
     {
         $user = Auth::guard('web')->user();
-        $attendanceRecord = AttendanceRecord::where('id', $id)->where('user_id', $user->id)->firstOrFail();
+        $attendanceRecord = AttendanceRecord::where('id', $id)
+            ->where('user_id', $user->id)
+            ->firstOrFail();
 
         $attendanceRecord->formatted_year = Carbon::parse($attendanceRecord->date)->format('Y年');
         $attendanceRecord->formatted_month_day = Carbon::parse($attendanceRecord->date)->format('n月j日');

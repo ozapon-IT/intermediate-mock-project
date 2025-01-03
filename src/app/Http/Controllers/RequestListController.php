@@ -13,7 +13,9 @@ class RequestListController extends Controller
     {
         $status = $request->query('status', '承認待ち');
 
-        $attendanceCorrections = AttendanceCorrectRequest::where('user_id', Auth::id())->where('status', $status)->get();
+        $attendanceCorrections = AttendanceCorrectRequest::where('user_id', Auth::id())
+            ->where('status', $status)
+            ->get();
 
         foreach ($attendanceCorrections as $attendanceCorrection) {
             $attendanceCorrection->formatted_requested_date = Carbon::parse($attendanceCorrection->requested_date)->isoFormat('YYYY/MM/DD');

@@ -19,11 +19,11 @@ use Laravel\Fortify\Http\Controllers\VerifyEmailController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// 一般ユーザー用ルート
 Route::get('/', function () {
     return redirect('/login');
 });
 
-// 認証が必要なルート
 Route::middleware('auth')->group(function () {
     Route::get('/attendance', [AttendanceController::class, 'show'])->name('attendance.show');
     Route::post('/attendance/clock_in', [AttendanceController::class, 'clockIn'])->name('attendance.clock_in');
@@ -36,8 +36,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/attendance/{id}', [AttendanceDetailController::class, 'show'])->name('attendance-detail.show');
 
-    Route::post('/attendance/request_correction/{id}', [AttendanceCorrectionController::class, 'requestCorrection'])->name('attendance-detail.request_correction');
-    Route::get('/attendance/wait_approval/{id}', [AttendanceCorrectionController::class, 'waitApproval'])->name('attendance-detail.wait_approval');
+    Route::post('/attendance/{id}/request_correction', [AttendanceCorrectionController::class, 'requestCorrection'])->name('attendance-detail.request_correction');
+    Route::get('/attendance/{id}/wait_approval', [AttendanceCorrectionController::class, 'waitApproval'])->name('attendance-detail.wait_approval');
 
     Route::get('/stamp_correction_request/list', [RequestListController::class, 'show'])->name('request-list.show');
 });

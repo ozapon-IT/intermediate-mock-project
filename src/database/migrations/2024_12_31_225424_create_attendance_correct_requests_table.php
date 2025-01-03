@@ -22,8 +22,8 @@ return new class extends Migration
             $table->datetime('old_clock_out')->nullable();
             $table->datetime('new_clock_in');
             $table->datetime('new_clock_out');
-            $table->string('reason');
-            $table->string('status');
+            $table->string('reason', 100);
+            $table->string('status', 10);
             $table->timestamps();
         });
     }

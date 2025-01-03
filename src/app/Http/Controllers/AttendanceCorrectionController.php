@@ -47,10 +47,6 @@ class AttendanceCorrectionController extends Controller
             }
         }
 
-        if (request()->routeIs('admin.*')) {
-            return redirect()->route('admin.attendance-detail.wait_approval', $attendanceRecord->id);
-        }
-
         return redirect()->route('attendance-detail.wait_approval', $attendanceRecord->id);
     }
 
@@ -58,7 +54,11 @@ class AttendanceCorrectionController extends Controller
     {
         $attendanceRecord = AttendanceRecord::findOrFail($id);
 
-        $attendanceCorrection = AttendanceCorrectRequest::where('attendance_record_id', $id)->where('user_id', $attendanceRecord->user->id)->latest()->first();
+        $attendanceCorrection = AttendanceCorrectRequest::where('attendance_record_id', $id)
+            ->where('user_id', $attendanceRecord->user->id)
+            ->latest()
+            ->first();
+
         $attendanceCorrection->formatted_year = Carbon::parse($attendanceCorrection->new_date)->format('Y年');
         $attendanceCorrection->formatted_month_day = Carbon::parse($attendanceCorrection->new_date)->format('m月d日');
         $attendanceCorrection->formatted_new_clock_in = $attendanceCorrection->new_clock_in ? Carbon::parse($attendanceCorrection->new_clock_in)->format('H:i') : '';
@@ -72,10 +72,6 @@ class AttendanceCorrectionController extends Controller
         }
 
         $isWaitingApproval = $attendanceCorrection && $attendanceCorrection->status === '承認待ち';
-
-        if (request()->routeIs('admin.*')) {
-            return view('admin.attendance-detail', compact('attendanceRecord', 'attendanceCorrection', 'breakCorrections', 'isWaitingApproval'));
-        }
 
         return view('attendance-detail', compact('attendanceRecord', 'attendanceCorrection', 'breakCorrections', 'isWaitingApproval'));
     }

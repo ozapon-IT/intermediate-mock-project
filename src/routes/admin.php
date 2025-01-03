@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminAttendanceListController;
 use App\Http\Controllers\AdminAttendanceDetailController;
-use App\Http\Controllers\AttendanceCorrectionController;
+use App\Http\Controllers\AdminCorrectionController;
 use App\Http\Controllers\AdminStaffListController;
 use App\Http\Controllers\AdminStaffAttendanceListController;
 use App\Http\Controllers\AdminRequestListController;
@@ -21,8 +21,7 @@ Route::middleware(['admin.session', 'admin'])->group(function () {
 
     Route::get('attendance/{id}', [AdminAttendanceDetailController::class, 'show'])->name('admin.attendance-detail.show');
 
-    Route::post('attendance/request_correction/{id}', [AttendanceCorrectionController::class, 'requestCorrection'])->name('admin.attendance-detail.request_correction');
-    Route::get('attendance/wait_approval/{id}', [AttendanceCorrectionController::class, 'waitApproval'])->name('admin.attendance-detail.wait_approval');
+    Route::patch('attendance/{id}', [AdminCorrectionController::class, 'correct'])->name('admin.attendance-detail.correct');
 
     Route::get('staff/list', [AdminStaffListController::class, 'show'])->name('admin.staff-list.show');
 

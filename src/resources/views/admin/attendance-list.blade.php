@@ -37,7 +37,7 @@
         <div class="attendance-list__daily">
             <a class="attendance-list__previous-day" href="{{ route('admin.attendance-list.show', ['day' => $previousDay]) }}"><i class="bi bi-arrow-left-short"></i> 前日</a>
 
-            <p class="attendance-list__calendar">{{ $currentDayFormatted }}</p>
+            <p class="attendance-list__calendar"><i class="bi bi-calendar3"></i> {{ $currentDayFormatted }}</p>
 
             <a class="attendance-list__next-day" href="{{ route('admin.attendance-list.show', ['day' => $nextDay]) }}">翌日 <i class="bi bi-arrow-right-short"></i></a>
         </div>

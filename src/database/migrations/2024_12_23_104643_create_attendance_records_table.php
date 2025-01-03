@@ -19,7 +19,7 @@ return new class extends Migration
             $table->datetime('clock_out')->nullable();
             $table->float('break_hours', 4, 2)->nullable();
             $table->float('work_hours', 4, 2)->nullable();
-            $table->string('status')->default('勤務外');
+            $table->string('status', 10)->default('勤務外');
             $table->timestamps();
         });
     }
