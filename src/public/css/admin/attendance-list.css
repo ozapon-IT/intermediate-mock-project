@@ -49,6 +49,10 @@ body {
     font-size: 1.7vw;
 }
 
+.attendance-list__calendar i {
+    color: #444;
+}
+
 .attendance-list__records {
     width: 100%;
     border-collapse: separate;

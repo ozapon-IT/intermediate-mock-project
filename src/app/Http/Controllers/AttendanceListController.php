@@ -11,10 +11,13 @@ class AttendanceListController extends Controller
     public function show(Request $request)
     {
         $currentMonth = $request->input('month', now()->format('Y-m'));
-        $attendanceRecords = AttendanceRecord::where('user_id', auth()->id())->whereBetween('date', [
+        $attendanceRecords = AttendanceRecord::where('user_id', auth()->id())
+            ->whereBetween('date', [
             Carbon::parse($currentMonth)->startOfMonth(),
             Carbon::parse($currentMonth)->endOfMonth()
-        ])->orderBy('date')->get();
+            ])
+            ->orderBy('date')
+            ->get();
 
         foreach ($attendanceRecords as $record) {
             $record->formatted_date = Carbon::parse($record->date)->locale('ja')->isoFormat('MM/DD(ddd)');

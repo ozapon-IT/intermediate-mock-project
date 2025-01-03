@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AdminLoginRequest;
+use App\Http\Requests\CustomLoginRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +15,7 @@ class AdminAuthController extends Controller
         return view('auth.admin-login');
     }
 
-    public function login(AdminLoginRequest $request)
+    public function login(CustomLoginRequest $request)
     {
         $user = User::where('email', $request->email)->first();
 
