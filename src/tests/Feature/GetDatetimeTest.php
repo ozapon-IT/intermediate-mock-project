@@ -15,13 +15,9 @@ class GetDatetimeTest extends TestCase
      * @test
      * 現在の日時情報がUIと同じ形式で出力されている
      */
-    public function current_date_and_time_is_output_in_same_format_as_ui(): void
+    public function it_outputs_current_date_and_time_in_same_format_as_ui(): void
     {
-        $user = User::factory()->create([
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-            'email_verified_at' => now(),
-        ]);
+        $user = User::factory()->create();
 
         Carbon::setTestNow('2025-01-04 10:30:00');
 

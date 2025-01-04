@@ -19,11 +19,7 @@ class AttendanceStatusTest extends TestCase
      */
     public function it_displays_correct_status_when_user_is_off_duty()
     {
-        $user = User::factory()->create([
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-            'email_verified_at' => now(),
-        ]);
+        $user = User::factory()->create();
 
         $response = $this->actingAs($user)->get(route('attendance.show'));
 
@@ -38,11 +34,7 @@ class AttendanceStatusTest extends TestCase
      */
     public function it_displays_correct_status_when_user_is_clocked_in()
     {
-        $user = User::factory()->create([
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-            'email_verified_at' => now(),
-        ]);
+        $user = User::factory()->create();
 
         Carbon::setTestNow('2025-01-04 10:30:00');
 
@@ -66,11 +58,7 @@ class AttendanceStatusTest extends TestCase
      */
     public function it_displays_correct_status_when_user_is_on_break()
     {
-        $user = User::factory()->create([
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-            'email_verified_at' => now(),
-        ]);
+        $user = User::factory()->create();
 
         Carbon::setTestNow('2025-01-04 10:30:00');
 
@@ -103,11 +91,7 @@ class AttendanceStatusTest extends TestCase
      */
     public function it_displays_correct_status_when_user_is_clocked_out()
     {
-        $user = User::factory()->create([
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-            'email_verified_at' => now(),
-        ]);
+        $user = User::factory()->create();
 
         Carbon::setTestNow('2025-01-04 18:00:00');
 
@@ -117,7 +101,6 @@ class AttendanceStatusTest extends TestCase
             'clock_in' => Carbon::now()->subHours(8)->format('Y-m-d H:i'),
             'clock_out' => Carbon::now()->format('Y-m-d H:i'),
             'status' => '退勤済',
-            'work_hours' => 8.00,
         ]);
 
         $response = $this->actingAs($user)->get(route('attendance.show'));
