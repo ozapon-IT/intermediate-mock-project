@@ -22,8 +22,9 @@ class CustomLoginRequest extends LoginRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email',
-            'password' => 'required|min:8',
+            'email' => 'required|string|email|max:100',
+            'password' => 'required|string|min:8|max:100',
+
         ];
     }
 
@@ -31,9 +32,13 @@ class CustomLoginRequest extends LoginRequest
     {
         return [
             'email.required' => 'メールアドレスを入力してください',
+            'email.string' => 'メールアドレスを文字列で入力してください',
             'email.email' => 'メールアドレスはメール形式で入力してください',
+            'email.max' => 'メールアドレスは100文字以下で入力してください',
             'password.required' => 'パスワードを入力してください',
+            'password.string' => 'パスワードを文字列で入力してください',
             'password.min' => 'パスワードは8文字以上で入力してください',
+            'password.max' => 'パスワードは100文字以下で入力してください',
         ];
     }
 }

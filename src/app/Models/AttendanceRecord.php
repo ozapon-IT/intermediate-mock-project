@@ -19,6 +19,7 @@ class AttendanceRecord extends Model
         'break_hours',
         'work_hours',
         'status',
+        'admin_correction_reason',
     ];
 
     public function user()

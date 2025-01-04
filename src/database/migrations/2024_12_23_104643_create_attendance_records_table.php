@@ -20,6 +20,7 @@ return new class extends Migration
             $table->float('break_hours', 4, 2)->nullable();
             $table->float('work_hours', 4, 2)->nullable();
             $table->string('status', 10)->default('勤務外');
+            $table->string('admin_correction_reason', 100)->nullable();
             $table->timestamps();
         });
     }
