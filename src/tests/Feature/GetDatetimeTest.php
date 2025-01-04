@@ -23,6 +23,8 @@ class GetDatetimeTest extends TestCase
             'email_verified_at' => now(),
         ]);
 
+        Carbon::setTestNow('2025-01-04 10:30:00');
+
         $response = $this->actingAs($user)->get(route('attendance.show'));
 
         $response->assertStatus(200);
