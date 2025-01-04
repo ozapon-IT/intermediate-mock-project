@@ -26,7 +26,7 @@ class AdminAuthController extends Controller
         }
 
         throw ValidationException::withMessages([
-            'email' => ['ログイン情報が登録されていません。'],
+            'email' => ['ログイン情報が登録されていません'],
         ]);
     }
 
