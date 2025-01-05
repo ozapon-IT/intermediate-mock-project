@@ -14,7 +14,7 @@ class RegisterTest extends TestCase
      * @test
      * 名前が未入力の場合、バリデーションメッセージが表示される
      */
-    public function it_shows_validation_message_when_name_is_missing()
+    public function it_shows_validation_message_when_name_is_missing() : void
     {
         $data = [
             'name' => '',
@@ -32,7 +32,7 @@ class RegisterTest extends TestCase
      * @test
      * メールアドレスが未入力の場合、バリデーションメッセージが表示される
      */
-    public function it_shows_validation_message_when_email_is_missing()
+    public function it_shows_validation_message_when_email_is_missing() : void
     {
         $data = [
             'name' => 'Test User',
@@ -50,7 +50,7 @@ class RegisterTest extends TestCase
      * @test
      * パスワードが8文字未満の場合、バリデーションメッセージが表示される
      */
-    public function it_shows_validation_message_when_password_is_too_short()
+    public function it_shows_validation_message_when_password_is_too_short() : void
     {
         $data = [
             'name' => 'Test User',
@@ -68,7 +68,7 @@ class RegisterTest extends TestCase
      * @test
      * パスワードが一致しない場合、バリデーションメッセージが表示される
      */
-    public function it_shows_validation_message_when_password_confirmation_does_not_match()
+    public function it_shows_validation_message_when_password_confirmation_does_not_match() : void
     {
         $data = [
             'name' => 'Test User',
@@ -86,7 +86,7 @@ class RegisterTest extends TestCase
      * @test
      * パスワードが未入力の場合、バリデーションメッセージが表示される
      */
-    public function it_shows_validation_message_when_password_is_missing()
+    public function it_shows_validation_message_when_password_is_missing() : void
     {
         $data = [
             'name' => 'Test User',
@@ -104,7 +104,7 @@ class RegisterTest extends TestCase
      * @test
      * フォームに内容が入力されていた場合、データが正常に保存される
      */
-    public function it_saves_data_successfully_when_form_is_filled()
+    public function it_saves_data_successfully_when_form_is_filled() : void
     {
         $data = [
             'name' => 'Test User',

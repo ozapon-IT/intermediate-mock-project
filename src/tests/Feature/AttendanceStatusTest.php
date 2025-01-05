@@ -17,7 +17,7 @@ class AttendanceStatusTest extends TestCase
      * @test
      * 勤務外の場合、勤怠ステータスが正しく表示される
      */
-    public function it_displays_correct_status_when_user_is_off_duty()
+    public function it_displays_correct_status_when_user_is_off_duty() : void
     {
         $user = User::factory()->create();
 
@@ -32,7 +32,7 @@ class AttendanceStatusTest extends TestCase
      * @test
      * 出勤中の場合、勤怠ステータスが正しく表示される
      */
-    public function it_displays_correct_status_when_user_is_clocked_in()
+    public function it_displays_correct_status_when_user_is_clocked_in() : void
     {
         $user = User::factory()->create();
 
@@ -56,7 +56,7 @@ class AttendanceStatusTest extends TestCase
      * @test
      * 休憩中の場合、勤怠ステータスが正しく表示される
      */
-    public function it_displays_correct_status_when_user_is_on_break()
+    public function it_displays_correct_status_when_user_is_on_break() : void
     {
         $user = User::factory()->create();
 
@@ -89,7 +89,7 @@ class AttendanceStatusTest extends TestCase
      * @test
      * 退勤済の場合、勤怠ステータスが正しく表示される
      */
-    public function it_displays_correct_status_when_user_is_clocked_out()
+    public function it_displays_correct_status_when_user_is_clocked_out() : void
     {
         $user = User::factory()->create();
 

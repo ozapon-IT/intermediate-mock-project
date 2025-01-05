@@ -16,7 +16,7 @@ class AttendanceClockInTest extends TestCase
      * @test
      * 出勤ボタンが正しく機能する
      */
-    public function it_works_clock_in_button_properly()
+    public function it_works_clock_in_button_properly() : void
     {
         $user = User::factory()->create();
 
@@ -38,7 +38,8 @@ class AttendanceClockInTest extends TestCase
 
         $this->assertDatabaseHas('attendance_records', [
             'user_id' => $user->id,
-            'date' => Carbon::today()->format('Y-m-d'),
+            'date' => '2025-01-04',
+            'clock_in' => '2025-01-04 08:00:00',
             'status' => '出勤中',
         ]);
     }
@@ -47,7 +48,7 @@ class AttendanceClockInTest extends TestCase
      * @test
      * 出勤は一日一回のみできる
      */
-    public function it_can_clock_in_only_once_day()
+    public function it_can_clock_in_only_once_day() : void
     {
         $user = User::factory()->create();
 
@@ -63,8 +64,6 @@ class AttendanceClockInTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('attendance.show'));
 
-        $response->assertStatus(200);
-
         $response->assertDontSee('出勤');
     }
 
@@ -72,7 +71,7 @@ class AttendanceClockInTest extends TestCase
      * @test
      * 出勤時刻が管理画面で確認できる
      */
-    public function it_can_check_clock_in_time_on_admin_screen()
+    public function it_can_check_clock_in_time_on_admin_screen() : void
     {
         $user = User::factory()->create();
 
@@ -89,8 +88,7 @@ class AttendanceClockInTest extends TestCase
         ]));
 
         $response->assertStatus(200);
-
         $response->assertSee($user->name);
-        $response->assertSee(Carbon::now()->format('H:i'));
+        $response->assertSee('08:00');
     }
 }

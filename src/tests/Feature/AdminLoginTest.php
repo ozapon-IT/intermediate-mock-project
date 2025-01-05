@@ -14,7 +14,7 @@ class AdminLoginTest extends TestCase
      * @test
      * メールアドレスが未入力の場合、バリデーションメッセージが表示される
      */
-    public function it_shows_validation_message_when_email_is_missing()
+    public function it_shows_validation_message_when_email_is_missing() : void
     {
         User::factory()->create([
             'email' => 'admin@example.com',
@@ -36,7 +36,7 @@ class AdminLoginTest extends TestCase
      * @test
      * パスワードが未入力の場合、バリデーションメッセージが表示される
      */
-    public function it_shows_validation_message_when_password_is_missing()
+    public function it_shows_validation_message_when_password_is_missing() : void
     {
         User::factory()->create([
             'email' => 'admin@example.com',
@@ -58,7 +58,7 @@ class AdminLoginTest extends TestCase
      * @test
      * 登録内容と一致しない場合、バリデーションメッセージが表示される
      */
-    public function it_shows_validation_message_when_registered_information_does_not_match()
+    public function it_shows_validation_message_when_registered_information_does_not_match() : void
     {
         User::factory()->create([
             'email' => 'admin@example.com',
