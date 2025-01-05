@@ -37,7 +37,6 @@ class AttendanceBreakTest extends TestCase
         $response = $this->post(route('attendance.break_in'), [
             'attendance_record_id' => $attendanceRecord->id,
         ]);
-
         $response->assertRedirect(route('attendance.show'));
 
         $this->assertDatabaseHas('attendance_records', [
@@ -109,7 +108,6 @@ class AttendanceBreakTest extends TestCase
         $response = $this->post(route('attendance.break_out'), [
             'attendance_record_id' => $attendanceRecord->id,
         ]);
-
         $response->assertRedirect(route('attendance.show'));
 
         $this->assertDatabaseHas('attendance_records', [
@@ -160,6 +158,7 @@ class AttendanceBreakTest extends TestCase
     public function it_can_check_break_times_on_admin_screen(): void
     {
         $user = User::factory()->create();
+        $this->actingAs($user);
 
         $admin = User::factory()->create([
             'role' => 'admin'
@@ -175,12 +174,12 @@ class AttendanceBreakTest extends TestCase
         ]);
 
         Carbon::setTestNow('2025-01-05 10:00:00');
-        $this->actingAs($user)->post(route('attendance.break_in'), [
+        $this->post(route('attendance.break_in'), [
             'attendance_record_id' => $attendanceRecord->id,
         ]);
 
         Carbon::setTestNow('2025-01-05 10:10:00');
-        $this->actingAs($user)->post(route('attendance.break_out'), [
+        $this->post(route('attendance.break_out'), [
             'attendance_record_id' => $attendanceRecord->id,
         ]);
 

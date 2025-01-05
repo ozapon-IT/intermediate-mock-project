@@ -19,21 +19,18 @@ class AttendanceClockInTest extends TestCase
     public function it_works_clock_in_button_properly() : void
     {
         $user = User::factory()->create();
+        $this->actingAs($user);
 
         Carbon::setTestNow('2025-01-04 08:00:00');
 
-        $response = $this->actingAs($user)->get(route('attendance.show'));
-
+        $response = $this->get(route('attendance.show'));
         $response->assertStatus(200);
-
         $response->assertSeeText('出勤');
 
-        $clockInResponse = $this->actingAs($user)->post(route('attendance.clock_in'));
-
+        $clockInResponse = $this->post(route('attendance.clock_in'));
         $clockInResponse->assertRedirect(route('attendance.show'));
 
-        $updatedResponse = $this->actingAs($user)->get(route('attendance.show'));
-
+        $updatedResponse = $this->get(route('attendance.show'));
         $updatedResponse->assertSeeText('出勤中');
 
         $this->assertDatabaseHas('attendance_records', [
@@ -84,7 +81,7 @@ class AttendanceClockInTest extends TestCase
         $this->actingAs($user)->post(route('attendance.clock_in'));
 
         $response = $this->actingAs($admin, 'admin')->get(route('admin.attendance-list.show', [
-            'day' => Carbon::today()->format('Y年n月j日'),
+            'day' => '2025年1月4日',
         ]));
 
         $response->assertStatus(200);
