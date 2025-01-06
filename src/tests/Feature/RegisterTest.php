@@ -24,8 +24,11 @@ class RegisterTest extends TestCase
         ];
 
         $response = $this->post(route('register'), $data);
-
         $response->assertSessionHasErrors(['name' => 'お名前を入力してください']);
+        $response->assertRedirect(route('register'));
+
+        $followed = $this->followRedirects($response);
+        $followed->assertSee('お名前を入力してください');
     }
 
     /**
@@ -42,8 +45,10 @@ class RegisterTest extends TestCase
         ];
 
         $response = $this->post(route('register'), $data);
-
         $response->assertSessionHasErrors(['email' => 'メールアドレスを入力してください']);
+
+        $followed = $this->followRedirects($response);
+        $followed->assertSee('メールアドレスを入力してください');
     }
 
     /**
@@ -60,8 +65,10 @@ class RegisterTest extends TestCase
         ];
 
         $response = $this->post(route('register'), $data);
-
         $response->assertSessionHasErrors(['password' => 'パスワードは8文字以上で入力してください']);
+
+        $followed = $this->followRedirects($response);
+        $followed->assertSee('パスワードは8文字以上で入力してください');
     }
 
     /**
@@ -78,8 +85,10 @@ class RegisterTest extends TestCase
         ];
 
         $response = $this->post(route('register'), $data);
-
         $response->assertSessionHasErrors(['password_confirmation' => 'パスワードと一致しません']);
+
+        $followed = $this->followRedirects($response);
+        $followed->assertSee('パスワードと一致しません');
     }
 
     /**
@@ -96,8 +105,10 @@ class RegisterTest extends TestCase
         ];
 
         $response = $this->post(route('register'), $data);
-
         $response->assertSessionHasErrors(['password' => 'パスワードを入力してください']);
+
+        $followed = $this->followRedirects($response);
+        $followed->assertSee('パスワードを入力してください');
     }
 
     /**
@@ -114,7 +125,6 @@ class RegisterTest extends TestCase
         ];
 
         $response = $this->post(route('register'), $data);
-
         $response->assertStatus(302);
 
         $this->assertDatabaseHas('users', [

@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CustomRegisterRequest extends FormRequest
 {
@@ -46,5 +48,15 @@ class CustomRegisterRequest extends FormRequest
             'password.max' => 'パスワードは100文字以下で入力してください',
             'password_confirmation.same' => 'パスワードと一致しません',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $response = redirect()
+            ->route('register', $this->route('id'))
+            ->withErrors($validator)
+            ->withInput();
+
+        throw new HttpResponseException($response);
     }
 }

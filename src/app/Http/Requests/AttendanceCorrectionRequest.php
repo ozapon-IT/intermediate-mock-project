@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class AttendanceCorrectionRequest extends FormRequest
 {
@@ -55,5 +57,15 @@ class AttendanceCorrectionRequest extends FormRequest
             'reason.string' => '備考を文字列で入力してください',
             'reason.max' => '備考は100文字以下で入力してください',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $response = redirect()
+            ->route('attendance-detail.show', $this->route('id'))
+            ->withErrors($validator)
+            ->withInput();
+
+        throw new HttpResponseException($response);
     }
 }

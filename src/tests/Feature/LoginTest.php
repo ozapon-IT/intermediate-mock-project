@@ -27,8 +27,11 @@ class LoginTest extends TestCase
         ];
 
         $response = $this->post(route('login'), $data);
-
         $response->assertSessionHasErrors(['email' => 'メールアドレスを入力してください']);
+        $response->assertRedirect(route('login'));
+
+        $followed = $this->followRedirects($response);
+        $followed->assertSee('メールアドレスを入力してください');
     }
 
     /**
@@ -48,8 +51,10 @@ class LoginTest extends TestCase
         ];
 
         $response = $this->post(route('login'), $data);
-
         $response->assertSessionHasErrors(['password' => 'パスワードを入力してください']);
+
+        $followed = $this->followRedirects($response);
+        $followed->assertSee('パスワードを入力してください');
     }
 
     /**
@@ -64,12 +69,16 @@ class LoginTest extends TestCase
         ]);
 
         $data = [
-            'email' => 'test@example.com',
+            'email' => 'wrongtest@example.com',
             'password' => 'wrongpassword123',
         ];
 
         $response = $this->post(route('login'), $data);
-
         $response->assertSessionHasErrors(['email' => 'ログイン情報が登録されていません']);
+        // dump(session()->all());
+
+        // $followed = $this->followRedirects($response);
+        // dump($followed->getContent());
+        // $followed->assertSee('ログイン情報が登録されていません');
     }
 }

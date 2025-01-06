@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Laravel\Fortify\Http\Requests\LoginRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CustomLoginRequest extends LoginRequest
 {
@@ -40,5 +42,28 @@ class CustomLoginRequest extends LoginRequest
             'password.min' => 'パスワードは8文字以上で入力してください',
             'password.max' => 'パスワードは100文字以下で入力してください',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $redirectRoute = 'login';
+
+        if ($this->isAdminGuard()) {
+            $redirectRoute = 'admin-login.show';
+        }
+
+        $response = redirect()
+            ->route($redirectRoute)
+            ->withErrors($validator)
+            ->withInput();
+
+        // dd($validator->errors()->messages());
+
+        throw new HttpResponseException($response);
+    }
+
+    protected function isAdminGuard() : bool
+    {
+        return auth('admin')->check() || $this->routeIs('admin-*');
     }
 }

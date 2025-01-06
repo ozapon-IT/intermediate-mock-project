@@ -28,8 +28,11 @@ class AdminLoginTest extends TestCase
         ];
 
         $response = $this->post(route('admin-login.login'), $data);
-
         $response->assertSessionHasErrors(['email' => 'メールアドレスを入力してください']);
+        $response->assertRedirect(route('admin-login.login'));
+
+        $followed = $this->followRedirects($response);
+        $followed->assertSee('メールアドレスを入力してください');
     }
 
     /**
@@ -50,8 +53,10 @@ class AdminLoginTest extends TestCase
         ];
 
         $response = $this->post(route('admin-login.login'), $data);
-
         $response->assertSessionHasErrors(['password' => 'パスワードを入力してください']);
+
+        $followed = $this->followRedirects($response);
+        $followed->assertSee('パスワードを入力してください');
     }
 
     /**
@@ -72,7 +77,6 @@ class AdminLoginTest extends TestCase
         ];
 
         $response = $this->post(route('admin-login.login'), $data);
-
         $response->assertSessionHasErrors(['email' => 'ログイン情報が登録されていません']);
     }
 }
