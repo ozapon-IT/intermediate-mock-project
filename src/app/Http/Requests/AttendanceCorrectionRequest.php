@@ -61,11 +61,22 @@ class AttendanceCorrectionRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
+        $redirectRoute = 'attendance-detail.show';
+
+        if ($this->isAdminGuard()) {
+            $redirectRoute = 'admin.attendance-detail.show';
+        }
+
         $response = redirect()
-            ->route('attendance-detail.show', $this->route('id'))
+            ->route($redirectRoute, ['id' => $this->route('id')])
             ->withErrors($validator)
             ->withInput();
 
         throw new HttpResponseException($response);
+    }
+
+    protected function isAdminGuard() : bool
+    {
+        return auth('admin')->check() || $this->routeIs('admin-*');
     }
 }

@@ -18,8 +18,8 @@ class AttendanceBreakFactory extends Factory
      */
     public function definition(): array
     {
-        $breakIn = Carbon::now();
-        $breakOut = Carbon::now()->addMinutes(60);
+        $breakIn = Carbon::now()->addHours(3);
+        $breakOut = Carbon::now()->addHours(4);
 
         return [
             'attendance_record_id' => AttendanceRecord::factory(),

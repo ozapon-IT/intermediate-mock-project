@@ -88,8 +88,6 @@ class AttendanceDetailTest extends TestCase
         $attendanceRecord = AttendanceRecord::factory()->create([
             'user_id' => $user->id,
         ]);
-
-        Carbon::setTestNow('2025-01-06 12:00:00');
         AttendanceBreak::factory()->create([
             'attendance_record_id' => $attendanceRecord->id,
         ]);

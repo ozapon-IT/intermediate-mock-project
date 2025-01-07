@@ -57,8 +57,6 @@ class CustomLoginRequest extends LoginRequest
             ->withErrors($validator)
             ->withInput();
 
-        // dd($validator->errors()->messages());
-
         throw new HttpResponseException($response);
     }
 
