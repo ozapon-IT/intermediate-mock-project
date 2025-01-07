@@ -4,14 +4,15 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Tests\Traits\AttendanceTestHelper;
 use App\Models\User;
 use App\Models\AttendanceRecord;
-use App\Models\AttendanceBreak;
 use Illuminate\Support\Carbon;
 
 class AdminStaffAttendanceListTest extends TestCase
 {
     use RefreshDatabase;
+    use AttendanceTestHelper;
 
     /**
      * @test
@@ -50,45 +51,33 @@ class AdminStaffAttendanceListTest extends TestCase
 
         $user = User::factory()->create();
 
-        Carbon::setTestNow('2025-01-06 09:00:00');
-        $attendanceRecord = AttendanceRecord::factory()->create([
-            'user_id' => $user->id,
+        // 勤怠情報作成
+        $this->createAttendanceRecord($user->id, '2025-01-05', '2025-01-05 09:00:00', '2025-01-05 18:00:00', [
+            ['break_in' => '2025-01-05 12:00:00', 'break_out' => '2025-01-05 13:00:00', 'break_duration' => 1.00]
         ]);
-        AttendanceBreak::factory()->create([
-            'attendance_record_id' => $attendanceRecord->id,
-        ]);
-
-        // 他のユーザーの勤怠情報を生成（表示されないことを確認する）
-        Carbon::setTestNow('2025-01-07 09:00:00');
-        $otherAttendanceRecord = AttendanceRecord::factory()->create([
-            'user_id' => User::factory()->create()->id,
-            'clock_in' => '2025-01-07 10:00:00',
-            'clock_out' => '2025-01-07 19:00:00',
-        ]);
-        AttendanceBreak::factory()->create([
-            'attendance_record_id' => $otherAttendanceRecord->id,
-            'break_in' => '2025-01-02 12:30:00',
-            'break_out' => '2025-01-02 13:25:00',
-            'break_duration' => 0.92,
+        $this->createAttendanceRecord($user->id, '2025-01-06', '2025-01-06 08:30:00', '2025-01-06 17:30:00', [
+            ['break_in' => '2025-01-06 11:30:00', 'break_out' => '2025-01-06 12:20', 'break_duration' => 0.84]
         ]);
 
-        $response = $this->get(route('admin.staff-attendance-list.show', ['id' => $user->id]));
+        // 他のユーザーの勤怠情報作成
+        $otherUser = User::factory()->create();
+        $this->createAttendanceRecord($otherUser->id, '2025-01-07', '2025-01-07 10:00:00', '2025-01-07 19:00:00', [
+            ['break_in' => '2025-01-07 12:30', 'break_out' => '2025-01-07 13:25', 'break_duration' => 0.92]
+        ]);
 
-        // 選択したユーザーの勤怠情報が全て表示されていることを確認
+        $response = $this->get(route('admin.staff-attendance-list.show', ['id' => $user->id, 'month' => '2025-01']));
+
+        // 選択したユーザーの勤怠情報が正しく表示されていることを確認
         $response->assertStatus(200);
-        $response->assertSee('2025/01');
-        $response->assertSee('01/06');
-        $response->assertSee('09:00');
-        $response->assertSee('18:00');
-        $response->assertSee('1:00');
-        $response->assertSee('8:00');
+        $this->assertAttendanceDisplayed($response, [
+            ['year_month' => '2025/01', 'day' => '01/05', 'clock_in' => '09:00', 'clock_out' => '18:00', 'break_hours' => '1:00', 'work_hours' => '8:00'],
+            ['day' => '01/06', 'clock_in' => '08:30', 'clock_out' => '17:30', 'break_hours' => '0:50', 'work_hours' => '8:10'],
+        ]);
 
         // 他のユーザーの勤怠情報が表示されていないことを確認
-        $response->assertDontSee('01/07');
-        $response->assertDontSee('10:00');
-        $response->assertDontSee('19:00');
-        $response->assertDontSee('0:55');
-        $response->assertDontSee('8:05');
+        $this->assertAttendanceNotDisplayed($response, [
+            ['day' => '01/07', 'clock_in' => '10:00', 'clock_out' => '19:00', 'break_hours' => '0:55', 'work_hours' => '8:05'],
+        ]);
     }
 
     /**
@@ -105,44 +94,31 @@ class AdminStaffAttendanceListTest extends TestCase
         $user = User::factory()->create();
 
         // 前月の勤怠情報を作成
-        Carbon::setTestNow('2024-12-07 09:00:00');
-        $attendanceRecord1 = AttendanceRecord::factory()->create([
-            'user_id' => $user->id,
+        $this->createAttendanceRecord($user->id, '2024-12-07', '2024-12-07 09:00:00', '2024-12-07 18:00:00', [
+            ['break_in' => '2024-12-07 12:00:00', 'break_out' => '2024-12-07 13:00:00', 'break_duration' => 1.00]
         ]);
-        AttendanceBreak::factory()->create([
-            'attendance_record_id' => $attendanceRecord1->id,
+        $this->createAttendanceRecord($user->id, '2024-12-08', '2024-12-08 08:30:00', '2024-12-08 17:30:00', [
+            ['break_in' => '2024-12-08 11:30:00', 'break_out' => '2024-12-08 12:20', 'break_duration' => 0.84]
         ]);
 
         // 今月の勤怠情報を作成
-        Carbon::setTestNow('2025-01-07 08:30:00');
-        $attendanceRecord2 = AttendanceRecord::factory()->create([
-            'user_id' => $user->id,
-        ]);
-        AttendanceBreak::factory()->create([
-            'attendance_record_id' => $attendanceRecord2->id,
-            'break_in' => '2025-01-07 12:00:00',
-            'break_out' => '2025-01-07 12:45:00',
-            'break_duration' => 0.75,
+        $this->createAttendanceRecord($user->id, '2025-01-06', '2025-01-06 10:00:00', '2025-01-06 19:00:00', [
+            ['break_in' => '2025-01-06 12:30:00', 'break_out' => '2025-01-06 13:25', 'break_duration' => 0.92]
         ]);
 
         $response = $this->get(route('admin.staff-attendance-list.show', ['id' => $user->id, 'month' => '2024-12']));
 
         // 前月の情報が表示されていることを確認
         $response->assertStatus(200);
-        $response->assertSee('2024/12');
-        $response->assertSee('12/07');
-        $response->assertSee('09:00');
-        $response->assertSee('18:00');
-        $response->assertSee('1:00');
-        $response->assertSee('8:00');
+        $this->assertAttendanceDisplayed($response, [
+            ['year_month' => '2024/12', 'day' => '12/07', 'clock_in' => '09:00', 'clock_out' => '18:00', 'break_hours' => '1:00', 'work_hours' => '8:00'],
+            ['day' => '12/08', 'clock_in' => '08:30', 'clock_out' => '17:30', 'break_hours' => '0:50', 'work_hours' => '8:10'],
+        ]);
 
         // 今月の情報が表示されていないことを確認
-        $response->assertDontSee('2025/01');
-        $response->assertDontSee('01/07');
-        $response->assertDontSee('08:30');
-        $response->assertDontSee('17:30');
-        $response->assertDontSee('0:45');
-        $response->assertDontSee('8:15');
+        $this->assertAttendanceNotDisplayed($response, [
+            ['year_month' => '2025/01', 'day' => '01/06', 'clock_in' => '10:00', 'clock_out' => '19:00', 'break_hours' => '0:55', 'work_hours' => '8:05'],
+        ]);
     }
 
     /**
@@ -159,44 +135,31 @@ class AdminStaffAttendanceListTest extends TestCase
         $user = User::factory()->create();
 
         // 今月の勤怠情報を作成
-        Carbon::setTestNow('2024-01-07 09:00:00');
-        $attendanceRecord1 = AttendanceRecord::factory()->create([
-            'user_id' => $user->id,
-        ]);
-        AttendanceBreak::factory()->create([
-            'attendance_record_id' => $attendanceRecord1->id,
+        $this->createAttendanceRecord($user->id, '2025-01-07', '2025-01-07 10:00:00', '2025-01-07 19:00:00', [
+            ['break_in' => '2025-01-07 12:30:00', 'break_out' => '2025-01-07 13:25:00', 'break_duration' => 0.92]
         ]);
 
         // 翌月の勤怠情報を作成
-        Carbon::setTestNow('2025-02-07 08:30:00');
-        $attendanceRecord2 = AttendanceRecord::factory()->create([
-            'user_id' => $user->id,
+        $this->createAttendanceRecord($user->id, '2025-02-06', '2025-02-06 09:00:00', '2025-02-06 18:00:00', [
+            ['break_in' => '2025-02-06 12:00:00', 'break_out' => '2025-02-06 13:00:00', 'break_duration' => 1.00]
         ]);
-        AttendanceBreak::factory()->create([
-            'attendance_record_id' => $attendanceRecord2->id,
-            'break_in' => '2025-02-07 12:30:00',
-            'break_out' => '2025-02-07 13:20:00',
-            'break_duration' => 0.84,
+        $this->createAttendanceRecord($user->id, '2025-02-08', '2025-02-08 08:30:00', '2025-02-08 17:30:00', [
+            ['break_in' => '2025-02-08 11:30:00', 'break_out' => '2025-02-08 12:20', 'break_duration' => 0.84]
         ]);
 
         $response = $this->get(route('admin.staff-attendance-list.show', ['id' => $user->id, 'month' => '2025-02']));
 
         // 翌月の情報が表示されていることを確認
         $response->assertStatus(200);
-        $response->assertSee('2025/02');
-        $response->assertSee('02/07');
-        $response->assertSee('08:30');
-        $response->assertSee('17:30');
-        $response->assertSee('0:50');
-        $response->assertSee('8:10');
+        $this->assertAttendanceDisplayed($response, [
+            ['year_month' => '2025/02', 'day' => '02/06', 'clock_in' => '09:00', 'clock_out' => '18:00', 'break_hours' => '1:00', 'work_hours' => '8:00'],
+            ['day' => '02/08', 'clock_in' => '08:30', 'clock_out' => '17:30', 'break_hours' => '0:50', 'work_hours' => '8:10'],
+        ]);
 
         // 今月の情報が表示されていないことを確認
-        $response->assertDontSee('2025/01');
-        $response->assertDontSee('01/07');
-        $response->assertDontSee('09:00');
-        $response->assertDontSee('18:00');
-        $response->assertDontSee('1:00');
-        $response->assertDontSee('8:00');
+        $this->assertAttendanceNotDisplayed($response, [
+            ['year_month' => '2025/01', 'day' => '01/07', 'clock_in' => '10:00', 'clock_out' => '19:00', 'break_hours' => '0:55', 'work_hours' => '8:05'],
+        ]);
     }
 
     /**

@@ -18,8 +18,8 @@ class AttendanceRecordFactory extends Factory
      */
     public function definition(): array
     {
-        $clockIn = Carbon::now();
-        $clockOut = Carbon::now()->addHours(9);;
+        $clockIn = Carbon::now()->setHour(9)->setMinute(0)->setSecond(0);
+        $clockOut = $clockIn->copy()->addHours(9);
 
         return [
             'user_id' => User::factory(),

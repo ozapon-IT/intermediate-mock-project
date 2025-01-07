@@ -75,10 +75,5 @@ class LoginTest extends TestCase
 
         $response = $this->post(route('login'), $data);
         $response->assertSessionHasErrors(['email' => 'ログイン情報が登録されていません']);
-        // dump(session()->all());
-
-        // $followed = $this->followRedirects($response);
-        // dump($followed->getContent());
-        // $followed->assertSee('ログイン情報が登録されていません');
     }
 }
