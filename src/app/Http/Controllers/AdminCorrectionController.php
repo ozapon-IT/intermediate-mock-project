@@ -38,6 +38,7 @@ class AdminCorrectionController extends Controller
         $attendanceRecord->update([
             'break_hours' => $attendanceRecord->calculateBreakHours(),
             'work_hours' => $attendanceRecord->calculateWorkHours(),
+            'admin_correction_reason' => $request->reason,
         ]);
 
         $monthlyAttendance = Carbon::parse($attendanceRecord->date)->format('Y-m');

@@ -65,6 +65,6 @@ class AdminApproveRequestController extends Controller
             'work_hours' => $attendanceRecord->calculateWorkHours(),
         ]);
 
-        return redirect()->route('admin.approve-request.show', ['attendance_correct_request' => $attendanceCorrectRequest->id]);
+        return redirect()->route('admin.request-list.show', ['status' => '承認済み']);
     }
 }

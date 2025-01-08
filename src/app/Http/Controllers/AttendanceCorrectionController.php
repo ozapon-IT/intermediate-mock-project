@@ -47,32 +47,6 @@ class AttendanceCorrectionController extends Controller
             }
         }
 
-        return redirect()->route('attendance-detail.wait_approval', $attendanceRecord->id);
-    }
-
-    public function waitApproval($id)
-    {
-        $attendanceRecord = AttendanceRecord::findOrFail($id);
-
-        $attendanceCorrection = AttendanceCorrectRequest::where('attendance_record_id', $id)
-            ->where('user_id', $attendanceRecord->user->id)
-            ->latest()
-            ->first();
-
-        $attendanceCorrection->formatted_year = Carbon::parse($attendanceCorrection->new_date)->format('Y年');
-        $attendanceCorrection->formatted_month_day = Carbon::parse($attendanceCorrection->new_date)->format('m月d日');
-        $attendanceCorrection->formatted_new_clock_in = $attendanceCorrection->new_clock_in ? Carbon::parse($attendanceCorrection->new_clock_in)->format('H:i') : '';
-        $attendanceCorrection->formatted_new_clock_out = $attendanceCorrection->new_clock_out ? Carbon::parse($attendanceCorrection->new_clock_out)->format('H:i') : '';
-
-        $breakCorrections = $attendanceCorrection->breakCorrectRequests;
-
-        foreach ($breakCorrections as $breakCorrection) {
-            $breakCorrection->formatted_new_break_in = $breakCorrection->new_break_in ? Carbon::parse($breakCorrection->new_break_in)->format('H:i') : '';
-            $breakCorrection->formatted_new_break_out = $breakCorrection->new_break_out ? Carbon::parse($breakCorrection->new_break_out)->format('H:i') : '';
-        }
-
-        $isWaitingApproval = $attendanceCorrection && $attendanceCorrection->status === '承認待ち';
-
-        return view('attendance-detail', compact('attendanceRecord', 'attendanceCorrection', 'breakCorrections', 'isWaitingApproval'));
+        return redirect()->route('request-list.show');
     }
 }

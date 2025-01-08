@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CustomRegisterRequest extends FormRequest
 {
@@ -22,10 +24,10 @@ class CustomRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8',
-            'password_confirmation' => 'required|min:8|same:password',
+            'name' => 'required|string|max:100',
+            'email' => 'required|string|email|max:100|unique:users',
+            'password' => 'required|string|min:8|max:100',
+            'password_confirmation' => 'same:password',
         ];
     }
 
@@ -33,14 +35,28 @@ class CustomRegisterRequest extends FormRequest
     {
         return [
             'name.required' => 'お名前を入力してください',
+            'name.string' => 'お名前を文字列で入力してください',
+            'name.max' => 'お名前は100文字以下で入力してください',
             'email.required' => 'メールアドレスを入力してください',
+            'email.string' => 'メールアドレスを文字列で入力してください',
             'email.email' => 'メールアドレスはメール形式で入力してください',
+            'email.max' => 'メールアドレスは100文字以下で入力してください',
             'email.unique' => 'このメールアドレスはすでに登録されています',
             'password.required' => 'パスワードを入力してください',
+            'password.string' => 'パスワードを文字列で入力してください',
             'password.min' => 'パスワードは8文字以上で入力してください',
-            'password_confirmation.required' => 'パスワード確認を入力してください',
-            'password_confirmation.min' => 'パスワード確認は8文字以上で入力してください',
+            'password.max' => 'パスワードは100文字以下で入力してください',
             'password_confirmation.same' => 'パスワードと一致しません',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $response = redirect()
+            ->route('register', $this->route('id'))
+            ->withErrors($validator)
+            ->withInput();
+
+        throw new HttpResponseException($response);
     }
 }
