@@ -32,6 +32,10 @@ trait AttendanceTestHelper
     public function assertAttendanceDisplayed($response, array $attendanceData): void
     {
         foreach ($attendanceData as $data) {
+            if (isset($data['year'])) {
+                $response->assertSee($data['year']);
+            }
+
             if (isset($data['year_month'])) {
                 $response->assertSee($data['year_month']);
             }
@@ -48,12 +52,24 @@ trait AttendanceTestHelper
                 $response->assertSee($data['clock_out']);
             }
 
+            if (isset($data['break_in'])) {
+                $response->assertSee($data['break_in']);
+            }
+
+            if (isset($data['break_out'])) {
+                $response->assertSee($data['break_out']);
+            }
+
             if (isset($data['break_hours'])) {
                 $response->assertSee($data['break_hours']);
             }
 
             if (isset($data['work_hours'])) {
                 $response->assertSee($data['work_hours']);
+            }
+
+            if (isset($data['user_name'])) {
+                $response->assertSee($data['user_name']);
             }
         }
 

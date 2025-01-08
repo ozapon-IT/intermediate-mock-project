@@ -70,7 +70,7 @@ class LoginTest extends TestCase
 
         $data = [
             'email' => 'wrongtest@example.com',
-            'password' => 'wrongpassword123',
+            'password' => 'password123',
         ];
 
         $response = $this->post(route('login'), $data);

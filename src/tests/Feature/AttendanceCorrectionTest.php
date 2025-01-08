@@ -33,7 +33,7 @@ class AttendanceCorrectionTest extends TestCase
             'month_day' => '1月6日',
             'clock_in' => '19:00',
             'clock_out' => '18:00',
-            'reason' => 'テストのための修正リクエスト',
+            'reason' => 'テスト用の修正リクエスト',
         ]);
 
         $response->assertSessionHasErrors([
@@ -161,10 +161,10 @@ class AttendanceCorrectionTest extends TestCase
 
         $response = $this->post(route('attendance-detail.request_correction', $attendanceRecord->id), [
             'year' => '2025年',
-            'month_day' => '1月6日',
+            'month_day' => '1月7日',
             'clock_in' => '10:00',
             'clock_out' => '19:00',
-            'reason' => 'テスト用修正申請',
+            'reason' => 'テスト用の修正申請',
         ]);
 
         $response->assertRedirect(route('request-list.show'));
@@ -172,8 +172,11 @@ class AttendanceCorrectionTest extends TestCase
         $this->assertDatabaseHas('attendance_correct_requests', [
             'attendance_record_id' => $attendanceRecord->id,
             'user_id' => $user->id,
+            'new_date' => '2025-01-07',
+            'new_clock_in' => '2025-01-07 10:00:00',
+            'new_clock_out' => '2025-01-07 19:00:00',
+            'reason' => 'テスト用の修正申請',
             'status' => '承認待ち',
-            'reason' => 'テスト用修正申請',
         ]);
 
         $admin = User::factory()->create([
@@ -183,14 +186,15 @@ class AttendanceCorrectionTest extends TestCase
 
         $requestListResponse = $this->get(route('admin.request-list.show', ['status' => '承認待ち']));
         $requestListResponse->assertOk();
-        $requestListResponse->assertSee('承認待ち');
-        $requestListResponse->assertSee('テスト用修正申請');
+        $requestListResponse->assertSee($user->name);
+        $requestListResponse->assertSee('テスト用の修正申請');
 
         $attendanceCorrection = AttendanceCorrectRequest::first();
         $approvalResponse = $this->get(route('admin.approve-request.show', ['attendance_correct_request' => $attendanceCorrection->id]));
         $approvalResponse->assertOk();
+        $approvalResponse->assertSee($user->name);
+        $approvalResponse->assertSee('テスト用の修正申請');
         $approvalResponse->assertSee('承認');
-        $approvalResponse->assertSee('テスト用修正申請');
     }
 
     /**

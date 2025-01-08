@@ -49,13 +49,10 @@ class AttendanceClockInTest extends TestCase
     {
         $user = User::factory()->create();
 
-        Carbon::setTestNow('2025-01-04 18:00:00');
+        Carbon::setTestNow('2025-01-04 09:00:00');
 
-        AttendanceRecord::create([
+        AttendanceRecord::factory()->create([
             'user_id' => $user->id,
-            'date' => Carbon::today()->format('Y-m-d'),
-            'clock_in' => Carbon::now()->subHours(9)->format('Y-m-d H:i:'),
-            'clock_out' => Carbon::now()->format('Y-m-d H:i'),
             'status' => '退勤済',
         ]);
 

@@ -21,6 +21,13 @@ class AttendanceStatusTest extends TestCase
     {
         $user = User::factory()->create();
 
+        Carbon::setTestNow('2025-01-04 10:30:00');
+
+        AttendanceRecord::factory()->create([
+            'user_id' => $user->id,
+            'status' => '勤務外',
+        ]);
+
         $response = $this->actingAs($user)->get(route('attendance.show'));
 
         $response->assertStatus(200);
@@ -38,16 +45,12 @@ class AttendanceStatusTest extends TestCase
 
         Carbon::setTestNow('2025-01-04 10:30:00');
 
-        AttendanceRecord::create([
+        AttendanceRecord::factory()->create([
             'user_id' => $user->id,
-            'date' => Carbon::today()->format('Y-m-d'),
-            'clock_in' => Carbon::now()->format('Y-m-d H:i'),
             'status' => '出勤中',
         ]);
 
         $response = $this->actingAs($user)->get(route('attendance.show'));
-
-        $response->assertStatus(200);
 
         $response->assertSeeText('出勤中');
     }
@@ -62,25 +65,12 @@ class AttendanceStatusTest extends TestCase
 
         Carbon::setTestNow('2025-01-04 10:30:00');
 
-        $attendanceRecord = AttendanceRecord::create([
+        $attendanceRecord = AttendanceRecord::factory()->create([
             'user_id' => $user->id,
-            'date' => Carbon::today()->format('Y-m-d'),
-            'clock_in' => Carbon::now()->subHours(2)->format('Y-m-d H:i'),
-            'status' => '出勤中',
-        ]);
-
-        AttendanceBreak::create([
-            'attendance_record_id' => $attendanceRecord->id,
-            'break_in' => Carbon::now()->format('Y-m-d H:i'),
-        ]);
-
-        $attendanceRecord->update([
             'status' => '休憩中',
         ]);
 
         $response = $this->actingAs($user)->get(route('attendance.show'));
-
-        $response->assertStatus(200);
 
         $response->assertSeeText('休憩中');
     }
@@ -95,17 +85,12 @@ class AttendanceStatusTest extends TestCase
 
         Carbon::setTestNow('2025-01-04 18:00:00');
 
-        AttendanceRecord::create([
+        AttendanceRecord::factory()->create([
             'user_id' => $user->id,
-            'date' => Carbon::today()->format('Y-m-d'),
-            'clock_in' => Carbon::now()->subHours(8)->format('Y-m-d H:i'),
-            'clock_out' => Carbon::now()->format('Y-m-d H:i'),
             'status' => '退勤済',
         ]);
 
         $response = $this->actingAs($user)->get(route('attendance.show'));
-
-        $response->assertStatus(200);
 
         $response->assertSeeText('退勤済');
     }

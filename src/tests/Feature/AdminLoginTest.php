@@ -72,8 +72,8 @@ class AdminLoginTest extends TestCase
         ]);
 
         $data = [
-            'email' => 'admin@example.com',
-            'password' => 'wrongpassword',
+            'email' => 'wrongadmin@example.com',
+            'password' => 'adminpassword',
         ];
 
         $response = $this->post(route('admin-login.login'), $data);

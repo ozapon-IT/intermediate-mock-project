@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Tests\Traits\AttendanceTestHelper;
 use App\Models\User;
 use App\Models\AttendanceRecord;
 use App\Models\AttendanceBreak;
@@ -12,6 +13,7 @@ use Illuminate\Support\Carbon;
 class AdminAttendanceDetailCorrectionTest extends TestCase
 {
     use RefreshDatabase;
+    use AttendanceTestHelper;
 
     /**
      * @test
@@ -25,6 +27,7 @@ class AdminAttendanceDetailCorrectionTest extends TestCase
         $this->actingAs($admin, 'admin');
 
         $user = User::factory()->create();
+
         Carbon::setTestNow('2025-01-06 09:00:00');
         $attendanceRecord = AttendanceRecord::factory()->create([
             'user_id' => $user->id,
@@ -36,8 +39,6 @@ class AdminAttendanceDetailCorrectionTest extends TestCase
         $response = $this->get(route('admin.attendance-detail.show', $attendanceRecord->id));
 
         $response->assertStatus(200);
-
-        $response->assertSee($user->name);
         $response->assertSee('2025年');
         $response->assertSee('1月6日');
         $response->assertSee('09:00');

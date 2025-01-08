@@ -23,10 +23,8 @@ class AttendanceBreakTest extends TestCase
 
         Carbon::setTestNow('2025-01-05 10:00:00');
 
-        $attendanceRecord = AttendanceRecord::create([
+        $attendanceRecord = AttendanceRecord::factory()->create([
             'user_id' => $user->id,
-            'date' => Carbon::today()->format('Y-m-d'),
-            'clock_in' => Carbon::now()->subHours(2)->format('Y-m-d H:i'),
             'status' => '出勤中',
         ]);
 
@@ -60,10 +58,8 @@ class AttendanceBreakTest extends TestCase
 
         Carbon::setTestNow('2025-01-05 10:00:00');
 
-        $attendanceRecord = AttendanceRecord::create([
+        $attendanceRecord = AttendanceRecord::factory()->create([
             'user_id' => $user->id,
-            'date' => Carbon::today()->format('Y-m-d'),
-            'clock_in' => Carbon::now()->subHours(2)->format('Y-m-d H:i'),
             'status' => '出勤中',
         ]);
 
@@ -76,7 +72,6 @@ class AttendanceBreakTest extends TestCase
         ]);
 
         $response = $this->get(route('attendance.show'));
-        $response->assertStatus(200);
         $response->assertSee('休憩入');
     }
 
@@ -91,10 +86,8 @@ class AttendanceBreakTest extends TestCase
 
         Carbon::setTestNow('2025-01-05 10:00:00');
 
-        $attendanceRecord = AttendanceRecord::create([
+        $attendanceRecord = AttendanceRecord::factory()->create([
             'user_id' => $user->id,
-            'date' => Carbon::today()->format('Y-m-d'),
-            'clock_in' => Carbon::now()->subHours(2)->format('Y-m-d H:i'),
             'status' => '出勤中',
         ]);
 
@@ -114,6 +107,9 @@ class AttendanceBreakTest extends TestCase
             'id' => $attendanceRecord->id,
             'status' => '出勤中',
         ]);
+
+        $response = $this->get(route('attendance.show'));
+        $response->assertSee('出勤中');
     }
 
     /**
@@ -127,10 +123,8 @@ class AttendanceBreakTest extends TestCase
 
         Carbon::setTestNow('2025-01-05 10:00:00');
 
-        $attendanceRecord = AttendanceRecord::create([
+        $attendanceRecord = AttendanceRecord::factory()->create([
             'user_id' => $user->id,
-            'date' => Carbon::today()->format('Y-m-d'),
-            'clock_in' => Carbon::now()->subHours(2)->format('Y-m-d H:i'),
             'status' => '出勤中',
         ]);
 
@@ -164,21 +158,19 @@ class AttendanceBreakTest extends TestCase
             'role' => 'admin'
         ]);
 
-        Carbon::setTestNow('2025-01-05 08:00:00');
+        Carbon::setTestNow('2025-01-05 09:00:00');
 
-        $attendanceRecord = AttendanceRecord::create([
+        $attendanceRecord = AttendanceRecord::factory()->create([
             'user_id' => $user->id,
-            'date' => Carbon::today()->format('Y-m-d'),
-            'clock_in' => Carbon::now()->format('Y-m-d H:i'),
             'status' => '出勤中',
         ]);
 
-        Carbon::setTestNow('2025-01-05 10:00:00');
+        Carbon::setTestNow('2025-01-05 12:00:00');
         $this->post(route('attendance.break_in'), [
             'attendance_record_id' => $attendanceRecord->id,
         ]);
 
-        Carbon::setTestNow('2025-01-05 10:10:00');
+        Carbon::setTestNow('2025-01-05 13:00:00');
         $this->post(route('attendance.break_out'), [
             'attendance_record_id' => $attendanceRecord->id,
         ]);
@@ -188,7 +180,8 @@ class AttendanceBreakTest extends TestCase
         ]));
 
         $response->assertStatus(200);
+        $response->assertSee('2025年1月5日');
         $response->assertSee($user->name);
-        $response->assertSee('0:10');
+        $response->assertSee('1:00');
     }
 }

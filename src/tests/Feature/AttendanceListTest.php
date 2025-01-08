@@ -23,10 +23,10 @@ class AttendanceListTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
+        // ログインユーザーの勤怠情報を生成
         $this->createAttendanceRecord($user->id, '2025-01-01', '2025-01-01 09:00:00', '2025-01-01 18:00:00', [
             ['break_in' => '2025-01-01 12:00:00', 'break_out' => '2025-01-01 12:45:00', 'break_duration' => 0.75]
         ]);
-
         $this->createAttendanceRecord($user->id, '2025-01-02', '2025-01-02 09:30:00', '2025-01-02 18:30:00', [
             ['break_in' => '2025-01-02 12:10:00', 'break_out' => '2025-01-02 13:00:00', 'break_duration' => 0.84]
         ]);
