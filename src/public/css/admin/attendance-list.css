@@ -17,7 +17,7 @@ body {
     padding-left: 1.3vw;
 }
 
-.attendance-list__daily {
+.attendance-list__day {
     background-color: #fff;
     display: flex;
     align-items: center;
@@ -124,7 +124,7 @@ body {
         padding-left: 20px;
     }
 
-    .attendance-list__daily {
+    .attendance-list__day {
         width: 860px;
         height: 50px;
         margin-top: 40px;
@@ -197,7 +197,7 @@ body {
         padding-left: 14px;
     }
 
-    .attendance-list__daily {
+    .attendance-list__day {
         width: 474px;
         height: 27px;
         margin-top: 22px;

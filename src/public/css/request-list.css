@@ -58,6 +58,22 @@ body {
     text-align: center;
 }
 
+.request-list__item td:nth-child(1) {
+    width: 7.8vw;
+}
+
+.request-list__item td:nth-child(3) {
+    width: 9.7vw;
+}
+
+.request-list__item td:nth-child(5) {
+    width: 9.7vw;
+}
+
+.request-list__item td:nth-child(6) {
+    width: 4.5vw;
+}
+
 .request-list__item th:first-of-type {
     border-radius: 0.5vw 0 0 0;
 }
@@ -124,6 +140,22 @@ body {
         height: 40px;
     }
 
+    .request-list__item td:nth-child(1) {
+        width: 120px;
+    }
+
+    .request-list__item td:nth-child(3) {
+        width: 150px;
+    }
+
+    .request-list__item td:nth-child(5) {
+        width: 150px;
+    }
+
+    .request-list__item td:nth-child(6) {
+        width: 70px;
+    }
+
     .request-list__item th,
     .request-list__item td {
         line-height: 40px;
@@ -180,6 +212,22 @@ body {
 
     .request-list__item {
         height: 22px;
+    }
+
+    .request-list__item td:nth-child(1) {
+        width: 66px;
+    }
+
+    .request-list__item td:nth-child(3) {
+        width: 82px;
+    }
+
+    .request-list__item td:nth-child(5) {
+        width: 82px;
+    }
+
+    .request-list__item td:nth-child(6) {
+        width: 38px;
     }
 
     .request-list__item th,

@@ -13,7 +13,7 @@ body {
     padding-left: 1.3vw;
 }
 
-.attendance-list__monthly {
+.attendance-list__month {
     background-color: #fff;
     display: flex;
     justify-content: space-between;
@@ -60,6 +60,14 @@ body {
     background-color: #fff;
     width: 100%;
     height: 2.6vw;
+}
+
+.attendance-list__item td:nth-child(1) {
+    width: 12.9vw;
+}
+
+.attendance-list__item td:not(:nth-child(1)) {
+    width: 9.1vw;
 }
 
 .attendance-list__item th,
@@ -115,7 +123,7 @@ body {
         padding-left: 20px;
     }
 
-    .attendance-list__monthly {
+    .attendance-list__month {
         width: 860px;
         height: 50px;
         margin-top: 40px;
@@ -148,6 +156,14 @@ body {
 
     .attendance-list__item {
         height: 40px;
+    }
+
+    .attendance-list__item td:nth-child(1) {
+        width: 200px;
+    }
+
+    .attendance-list__item td:not(:nth-child(1)) {
+        width: 140px;
     }
 
     .attendance-list__item th,
@@ -185,7 +201,7 @@ body {
         padding-left: 14px;
     }
 
-    .attendance-list__monthly {
+    .attendance-list__month {
         width: 474px;
         height: 27px;
         margin-top: 22px;
@@ -217,6 +233,14 @@ body {
 
     .attendance-list__item {
         height: 22px;
+    }
+
+    .attendance-list__item td:nth-child(1) {
+        width: 110px;
+    }
+
+    .attendance-list__item td:not(:nth-child(1)) {
+        width: 78px;
     }
 
     .attendance-list__item th,
