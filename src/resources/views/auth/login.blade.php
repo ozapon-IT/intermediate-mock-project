@@ -7,13 +7,7 @@
 @endsection
 
 @section('header')
-<header class="header">
-    <div class="header__container">
-        <a class="header__logo" href="#">
-            <img src="{{ asset('img/logo.svg') }}" alt="COACHTECHロゴ画像">
-        </a>
-    </div>
-</header>
+<x-header type="default" />
 @endsection
 
 @section('main')
@@ -29,9 +23,7 @@
 
                 <input class="login__input" type="text" id="email" name="email" value="{{ old('email') }}">
 
-                @error('email')
-                    <span class="error-message">{{ $message }}</span>
-                @enderror
+                <x-validation-error field="email" />
             </div>
 
             <div class="login__form-group">
@@ -39,9 +31,7 @@
 
                 <input class="login__input" type="password" id="password" name="password">
 
-                @error('password')
-                    <span class="error-message">{{ $message }}</span>
-                @enderror
+                <x-validation-error field="password" />
             </div>
 
             <button class="login__button" type="submit">ログインする</button>

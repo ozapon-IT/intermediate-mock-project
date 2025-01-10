@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\AttendanceRecord;
 use App\Models\AttendanceBreak;
+use App\Models\AttendanceCorrectRequest;
 use Carbon\Carbon;
 
 class UserAttendanceSeeder extends Seeder
@@ -38,13 +39,13 @@ class UserAttendanceSeeder extends Seeder
             ]);
 
             // 勤怠データ生成
-            $startDate = Carbon::parse('2024-10-01');
-            $endDate = Carbon::parse('2024-12-31');
+            $startDate = Carbon::parse('2024-11-01');
+            $endDate = Carbon::parse('2025-01-10');
 
             while ($startDate->lte($endDate)) {
                 // 勤怠記録作成
                 $attendanceRecord = $user->attendanceRecords()->create([
-                    'date' => $startDate->toDateString(),
+                    'date' => $startDate->copy()->toDateString(),
                     'clock_in' => $startDate->copy()->setTime(9, 0, 0),
                     'clock_out' => $startDate->copy()->setTime(18, 0, 0),
                     'break_hours' => '1.00',
@@ -68,6 +69,55 @@ class UserAttendanceSeeder extends Seeder
 
                 // 次の日へ
                 $startDate->addDay();
+            }
+
+            // 勤怠修正申請作成
+            $correctDate = Carbon::parse('2024-12-31');
+
+            $attendanceRecord = AttendanceRecord::where('date', $correctDate->toDateString())
+                ->where('user_id', $user->id)
+                ->first();
+
+            $attendanceCorrectRequest = AttendanceCorrectRequest::create([
+                'attendance_record_id' => $attendanceRecord->id,
+                'user_id' => $user->id,
+                'requested_date' => $endDate->copy()->toDateString(),
+                'old_date' => $attendanceRecord->date,
+                'new_date' => $attendanceRecord->date,
+                'old_clock_in' => $attendanceRecord->clock_in,
+                'old_clock_out' => $attendanceRecord->clock_out,
+                'new_clock_in' => $correctDate->copy()->setTime(10, 0, 0),
+                'new_clock_out' => $correctDate->copy()->setTime(19, 0, 0),
+                'reason' => 'テスト用修正申請',
+                'status' => '承認待ち',
+            ]);
+
+            // 休憩修正申請作成
+            $breakId1 = AttendanceBreak::where('attendance_record_id', $attendanceRecord->id)
+                ->where('break_in', Carbon::parse($attendanceRecord->date)->copy()->setTime(12, 0, 0))
+                ->first()->id;
+
+            $breakId2 = AttendanceBreak::where('attendance_record_id', $attendanceRecord->id)
+                ->where('break_in', Carbon::parse($attendanceRecord->date)->copy()->setTime(15, 0, 0))
+                ->first()->id;
+
+            if ($breakId1 && $breakId2) {
+                $attendanceCorrectRequest->breakCorrectRequests()->createMany([
+                    [
+                        'attendance_break_id' => $breakId1,
+                        'old_break_in' => Carbon::parse($attendanceRecord->date)->copy()->setTime(12, 0, 0),
+                        'old_break_out' => Carbon::parse($attendanceRecord->date)->copy()->setTime(12, 40, 0),
+                        'new_break_in' => $correctDate->copy()->setTime(12, 30, 0),
+                        'new_break_out' => $correctDate->copy()->setTime(13, 10, 0),
+                    ],
+                    [
+                        'attendance_break_id' => $breakId2,
+                        'old_break_in' => Carbon::parse($attendanceRecord->date)->copy()->setTime(15, 0, 0),
+                        'old_break_out' => Carbon::parse($attendanceRecord->date)->copy()->setTime(15, 20, 0),
+                        'new_break_in' => $correctDate->copy()->setTime(15, 30, 0),
+                        'new_break_out' => $correctDate->copy()->setTime(15, 50, 0),
+                    ],
+                ]);
             }
         }
     }

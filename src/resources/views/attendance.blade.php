@@ -7,27 +7,7 @@
 @endsection
 
 @section('header')
-<header class="header">
-    <div class="header__container">
-        <a class="header__logo" href="#">
-            <img src="{{ asset('img/logo.svg') }}" alt="COACHTECHロゴ画像">
-        </a>
-
-        <nav class="header__nav">
-            <a class="header__link" href="{{ route('attendance.show') }}" class="header__link">勤怠</a>
-
-            <a class="header__link" href="{{ route('attendance-list.show') }}" class="header__link">勤怠一覧</a>
-
-            <a class="header__link" href="{{ route('request-list.show') }}" class="header__link">申請</a>
-
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-
-                <button class="header__button" type="submit">ログアウト</button>
-            </form>
-        </nav>
-    </div>
-</header>
+<x-header type="user" />
 @endsection
 
 @section('main')

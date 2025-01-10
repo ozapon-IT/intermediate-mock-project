@@ -7,26 +7,7 @@
 @endsection
 
 @section('header')
-<header class="header">
-    <div class="header__container">
-        <a class="header__logo" href="#">
-            <img src="{{ asset('img/logo.svg') }}" alt="COACHTECHロゴ画像">
-        </a>
-        <nav class="header__nav">
-            <a class="header__link" href="{{ route('admin.attendance-list.show') }}">勤怠一覧</a>
-
-            <a class="header__link" href="{{ route('admin.staff-list.show') }}">スタッフ一覧</a>
-
-            <a class="header__link" href="{{ route('admin.request-list.show') }}">申請一覧</a>
-
-            <form action="{{ route('admin.logout') }}" method="POST">
-                @csrf
-
-                <button class="header__button" type="submit">ログアウト</button>
-            </form>
-        </nav>
-    </div>
-</header>
+<x-header type="admin" />
 @endsection
 
 @section('main')
@@ -34,40 +15,19 @@
     <div class="attendance-list">
         <h1 class="attendance-list__title">{{ $currentDay }}の勤怠</h1>
 
-        <div class="attendance-list__daily">
-            <a class="attendance-list__previous-day" href="{{ route('admin.attendance-list.show', ['day' => $previousDay]) }}"><i class="bi bi-arrow-left-short"></i> 前日</a>
+        <x-navigation
+            :previousLink="route('admin.attendance-list.show', ['day' => $previousDay])"
+            :currentLabel="$currentDayFormatted"
+            :nextLink="route('admin.attendance-list.show', ['day' => $nextDay])"
+            type="day"
+        />
 
-            <p class="attendance-list__calendar"><i class="bi bi-calendar3"></i> {{ $currentDayFormatted }}</p>
-
-            <a class="attendance-list__next-day" href="{{ route('admin.attendance-list.show', ['day' => $nextDay]) }}">翌日 <i class="bi bi-arrow-right-short"></i></a>
-        </div>
-
-        <table class="attendance-list__records">
-            <tr class="attendance-list__item">
-                <th>名前</th>
-                <th>出勤</th>
-                <th>退勤</th>
-                <th>休憩</th>
-                <th>合計</th>
-                <th>詳細</th>
-            </tr>
-
-            @foreach ($attendanceRecords as $record)
-                <tr class="attendance-list__item">
-                    <td>{{ $record->user->name }}</td>
-
-                    <td>{{ $record->formatted_clock_in }}</td>
-
-                    <td>{{ $record->formatted_clock_out }}</td>
-
-                    <td>{{ $record->formatted_break_hours }}</td>
-
-                    <td>{{ $record->formatted_work_hours }}</td>
-
-                    <td><a href="{{ route('admin.attendance-detail.show', $record->id) }}">詳細</a></td>
-                </tr>
-            @endforeach
-        </table>
+        <x-attendance-list-table
+            :attendanceRecords="$attendanceRecords"
+            :columns="['名前', '出勤', '退勤', '休憩', '合計', '詳細']"
+            :fields="[fn($record) => $record->user->name, 'formatted_clock_in', 'formatted_clock_out', 'formatted_break_hours', 'formatted_work_hours']"
+            :detailRoute="fn($record) => route('admin.attendance-detail.show', $record->id)"
+        />
     </div>
 </main>
 @endsection

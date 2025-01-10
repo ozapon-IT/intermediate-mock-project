@@ -18,7 +18,7 @@ body {
     height: 3.9vw;
 }
 
-.header__logo img {
+.header__logo {
     width: 24vw;
     height: 3.9vw;
 }
@@ -60,7 +60,7 @@ body {
         height: 60px;
     }
 
-    .header__logo img {
+    .header__logo {
         width: 370px;
         height: 60px;
     }
@@ -96,7 +96,7 @@ body {
         height: 33px;
     }
 
-    .header__logo img {
+    .header__logo {
         width: 204px;
         height: 33px;
     }

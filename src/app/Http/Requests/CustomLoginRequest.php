@@ -26,7 +26,6 @@ class CustomLoginRequest extends LoginRequest
         return [
             'email' => 'required|string|email|max:100',
             'password' => 'required|string|min:8|max:100',
-
         ];
     }
 
