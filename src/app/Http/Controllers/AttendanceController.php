@@ -2,55 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Services\AttendanceService;
 use Carbon\Carbon;
-use App\Models\AttendanceRecord;
-use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
-    public function show()
+    protected $attendanceService;
+
+    public function __construct(AttendanceService $attendanceService)
     {
-        $now = Carbon::now('Asia/Tokyo');
-        $formattedDate = $now->isoFormat('YYYY年M月D日(ddd)');
-        $formattedTime = $now->format('H:i');
-
-        $attendanceRecord = AttendanceRecord::where('user_id', Auth::id())
-            ->where('date', Carbon::today())
-            ->first();
-
-        $status = $attendanceRecord->status ?? '勤務外';
-
-        return view('attendance', compact('formattedDate', 'formattedTime', 'status', 'attendanceRecord'));
+        $this->attendanceService = $attendanceService;
     }
 
-    public function clockIn(Request $request)
+    public function show()
     {
-        AttendanceRecord::create([
-            'user_id' => auth()->id(),
-            'date' => Carbon::today(),
-            'clock_in' => Carbon::now()->format('Y-m-d H:i:00'),
-            'status' => '出勤中',
-        ]);
+        $attendanceInformation = $this->attendanceService->getTodayAttendanceInformation(auth()->id());
+
+        return view('attendance', array_merge($attendanceInformation));
+    }
+
+    public function clockIn()
+    {
+        $this->attendanceService->clockIn(auth()->id());
 
         return redirect()->route('attendance.show');
     }
 
-    public function clockOut(Request $request)
+    public function clockOut()
     {
-        $attendance = AttendanceRecord::where('user_id', auth()->id())
-            ->whereNull('clock_out')
-            ->orderBy('created_at', 'desc')
-            ->first();
-
-        if ($attendance) {
-            $attendance->update([
-                'clock_out' => Carbon::now()->format('Y-m-d H:i:00'),
-                'break_hours' => $attendance->calculateBreakHours(),
-                'work_hours' => $attendance->calculateWorkHours(),
-                'status' => '退勤済',
-            ]);
-        }
+        $this->attendanceService->clockOut(auth()->id());
 
         return redirect()->route('attendance.show');
     }

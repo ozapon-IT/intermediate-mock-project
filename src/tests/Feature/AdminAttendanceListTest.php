@@ -3,8 +3,9 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use Tests\Traits\AttendanceTestHelper;
+use App\Services\AttendanceRecordService;
+use Tests\TestCase;
 use App\Models\User;
 use App\Models\AttendanceRecord;
 use Illuminate\Support\Carbon;
@@ -43,13 +44,15 @@ class AdminAttendanceListTest extends TestCase
         // ステータスコードが200であることを確認
         $response->assertStatus(200);
 
+        $service = app(AttendanceRecordService::class);
+
         // 勤怠情報が正しく表示されていることを確認
         foreach ($attendanceRecords as $record) {
             $response->assertSee($record->user->name);
             $response->assertSee(Carbon::parse($record->clock_in)->format('H:i'));
             $response->assertSee(Carbon::parse($record->clock_out)->format('H:i'));
-            $response->assertSee($record->formatBreakHours());
-            $response->assertSee($record->formatWorkHours());
+            $response->assertSee($service->formatBreakHours($record));
+            $response->assertSee($service->formatWorkHours($record));
         }
     }
 

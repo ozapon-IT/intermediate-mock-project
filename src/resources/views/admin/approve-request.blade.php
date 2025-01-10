@@ -21,7 +21,7 @@
             <x-attendance-detail-table
                 mode="approval"
                 :attendanceCorrection="$attendanceCorrection"
-                :attendanceBreaks="$attendanceBreaks"
+                :breakCorrections="$breakCorrections"
             />
 
             <div class="attendance-detail__approval">

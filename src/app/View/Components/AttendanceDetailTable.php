@@ -13,7 +13,6 @@ class AttendanceDetailTable extends Component
     public $attendanceCorrection;
     public $breaks;
     public $breakCorrections;
-    public $attendanceBreaks;
     public $isWaitingApproval;
 
     /**
@@ -24,7 +23,6 @@ class AttendanceDetailTable extends Component
      * @param mixed $attendanceCorrection 勤怠修正
      * @param array $breaks 休憩データ
      * @param array $breakCorrections 修正された休憩データ
-     * @param array $attendanceBreaks 修正申請承認画面の休憩データ
      * @param bool $isWaitingApproval 承認待ちかどうか
      */
     public function __construct(
@@ -33,7 +31,6 @@ class AttendanceDetailTable extends Component
         $attendanceCorrection = null,
         $breaks = [],
         $breakCorrections = [],
-        $attendanceBreaks = [],
         $isWaitingApproval = false
     )
     {
@@ -42,7 +39,6 @@ class AttendanceDetailTable extends Component
         $this->attendanceCorrection = $attendanceCorrection;
         $this->breaks = $breaks;
         $this->breakCorrections = $breakCorrections;
-        $this->attendanceBreaks = $attendanceBreaks;
         $this->isWaitingApproval = $isWaitingApproval;
     }
 

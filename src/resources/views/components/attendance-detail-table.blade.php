@@ -84,20 +84,20 @@
     </tr>
 
     @if ($mode === 'approval')
-        @foreach ($attendanceBreaks as $index => $attendanceBreak)
+        @foreach ($breakCorrections as $index => $breakCorrection)
             <tr class="attendance-detail__item attendance-detail__break">
                 <td>{{ $index === 0 ? '休憩' : '休憩' . ($index + 1) }}</td>
 
                 <td>
-                    <p>{{ $attendanceBreak->formatted_new_break_in }}</p>
+                    <p>{{ $breakCorrection->formatted_new_break_in }}</p>
 
                     <span>〜</span>
 
-                    <p>{{ $attendanceBreak->formatted_new_break_out }}</p>
+                    <p>{{ $breakCorrection->formatted_new_break_out }}</p>
 
-                    <input type="hidden" name="break_in[{{ $index }}]" value="{{ $attendanceBreak->formatted_new_break_in }}">
+                    <input type="hidden" name="break_in[{{ $index }}]" value="{{ $breakCorrection->formatted_new_break_in }}">
 
-                    <input type="hidden" name="break_out[{{ $index }}]" value="{{ $attendanceBreak->formatted_new_break_out }}">
+                    <input type="hidden" name="break_out[{{ $index }}]" value="{{ $breakCorrection->formatted_new_break_out }}">
                 </td>
             </tr>
         @endforeach
