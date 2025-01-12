@@ -1,0 +1,170 @@
+body {
+    background-color: #f0eff2;
+}
+
+.header__nav {
+    width: 38.9vw;
+}
+
+.staff-list {
+    width: 58.4vw;
+    margin: 6.5vw auto;
+}
+
+.staff-list__title {
+    font-size: 2.2vw;
+    border-left: 0.4vw solid #000;
+    padding-left: 1.3vw;
+}
+
+.staff-list__records {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 0.3vw;
+    margin-top: 3.9vw;
+    font-size: 1.2vw;
+}
+
+.staff-list__item {
+    background-color: #fff;
+    width: 100%;
+    height: 2.6vw;
+}
+
+.staff-list__item th,
+.staff-list__item td {
+    color: #666;
+    line-height: 2.6vw;
+}
+
+.staff-list__item th:first-of-type {
+    border-radius: 0.5vw 0 0 0;
+}
+
+.staff-list__item th:last-of-type {
+    border-radius: 0 0.5vw 0 0;
+}
+
+.staff-list__item td {
+    text-align: center;
+}
+
+.staff-list__item:last-of-type td:first-of-type {
+    border-radius: 0 0 0 0.5vw;
+}
+
+.staff-list__item:last-of-type td:last-of-type {
+    border-radius: 0 0 0.5vw 0;
+}
+
+.staff-list__item td a {
+    text-decoration: none;
+    color: #222;
+}
+
+.staff-list__item td a:hover {
+    color: #000;
+}
+
+.staff-list__item td:last-of-type {
+    color: #222;
+    font-weight: bold;
+}
+
+/* PC画面時(1400-1540px) */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .header__nav {
+        width: 600px;
+    }
+
+    .staff-list {
+        width: 900px;
+        margin: 100px auto;
+    }
+
+    .staff-list__title {
+        font-size: 2rem;
+        border-left: 8px solid #000;
+        padding-left: 20px;
+    }
+
+    .staff-list__records {
+        border-spacing: 0 4px;
+        margin-top: 60px;
+        font-size: 1rem;
+    }
+
+    .staff-list__item {
+        height: 40px;
+    }
+
+    .staff-list__item th,
+    .staff-list__item td {
+        line-height: 40px;
+    }
+
+    .staff-list__item th:first-of-type {
+        border-radius: 10px 0 0 0;
+    }
+
+    .staff-list__item th:last-of-type {
+        border-radius: 0 10px 0 0;
+    }
+
+    .staff-list__item:last-of-type td:first-of-type {
+        border-radius: 0 0 0 10px;
+    }
+
+    .staff-list__item:last-of-type td:last-of-type {
+        border-radius: 0 0 10px 0;
+    }
+}
+
+/* タブレット画面時(768-850px) */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .header__nav {
+        width: 330px;
+    }
+
+    .staff-list {
+        width: 500px;
+        margin: 55px auto;
+    }
+
+    .staff-list__title {
+        font-size: 1.1rem;
+        border-left: 4px solid #000;
+        padding-left: 14px;
+    }
+
+    .staff-list__records {
+        border-spacing: 0 2px;
+        margin-top: 33px;
+        font-size: 0.6rem;
+    }
+
+    .staff-list__item {
+        height: 22px;
+    }
+
+    .staff-list__item th,
+    .staff-list__item td {
+        line-height: 22px;
+    }
+
+    .staff-list__item th:first-of-type {
+        border-radius: 6px 0 0 0;
+    }
+
+    .staff-list__item th:last-of-type {
+        border-radius: 0 6px 0 0;
+    }
+
+    .staff-list__item:last-of-type td:first-of-type {
+        border-radius: 0 0 0 6px;
+    }
+
+    .staff-list__item:last-of-type td:last-of-type {
+        border-radius: 0 0 6px 0;
+    }
+}
