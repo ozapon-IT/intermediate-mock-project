@@ -18,37 +18,39 @@
         <form class="register__form" action="{{ route('register') }}" method="POST">
             @csrf
 
-            <div class="register__form-group">
-                <label class="register__label" for="name">名前</label>
+            <x-auth-form-group
+                auth="register"
+                label="名前"
+                type="text"
+                id="name"
+                name="name"
+                :value="old('name')"
+            />
 
-                <input class="register__input" type="text" id="name" name="name" value="{{ old('name') }}">
+            <x-auth-form-group
+                auth="register"
+                label="メールアドレス"
+                type="text"
+                id="email"
+                name="email"
+                :value="old('email')"
+            />
 
-                <x-validation-error field="name" />
-            </div>
+            <x-auth-form-group
+                auth="register"
+                label="パスワード"
+                type="password"
+                id="password"
+                name="password"
+            />
 
-            <div class="register__form-group">
-                <label class="register__label" for="email">メールアドレス</label>
-
-                <input class="register__input" type="text" id="email" name="email" value="{{ old('email') }}">
-
-                <x-validation-error field="email" />
-            </div>
-
-            <div class="register__form-group">
-                <label class="register__label" for="password">パスワード</label>
-
-                <input class="register__input" type="password" id="password" name="password"">
-
-                <x-validation-error field="password" />
-            </div>
-
-            <div class="register__form-group">
-                <label class="register__label" for="password_confirmation">パスワード確認</label>
-
-                <input class="register__input" type="password" id="password_confirmation" name="password_confirmation">
-
-                <x-validation-error field="password_confirmation" />
-            </div>
+            <x-auth-form-group
+                auth="register"
+                label="パスワード確認"
+                type="password"
+                id="password_confirmation"
+                name="password_confirmation"
+            />
 
             <button class="register__button" type="submit">登録する</button>
         </form>

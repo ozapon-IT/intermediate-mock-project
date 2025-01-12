@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-// use Carbon\Carbon;
-use App\Models\AttendanceBreak;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AttendanceRecord extends Model
 {
@@ -22,12 +22,22 @@ class AttendanceRecord extends Model
         'admin_correction_reason',
     ];
 
-    public function user()
+    /**
+     * ユーザーとのリレーションを定義
+     *
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function attendanceBreaks()
+    /**
+     * 休憩記録とのリレーションを定義
+     *
+     * @return HasMany
+     */
+    public function attendanceBreaks(): HasMany
     {
         return $this->hasMany(AttendanceBreak::class, 'attendance_record_id');
     }

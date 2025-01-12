@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\AttendanceListService;
+use Illuminate\Http\Request;
 
 class AdminAttendanceListController extends Controller
 {
@@ -16,7 +16,7 @@ class AdminAttendanceListController extends Controller
 
     public function show(Request $request)
     {
-        $currentDay = $request->input('day', now()->format('Y年n月j日'));
+        $currentDay = $this->attendanceListService->getCurrentDay($request);
 
         $attendanceRecords = $this->attendanceListService->getDailyFormattedAttendanceRecords($currentDay);
 

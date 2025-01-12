@@ -18,16 +18,11 @@ class AdminAttendanceDetailController extends Controller
     {
         $attendanceData = $this->attendanceDetailService->getFormattedAttendanceRecord($id);
 
-        $attendanceCorrection = AttendanceCorrectRequest::where('attendance_record_id', $id)
-            ->where('user_id', $attendanceData['attendanceRecord']->user_id)
-            ->latest()
-            ->first();
+        $attendanceCorrection = $this->attendanceDetailService->getAttendanceCorrection($id, $attendanceData['attendanceRecord']->user_id);
 
-        $correctionData = $attendanceCorrection
-            ? $this->attendanceDetailService->formatAttendanceCorrection($attendanceCorrection)
-            : ['attendanceCorrection' => null, 'breakCorrections' => []];
+        $correctionData = $this->attendanceDetailService->getFormattedCorrectionData($attendanceCorrection);
 
-        $isWaitingApproval = $correctionData['attendanceCorrection'] && $correctionData['attendanceCorrection']->status === '承認待ち';
+        $isWaitingApproval = $this->attendanceDetailService->isWaitingApproval($correctionData['attendanceCorrection']);
 
         return view('admin.attendance-detail', array_merge($attendanceData, $correctionData, compact('isWaitingApproval')));
     }

@@ -50,7 +50,14 @@ class CustomRegisterRequest extends FormRequest
         ];
     }
 
-    protected function failedValidation(Validator $validator)
+    /**
+     * バリデーション失敗時の処理
+     *
+     * @param Validator $validator
+     * @return void
+     * @throws HttpResponseException
+     */
+    protected function failedValidation(Validator $validator): void
     {
         $response = redirect()
             ->route('register', $this->route('id'))

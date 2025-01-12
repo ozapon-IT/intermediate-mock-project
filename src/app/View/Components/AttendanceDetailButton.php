@@ -6,18 +6,21 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Header extends Component
+class AttendanceDetailButton extends Component
 {
     public $type;
+    public $isWaitingApproval;
 
     /**
      * Create a new component instance.
      *
      * @param string $type
+     * @param bool $isWaitingApproval
      */
-    public function __construct($type = 'default')
+    public function __construct($type, $isWaitingApproval)
     {
         $this->type = $type;
+        $this->isWaitingApproval = $isWaitingApproval;
     }
 
     /**
@@ -25,6 +28,6 @@ class Header extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.header');
+        return view('components.attendance-detail-button');
     }
 }

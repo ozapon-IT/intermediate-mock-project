@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Services\AttendanceCorrectionService;
 use App\Http\Requests\AttendanceCorrectionRequest;
-use App\Models\AttendanceRecord;
-use Illuminate\Support\Carbon;
 
 class AdminCorrectionController extends Controller
 {
@@ -18,11 +16,11 @@ class AdminCorrectionController extends Controller
 
     public function correct(AttendanceCorrectionRequest $request, $id)
     {
-        $attendanceRecord = AttendanceRecord::findOrFail($id);
+        $attendanceRecord = $this->attendanceCorrectionService->getAttendanceRecordById($id);
 
         $this->attendanceCorrectionService->correctAttendanceRecord($request->validated(), $attendanceRecord);
 
-        $monthlyAttendance = Carbon::parse($attendanceRecord->date)->format('Y-m');
+        $monthlyAttendance = $this->attendanceCorrectionService->formatDateToMonth($attendanceRecord->date);
 
         return redirect()->route('admin.staff-attendance-list.show', ['id' => $attendanceRecord->user_id, 'month' => $monthlyAttendance]);
     }

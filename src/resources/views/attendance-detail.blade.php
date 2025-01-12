@@ -28,11 +28,7 @@
             />
 
             <div class="attendance-detail__correction">
-                @if ($isWaitingApproval)
-                    <p>*承認待ちのため修正はできません。</p>
-                @else
-                    <button class="attendance-detail__button" type="submit">修正</button>
-                @endif
+                <x-attendance-detail-button type="correction" :isWaitingApproval="$isWaitingApproval" />
             </div>
         </form>
     </div>

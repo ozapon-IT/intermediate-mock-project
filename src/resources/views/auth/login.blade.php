@@ -18,21 +18,22 @@
         <form class="login__form" action="{{ route('login') }}" method="POST">
             @csrf
 
-            <div class="login__form-group">
-                <label class="login__label" for="email">メールアドレス</label>
+            <x-auth-form-group
+                auth="login"
+                label="メールアドレス"
+                type="text"
+                id="email"
+                name="email"
+                :value="old('email')"
+            />
 
-                <input class="login__input" type="text" id="email" name="email" value="{{ old('email') }}">
-
-                <x-validation-error field="email" />
-            </div>
-
-            <div class="login__form-group">
-                <label class="login__label" for="password">パスワード</label>
-
-                <input class="login__input" type="password" id="password" name="password">
-
-                <x-validation-error field="password" />
-            </div>
+            <x-auth-form-group
+                auth="login"
+                label="パスワード"
+                type="password"
+                id="password"
+                name="password"
+            />
 
             <button class="login__button" type="submit">ログインする</button>
         </form>

@@ -72,7 +72,6 @@ trait AttendanceTestHelper
                 $response->assertSee($data['user_name']);
             }
         }
-
     }
 
     /**

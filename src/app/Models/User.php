@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -44,8 +46,24 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
-    public function attendanceRecords()
+    /**
+     * 勤怠記録とのリレーションを定義
+     *
+     * @return HasMany
+     */
+    public function attendanceRecords(): HasMany
     {
         return $this->hasMany(AttendanceRecord::class);
+    }
+
+    /**
+     * ロールが 'user' のスコープを定義
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeRoleUser(Builder $query): Builder
+    {
+        return $query->where('role', 'user');
     }
 }

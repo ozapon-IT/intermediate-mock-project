@@ -15,7 +15,7 @@ class AttendanceDetailService
      * @param int|null $userId ユーザーID（指定されている場合のみフィルタリング）
      * @return array ['attendanceRecord' => AttendanceRecord, 'breaks' => Collection]
      */
-    public function getFormattedAttendanceRecord($id, $userId = null)
+    public function getFormattedAttendanceRecord($id, $userId = null): array
     {
         $query = AttendanceRecord::where('id', $id);
         if ($userId) {
@@ -38,12 +38,29 @@ class AttendanceDetailService
     }
 
     /**
+     * 勤怠修正申請を取得
+     *
+     * @param int $attendanceRecordId 勤怠記録ID
+     * @param int|null $userId ユーザーID（省略時は認証ユーザーIDを使用）
+     * @return AttendanceCorrectRequest|null
+     */
+    public function getAttendanceCorrection(int $attendanceRecordId, ?int $userId = null): ?AttendanceCorrectRequest
+    {
+        $userId = $userId ?? auth()->id();
+
+        return AttendanceCorrectRequest::where('attendance_record_id', $attendanceRecordId)
+            ->where('user_id', $userId)
+            ->latest()
+            ->first();
+    }
+
+    /**
      * 勤怠修正申請をフォーマット
      *
      * @param AttendanceCorrectRequest $attendanceCorrectRequest
      * @return array ['attendanceCorrection' => AttendanceCorrectRequest, 'breakCorrections' => Collection]
      */
-    public function formatAttendanceCorrection(AttendanceCorrectRequest $attendanceCorrectRequest)
+    public function formatAttendanceCorrection(AttendanceCorrectRequest $attendanceCorrectRequest): array
     {
         $attendanceCorrection = $attendanceCorrectRequest;
         $attendanceCorrection->formatted_year = $attendanceCorrection->new_date ? Carbon::parse($attendanceCorrection->new_date)->format('Y年') : '';
@@ -58,5 +75,29 @@ class AttendanceDetailService
         }
 
         return compact('attendanceCorrection', 'breakCorrections');
+    }
+
+    /**
+     * フォーマットされた勤怠修正申請データを取得
+     *
+     * @param $attendanceCorrection 勤怠修正申請データ
+     * @return array フォーマットされた勤怠修正申請データ
+     */
+    public function getFormattedCorrectionData($attendanceCorrection): array
+    {
+        return $attendanceCorrection
+            ? $this->formatAttendanceCorrection($attendanceCorrection)
+            : ['attendanceCorrection' => null, 'breakCorrections' => []];
+    }
+
+    /**
+     * 勤怠修正申請が承認待ちかを判定
+     *
+     * @param AttendanceCorrectRequest|null $attendanceCorrection 勤怠修正申請データ
+     * @return bool 勤怠修正申請が承認待ちの場合はtrue、それ以外はfalse
+     */
+    public function isWaitingApproval($attendanceCorrection): bool
+    {
+        return $attendanceCorrection && $attendanceCorrection->status === '承認待ち';
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\AttendanceListService;
+use Illuminate\Http\Request;
 
 class AttendanceListController extends Controller
 {
@@ -16,13 +16,12 @@ class AttendanceListController extends Controller
 
     public function show(Request $request)
     {
-        $currentMonth = $request->input('month', now()->format('Y-m'));
+        $currentMonth = $this->attendanceListService->getCurrentMonth($request);
+
         $attendanceRecords = $this->attendanceListService->getFormattedAttendanceRecords(auth()->id(), $currentMonth);
+
         $monthNavigation = $this->attendanceListService->getMonthNavigation($currentMonth);
 
-        return view('attendance-list', array_merge(
-            ['attendanceRecords' => $attendanceRecords],
-            $monthNavigation
-        ));
+        return view('attendance-list', array_merge(['attendanceRecords' => $attendanceRecords], $monthNavigation));
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BreakCorrectRequest extends Model
 {
@@ -18,7 +19,12 @@ class BreakCorrectRequest extends Model
         'new_break_out',
     ];
 
-    public function attendanceCorrectRequest()
+    /**
+     * 勤怠修正申請とのリレーションを定義
+     *
+     * @return BelongsTo
+     */
+    public function attendanceCorrectRequest(): BelongsTo
     {
         return $this->belongsTo(AttendanceCorrectRequest::class, 'attendance_correct_request_id');
     }
