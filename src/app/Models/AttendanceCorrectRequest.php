@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AttendanceCorrectRequest extends Model
 {
@@ -23,17 +25,32 @@ class AttendanceCorrectRequest extends Model
         'status',
     ];
 
-    public function user()
+    /**
+     * ユーザーとのリレーションを定義
+     *
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function attendanceRecord()
+    /**
+     * 勤怠記録とのリレーションを定義
+     *
+     * @return BelongsTo
+     */
+    public function attendanceRecord(): BelongsTo
     {
         return $this->belongsTo(AttendanceRecord::class, 'attendance_record_id');
     }
 
-    public function breakCorrectRequests()
+    /**
+     * 休憩修正申請とのリレーションを定義
+     *
+     * @return HasMany
+     */
+    public function breakCorrectRequests(): HasMany
     {
         return $this->hasMany(BreakCorrectRequest::class, 'attendance_correct_request_id');
     }

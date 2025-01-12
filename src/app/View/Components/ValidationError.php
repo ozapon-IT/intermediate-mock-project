@@ -14,7 +14,6 @@ class ValidationError extends Component
      * Create a new component instance.
      *
      * @param string $field
-     * @return void
      */
     public function __construct($field)
     {

@@ -21,6 +21,12 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
+                // 管理者の場合のリダイレクト先
+                if ($guard === 'admin') {
+                    return redirect('/admin/attendance/list');
+                }
+
+                // 一般ユーザーの場合のリダイレクト先
                 return redirect(RouteServiceProvider::HOME);
             }
         }

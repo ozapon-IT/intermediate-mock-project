@@ -2,11 +2,25 @@
 
 namespace App\Services;
 
+use Illuminate\Http\Request;
 use App\Models\AttendanceCorrectRequest;
 use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 
 class RequestListService
 {
+    /**
+     * クエリパラメータからステータスを取得
+     *
+     * @param Request $request
+     * @param string $default デフォルトのステータス
+     * @return string
+     */
+    public function getStatusFromQuery(Request $request, string $default = '承認待ち'): string
+    {
+        return $request->query('status', $default);
+    }
+
     /**
      * 勤怠修正申請を取得してフォーマット
      *
@@ -14,7 +28,7 @@ class RequestListService
      * @param int|null $userId ユーザーID（nullの場合は全ユーザー）
      * @return Collection
      */
-    public function getFormattedAttendanceCorrections(string $status, ?int $userId = null)
+    public function getFormattedAttendanceCorrections(string $status, ?int $userId = null): Collection
     {
         $query = AttendanceCorrectRequest::where('status', $status);
 

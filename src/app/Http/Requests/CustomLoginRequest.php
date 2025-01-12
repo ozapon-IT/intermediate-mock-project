@@ -43,7 +43,14 @@ class CustomLoginRequest extends LoginRequest
         ];
     }
 
-    protected function failedValidation(Validator $validator)
+    /**
+     * バリデーション失敗時の処理
+     *
+     * @param Validator $validator
+     * @return void
+     * @throws HttpResponseException
+     */
+    protected function failedValidation(Validator $validator): void
     {
         $redirectRoute = 'login';
 
@@ -59,6 +66,11 @@ class CustomLoginRequest extends LoginRequest
         throw new HttpResponseException($response);
     }
 
+    /**
+     * リクエストが管理者ガード用かどうか判定
+     *
+     * @return bool
+     */
     protected function isAdminGuard() : bool
     {
         return auth('admin')->check() || $this->routeIs('admin-*');

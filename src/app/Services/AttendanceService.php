@@ -22,7 +22,7 @@ class AttendanceService
      * @param int $userId
      * @return array
      */
-    public function getTodayAttendanceInformation(int $userId)
+    public function getTodayAttendanceInformation(int $userId): array
     {
         $now = Carbon::now('Asia/Tokyo');
 
@@ -60,9 +60,9 @@ class AttendanceService
      * 勤怠記録の「退勤」処理
      *
      * @param int $userId ユーザーID
-     * @return AttendanceRecord 更新された勤怠記録
+     * @return AttendanceRecord|null 更新された勤怠記録。勤怠記録が見つからなかった場合は null を返す。
      */
-    public function clockOut(int $userId): AttendanceRecord
+    public function clockOut(int $userId): ?AttendanceRecord
     {
         $attendanceRecord = AttendanceRecord::where('user_id', $userId)
             ->whereNull('clock_out')

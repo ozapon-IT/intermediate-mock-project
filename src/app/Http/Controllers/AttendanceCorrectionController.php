@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AttendanceCorrectionRequest;
-use App\Models\AttendanceRecord;
 use App\Services\AttendanceCorrectionService;
+use App\Http\Requests\AttendanceCorrectionRequest;
 
 class AttendanceCorrectionController extends Controller
 {
@@ -17,7 +16,7 @@ class AttendanceCorrectionController extends Controller
 
     public function requestCorrection(AttendanceCorrectionRequest $request, $id)
     {
-        $attendanceRecord = AttendanceRecord::findOrFail($id);
+        $attendanceRecord = $this->attendanceCorrectionService->getAttendanceRecordById($id);
 
         $this->attendanceCorrectionService->createAttendanceCorrection($request->validated(), $attendanceRecord);
 

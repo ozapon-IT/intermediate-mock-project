@@ -38,9 +38,8 @@ class UserAttendanceSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
             ]);
 
-            // 勤怠データ生成
             $startDate = Carbon::parse('2024-11-01');
-            $endDate = Carbon::parse('2025-01-10');
+            $endDate = Carbon::parse('2025-01-11');
 
             while ($startDate->lte($endDate)) {
                 // 勤怠記録作成
@@ -71,8 +70,8 @@ class UserAttendanceSeeder extends Seeder
                 $startDate->addDay();
             }
 
-            // 勤怠修正申請作成
-            $correctDate = Carbon::parse('2024-12-31');
+            // 勤怠修正申請データ作成
+            $correctDate = Carbon::parse('2025-01-01');
 
             $attendanceRecord = AttendanceRecord::where('date', $correctDate->toDateString())
                 ->where('user_id', $user->id)
@@ -86,13 +85,13 @@ class UserAttendanceSeeder extends Seeder
                 'new_date' => $attendanceRecord->date,
                 'old_clock_in' => $attendanceRecord->clock_in,
                 'old_clock_out' => $attendanceRecord->clock_out,
-                'new_clock_in' => $correctDate->copy()->setTime(10, 0, 0),
-                'new_clock_out' => $correctDate->copy()->setTime(19, 0, 0),
+                'new_clock_in' => $correctDate->copy()->setTime(8, 30, 0),
+                'new_clock_out' => $correctDate->copy()->setTime(17, 0, 0),
                 'reason' => 'テスト用修正申請',
                 'status' => '承認待ち',
             ]);
 
-            // 休憩修正申請作成
+            // 休憩修正申請データ作成
             $breakId1 = AttendanceBreak::where('attendance_record_id', $attendanceRecord->id)
                 ->where('break_in', Carbon::parse($attendanceRecord->date)->copy()->setTime(12, 0, 0))
                 ->first()->id;
@@ -107,17 +106,48 @@ class UserAttendanceSeeder extends Seeder
                         'attendance_break_id' => $breakId1,
                         'old_break_in' => Carbon::parse($attendanceRecord->date)->copy()->setTime(12, 0, 0),
                         'old_break_out' => Carbon::parse($attendanceRecord->date)->copy()->setTime(12, 40, 0),
-                        'new_break_in' => $correctDate->copy()->setTime(12, 30, 0),
-                        'new_break_out' => $correctDate->copy()->setTime(13, 10, 0),
+                        'new_break_in' => $correctDate->copy()->setTime(11, 30, 0),
+                        'new_break_out' => $correctDate->copy()->setTime(11, 55, 0),
                     ],
                     [
                         'attendance_break_id' => $breakId2,
                         'old_break_in' => Carbon::parse($attendanceRecord->date)->copy()->setTime(15, 0, 0),
                         'old_break_out' => Carbon::parse($attendanceRecord->date)->copy()->setTime(15, 20, 0),
-                        'new_break_in' => $correctDate->copy()->setTime(15, 30, 0),
-                        'new_break_out' => $correctDate->copy()->setTime(15, 50, 0),
+                        'new_break_in' => $correctDate->copy()->setTime(14, 30, 0),
+                        'new_break_out' => $correctDate->copy()->setTime(14, 55, 0),
                     ],
                 ]);
+            }
+        }
+
+        // 勤怠修正申請承認済みデータ作成
+        $approvedRequests = AttendanceCorrectRequest::take(3)->get();
+
+        foreach ($approvedRequests as $request) {
+            $request->update(['status' => '承認済み']);
+
+            $attendanceRecord = $request->AttendanceRecord;
+            $attendanceRecord->update([
+                'date' => $request->new_date,
+                'clock_in' => $request->new_clock_in,
+                'clock_out' => $request->new_clock_out,
+                'break_hours' => '0.84',
+                'work_hours' => '7.66',
+            ]);
+
+            $breakCorrections = $request->breakCorrectRequests;
+            foreach ($breakCorrections as $breakCorrection) {
+                $attendanceBreak = AttendanceBreak::find($breakCorrection->attendance_break_id);
+
+                $breakDuration = Carbon::parse($breakCorrection->new_break_in)->diffInMinutes($breakCorrection->new_break_out) / 60;
+
+                if ($attendanceBreak) {
+                    $attendanceBreak->update([
+                        'break_in' => $breakCorrection->new_break_in,
+                        'break_out' => $breakCorrection->new_break_out,
+                        'break_duration' => round($breakDuration, 2),
+                    ]);
+                }
             }
         }
     }

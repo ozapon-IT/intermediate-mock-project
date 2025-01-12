@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\RequestListService;
+use Illuminate\Http\Request;
 
 class RequestListController extends Controller
 {
@@ -16,7 +16,7 @@ class RequestListController extends Controller
 
     public function show(Request $request)
     {
-        $status = $request->query('status', '承認待ち');
+        $status = $this->requestListService->getStatusFromQuery($request);
 
         $attendanceCorrections = $this->requestListService->getFormattedAttendanceCorrections($status, auth()->id());
 

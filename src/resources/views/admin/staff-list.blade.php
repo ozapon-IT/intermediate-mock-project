@@ -25,9 +25,7 @@
             @foreach ($users as $user)
                 <tr class="staff-list__item">
                     <td>{{ $user->name }}</td>
-
                     <td>{{ $user->email }}</td>
-
                     <td><a href="{{ route('admin.staff-attendance-list.show', $user->id) }}">詳細</a></td>
                 </tr>
             @endforeach

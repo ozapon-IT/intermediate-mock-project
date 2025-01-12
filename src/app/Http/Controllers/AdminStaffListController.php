@@ -8,7 +8,7 @@ class AdminStaffListController extends Controller
 {
     public function show()
     {
-        $users = User::where('role', 'user')->get();
+        $users = User::roleUser()->get();
 
         return view('admin.staff-list', compact('users'));
     }

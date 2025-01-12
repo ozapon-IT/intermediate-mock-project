@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AdminAuthService;
 use App\Http\Requests\CustomLoginRequest;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 class AdminAuthController extends Controller
 {
+    protected $adminAuthService;
+
+    public function __construct(AdminAuthService $adminAuthService)
+    {
+        $this->adminAuthService = $adminAuthService;
+    }
+
     public function show()
     {
         return view('auth.admin-login');
@@ -17,22 +21,14 @@ class AdminAuthController extends Controller
 
     public function login(CustomLoginRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $this->adminAuthService->login($request->email, $request->password);
 
-        if ($user && Hash::check($request->password, $user->password)) {
-            Auth::guard('admin')->login($user);
-
-            return redirect()->route('admin.attendance-list.show');
-        }
-
-        throw ValidationException::withMessages([
-            'email' => ['ログイン情報が登録されていません'],
-        ]);
+        return redirect()->route('admin.attendance-list.show');
     }
 
     public function logout()
     {
-        Auth::guard('admin')->logout();
+        $this->adminAuthService->logout();
 
         return redirect()->route('admin-login.show');
     }

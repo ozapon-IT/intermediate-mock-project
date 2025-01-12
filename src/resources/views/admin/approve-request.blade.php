@@ -25,11 +25,7 @@
             />
 
             <div class="attendance-detail__approval">
-                @if ($isWaitingApproval)
-                    <button class="attendance-detail__button attendance-detail__button--approve" type="submit">承認</button>
-                @else
-                    <button class="attendance-detail__button attendance-detail__button--approved">承認済み</button>
-                @endif
+                <x-attendance-detail-button type="approval" :isWaitingApproval="$isWaitingApproval" />
             </div>
         </form>
     </div>

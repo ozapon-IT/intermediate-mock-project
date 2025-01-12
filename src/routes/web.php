@@ -24,6 +24,7 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
+// ログイン済みルート
 Route::middleware('auth')->group(function () {
     Route::get('/attendance', [AttendanceController::class, 'show'])->name('attendance.show');
     Route::post('/attendance/clock_in', [AttendanceController::class, 'clockIn'])->name('attendance.clock_in');

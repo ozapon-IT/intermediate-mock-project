@@ -17,13 +17,24 @@ class AttendanceCorrectionService
     }
 
     /**
+     * 勤怠記録を取得
+     *
+     * @param int $id 勤怠記録ID
+     * @return AttendanceRecord
+     */
+    public function getAttendanceRecordById(int $id): AttendanceRecord
+    {
+        return AttendanceRecord::findOrFail($id);
+    }
+
+    /**
      * 勤怠修正リクエストを作成
      *
      * @param array $data リクエストデータ（年、月日、出勤時間、退勤時間、休憩時間など）
      * @param AttendanceRecord $attendanceRecord 対象の勤怠記録
      * @return AttendanceCorrectRequest 作成された勤怠修正リクエスト
      */
-    public function createAttendanceCorrection(array $data, AttendanceRecord $attendanceRecord)
+    public function createAttendanceCorrection(array $data, AttendanceRecord $attendanceRecord): AttendanceCorrectRequest
     {
         $formattedDate = Carbon::createFromFormat('Y年m月d日', "{$data['year']}{$data['month_day']}")->toDateString();
 
@@ -69,7 +80,7 @@ class AttendanceCorrectionService
      * @param AttendanceRecord $attendanceRecord 対象の勤怠記録
      * @return AttendanceRecord 修正された勤怠記録
      */
-    public function correctAttendanceRecord(array $data, AttendanceRecord $attendanceRecord)
+    public function correctAttendanceRecord(array $data, AttendanceRecord $attendanceRecord): AttendanceRecord
     {
         $formattedDate = Carbon::createFromFormat('Y年m月d日', "{$data['year']}{$data['month_day']}")->toDateString();
 
@@ -112,7 +123,7 @@ class AttendanceCorrectionService
      * @param array $data リクエストデータ
      * @return void
      */
-    public function approveAttendanceCorrection(AttendanceCorrectRequest $attendanceCorrectRequest, array $data)
+    public function approveAttendanceCorrection(AttendanceCorrectRequest $attendanceCorrectRequest, array $data): void
     {
         // 修正リクエストのステータスを更新
         $attendanceCorrectRequest->update([
@@ -157,5 +168,16 @@ class AttendanceCorrectionService
             'work_hours' => $this->attendanceRecordService->calculateWorkHours($attendanceRecord),
             'status' => '退勤済',
         ]);
+    }
+
+    /**
+     * 日付を月単位でフォーマット
+     *
+     * @param string $date 日付文字列
+     * @return string フォーマット済みの月 (例: '2024-01')
+     */
+    public function formatDateToMonth(string $date): string
+    {
+        return Carbon::parse($date)->format('Y-m');
     }
 }

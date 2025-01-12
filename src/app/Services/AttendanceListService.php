@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Carbon;
 use App\Models\AttendanceRecord;
 use App\Services\AttendanceRecordService;
@@ -17,13 +19,35 @@ class AttendanceListService
     }
 
     /**
+     * IDでユーザーを取得
+     *
+     * @param int $id ユーザーID
+     * @return User
+     */
+    public function getUserById(int $id): User
+    {
+        return User::findOrFail($id);
+    }
+
+    /**
+     * 現在の月を取得
+     *
+     * @param Request $request
+     * @return string
+     */
+    public function getCurrentMonth(Request $request): string
+    {
+        return $request->input('month', now()->format('Y-m'));
+    }
+
+    /**
      * 月の勤怠記録を取得してフォーマット
      *
      * @param int $userId
      * @param string $currentMonth
      * @return Collection
      */
-    public function getFormattedAttendanceRecords(int $userId, string $currentMonth)
+    public function getFormattedAttendanceRecords(int $userId, string $currentMonth): Collection
     {
         $attendanceRecords = AttendanceRecord::where('user_id', $userId)
             ->whereBetween('date', [
@@ -50,7 +74,7 @@ class AttendanceListService
      * @param string $currentMonth
      * @return array
      */
-    public function getMonthNavigation(string $currentMonth)
+    public function getMonthNavigation(string $currentMonth): array
     {
         return [
             'currentMonthFormatted' => Carbon::parse($currentMonth)->format('Y/m'),
@@ -60,12 +84,23 @@ class AttendanceListService
     }
 
     /**
+     * 現在の日付を取得
+     *
+     * @param Request $request
+     * @return string
+     */
+    public function getCurrentDay(Request $request): string
+    {
+        return $request->input('day', now()->format('Y年n月j日'));
+    }
+
+    /**
      * 日次の勤怠記録を取得してフォーマット
      *
      * @param string $currentDay 指定日 (Y年n月j日形式)
      * @return Collection
      */
-    public function getDailyFormattedAttendanceRecords(string $currentDay)
+    public function getDailyFormattedAttendanceRecords(string $currentDay): Collection
     {
         $currentDayObj = Carbon::createFromFormat('Y年n月j日', $currentDay);
 
@@ -89,7 +124,7 @@ class AttendanceListService
      * @param string $currentDay 指定日 (Y年n月j日形式)
      * @return array
      */
-    public function getDayNavigation(string $currentDay)
+    public function getDayNavigation(string $currentDay): array
     {
         $currentDayObj = Carbon::createFromFormat('Y年n月j日', $currentDay);
 
@@ -106,7 +141,7 @@ class AttendanceListService
      * @param Collection $attendanceRecords フォーマット済みの勤怠記録
      * @return \Closure CSV出力用のコールバック
      */
-    public function exportAttendanceRecordsToCsv(Collection $attendanceRecords)
+    public function exportAttendanceRecordsToCsv(Collection $attendanceRecords): \Closure
     {
         $csvHeader = ['日付', '出勤', '退勤', '休憩時間', '合計時間'];
 

@@ -6,7 +6,6 @@ use App\Services\AttendanceDetailService;
 use App\Services\AttendanceCorrectionService;
 use App\Models\AttendanceCorrectRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
 class AdminApproveRequestController extends Controller
 {
@@ -25,7 +24,7 @@ class AdminApproveRequestController extends Controller
     {
         $correctionData = $this->attendanceDetailService->formatAttendanceCorrection($attendanceCorrectRequest);
 
-        $isWaitingApproval = $correctionData['attendanceCorrection']->status === '承認待ち';
+        $isWaitingApproval = $this->attendanceDetailService->isWaitingApproval($correctionData['attendanceCorrection']);
 
         return view('admin.approve-request', array_merge($correctionData, compact('isWaitingApproval')));
     }

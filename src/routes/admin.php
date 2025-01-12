@@ -11,9 +11,15 @@ use App\Http\Controllers\AdminRequestListController;
 use App\Http\Controllers\AdminApproveRequestController;
 
 // 管理者用ルート
-Route::get('login', [AdminAuthController::class, 'show'])->name('admin-login.show');
-Route::post('login', [AdminAuthController::class, 'login'])->name('admin-login.login');
+Route::middleware(['guest:admin'])->group(function () {
+    Route::get('/', function () {
+        return redirect('/admin/login');
+    });
+    Route::get('login', [AdminAuthController::class, 'show'])->name('admin-login.show');
+    Route::post('login', [AdminAuthController::class, 'login'])->name('admin-login.login');
+});
 
+// ログイン済みルート
 Route::middleware(['admin.session', 'admin'])->group(function () {
     Route::post('logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 

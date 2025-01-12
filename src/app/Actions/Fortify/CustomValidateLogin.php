@@ -9,7 +9,14 @@ use App\Http\Requests\CustomLoginRequest;
 
 class CustomValidateLogin
 {
-    public function __invoke(Request $request)
+    /**
+     * カスタムルールとメッセージを使用してログインリクエストを検証
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function __invoke(Request $request): void
     {
         $loginRequest = app(CustomLoginRequest::class);
         $rules = $loginRequest->rules();
