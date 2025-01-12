@@ -33,6 +33,8 @@ Laravel環境構築後ダミーデータのアカウントでアプリにログ�
 - 管理者ユーザー
   - メールアドレス: admin@coachtech.com パスワード: testadmin
 
+---
+
 ## 使用技術
 
 - Laravel Framework 10.48.23
